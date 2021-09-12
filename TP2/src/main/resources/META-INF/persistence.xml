@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+    <persistence-unit name="Example">
+        <provider> org.hibernate.jpa.HibernatePersistenceProvider </provider>
+
+
+        <class>entity.Estudiante</class>
+        <class>entity.Carrera</class>
+
+        <properties>
+            <!-- Propiedades de configuracion de JDBC para MySQL
+            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby:MyDerbyDb;create=true" /> -->
+
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/example_DB" />
+            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.password" value="password" />
+
+            <!-- Propiedad para la generacion automatica del esquema de base de datos -->
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <!--property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/-->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="show_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>
