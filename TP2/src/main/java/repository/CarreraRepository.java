@@ -1,13 +1,13 @@
 package repository;
 
+import dto.CarreraDto;
 import entity.Carrera;
-import entity.Estudiante;
-
-import java.util.ArrayList;
+import java.util.List;
 
 public interface CarreraRepository {
 
     void save( Carrera c );
-    ArrayList<Carrera> findAllByInscriptos(); // ver el order by
-    ArrayList< Carrera > report ();
+    List<Carrera> findAll();
+    List<CarreraDto> findAllByInscriptosOrderByCount();
+    List<Carrera> report();
 }

@@ -1,16 +1,14 @@
 package repository;
 
-import entity.Carrera;
 import entity.Estudiante;
-
-import java.util.ArrayList;
+import java.util.List;
 
 public interface EstudianteRepository {
 
     void save( Estudiante e ); // ver que pasa con carrera
-    ArrayList<Estudiante> findAll( );
+    List<Estudiante> findAllOrderByDocumento( );
     Estudiante findByLibreta( int libreta);
-    ArrayList<Estudiante> findAllByGenero( String genero );
-    ArrayList<Estudiante> findAllByCarreraAndCiudad( int idCarrera, String ciudad);
+    List<Estudiante> findAllByGenero( String genero );
+    List<Estudiante> findAllByCarreraAndCiudad( int idCarrera, String ciudad);
 
 }

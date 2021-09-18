@@ -5,62 +5,87 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import java.util.ArrayList;
+import java.util.List;
 
 
-public class EstudianteRepositoryImpl implements EstudianteRepository{
+public class EstudianteRepositoryImpl implements EstudianteRepository {
+
     private final EntityManager em;
 
     public EstudianteRepositoryImpl ( ){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Integrador2");
         this.em = emf.createEntityManager();
-        emf.close();
     }
 
     @Override
     public void save(Estudiante e) {
+        em.getTransaction().begin();
         em.persist(e);
+        em.getTransaction().commit();
     }
 
     @Override
-    public ArrayList<Estudiante> findAll() {
-        String jpql = "SELECT e FROM Estudiante e";
+    public List<Estudiante> findAllOrderByDocumento() {
+        em.getTransaction().begin();
+        String jpql = "SELECT e FROM Estudiante e ORDER BY e.documento";
         Query q = this.em.createQuery( jpql );
-        ArrayList<Estudiante> estudiantes = (ArrayList<Estudiante>) q.getResultList();
-        this.em.close();
+        List<Estudiante> estudiantes = q.getResultList();
+        em.getTransaction().commit();
         return estudiantes;
     }
 
     @Override
     public Estudiante findByLibreta(int libreta) {
+        em.getTransaction().begin();
         String jpql = "SELECT e FROM Estudiante e WHERE e.libretaUniversitaria = :libreta";
-        Query q = this.em.createQuery( jpql, Estudiante.class );
+        Query q = this.em.createQuery(jpql);
         q.setParameter( "libreta", libreta );
         Estudiante estudiante = (Estudiante) q.getSingleResult();
-        this.em.close();
+        em.getTransaction().commit();
         return estudiante;
     }
 
     @Override
-    public ArrayList<Estudiante> findAllByGenero(String genero) {
+    public List<Estudiante> findAllByGenero(String genero) {
+        em.getTransaction().begin();
         String jpql = "SELECT e FROM Estudiante e WHERE e.genero = :genero";
         Query q = this.em.createQuery( jpql );
         q.setParameter( "genero", genero );
-        ArrayList<Estudiante> estudiantes = (ArrayList<Estudiante>) q.getResultList();
-        this.em.close();
+        List<Estudiante> estudiantes = q.getResultList();
+        em.getTransaction().commit();
         return estudiantes;
     }
 
+    // recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
     @Override
-    public ArrayList<Estudiante> findAllByCarreraAndCiudad( int idCarrera, String ciudad) {
-        String jpql = "SELECT e FROM Estudiante e JOIN Carrera c WHERE e.ciudadResidencia = :ciudad " +
-                 "AND c.id = :idCarrera";
-        Query q = this.em.createQuery( jpql );
+    public List<Estudiante> findAllByCarreraAndCiudad( int idCarrera, String ciudad) {
+        this.em.getTransaction().begin();
+        String jpql = """
+                 SELECT e 
+                 FROM Estudiante e 
+                 JOIN CarreraEstudiante c 
+                 ON e.documento = c.estudiante.documento 
+                 WHERE e.ciudadResidencia = :ciudad
+                 AND c.carrera.id_carrera = :idCarrera
+                 """.trim();
+        Query q = this.em.createQuery(jpql, Estudiante.class);
         q.setParameter( "ciudad", ciudad );
         q.setParameter( "idCarrera", idCarrera );
-        ArrayList<Estudiante> estudiantes = (ArrayList<Estudiante>) q.getResultList();
-        this.em.close();
+        List<Estudiante> estudiantes = q.getResultList();
+        em.getTransaction().commit();
         return estudiantes;
     }
+
+    /*
+    @Override
+    public Address findById(int id) {
+        em.getTransaction().begin();
+        String jpql = "SELECT e FROM Address e WHERE e.id = :id";
+        Query q = this.em.createQuery( jpql, Address.class );
+        q.setParameter( "id", id );
+        Address address = (Address) q.getSingleResult();
+        return address;
+    }
+     */
 
 }
