@@ -19,4 +19,16 @@ public class CarreraEstudiantePk implements Serializable {
 		this.idCarrera = idCarrera;
 		this.idEstudiante = idEstudiante;
 	}
+
+	public int getIdEstudiante ( ) {
+		return this.idEstudiante;
+	}
+
+	public int getIdCarrera ( ) {
+		return this.idCarrera;
+	}
+
+	public String toString ( ) {
+		return " id_estudiante: " + this.idEstudiante + ", id_carrera: " + this.idCarrera;
+	}
 }

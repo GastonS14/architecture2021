@@ -1,9 +1,12 @@
 package service;
 
+import entity.Carrera;
 import entity.Estudiante;
 import repository.EstudianteRepository;
 import repository.EstudianteRepositoryImpl;
 
+import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 public class EstudianteService {
@@ -32,6 +35,23 @@ public class EstudianteService {
 
     public List<Estudiante> findAllByCarreraAndCiudad(int idCarrera, String ciudad) {
         return this.repository.findAllByCarreraAndCiudad(idCarrera, ciudad);
+    }
+
+    public void addCarrera (Carrera c, Estudiante e, LocalDate fechaIngreso, LocalDate fechaEgreso ){
+        this.repository.addCareer( c, e, fechaIngreso, fechaEgreso );
+        this.repository.update ( e );
+    }
+
+    /**
+     * If you want to remove some career, first you need the student.
+     * So in main, you should write something like this:
+     *      se.removeCarrera( carrera, se.findByLibreta( 22 ) );
+     * @param c career that you want to delete
+     * @param e the student that you want to update
+     */
+    public void removeCarrera (Carrera c, Estudiante e ){
+        this.repository.removeCareer( c, e );
+        this.repository.update( e );
     }
 
 

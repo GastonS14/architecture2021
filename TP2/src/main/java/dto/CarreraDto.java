@@ -3,15 +3,16 @@ package dto;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table ( name = "carrera_dto")
 public class CarreraDto {
-
 	@Id
 	private int idCarrera;
-	@Column(name = "nombre")
+	@Column
 	private String nombre;
-	@Column(name = "cantidad")
+	@Column
 	private long cantidad;
 
 	public CarreraDto(int idCarrera, String nombre, long cantidad) {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table( name = "estudiante")
 public class Estudiante {
     @Id
     private int documento;
@@ -12,7 +13,7 @@ public class Estudiante {
     private String nombre;
     @Column(nullable = false)
     private String apellido;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private int libretaUniversitaria;
     @Column(nullable = false)
     private int edad;
@@ -21,7 +22,10 @@ public class Estudiante {
     @Column
     private String ciudadResidencia;
 
-    @OneToMany (mappedBy = "estudiante", fetch = FetchType.LAZY, cascade = {CascadeType.ALL} )
+    @OneToMany (mappedBy = "estudiante",
+            cascade = {CascadeType.ALL},
+            fetch = FetchType.LAZY,
+            orphanRemoval = true) // this remove references
     private List<CarreraEstudiante> carreraEstudiante;
 
     public Estudiante (){}
@@ -38,10 +42,27 @@ public class Estudiante {
         this.genero = genero;
         this.libretaUniversitaria = libretaUniversitaria;
         this.ciudadResidencia = ciudadResidencia;
+        this.carreraEstudiante = new ArrayList<>();
     }
 
     public int getId() {
         return this.documento;
+    }
+
+    public String getName ( ) {
+        return this.nombre;
+    }
+
+    public boolean addCareer(CarreraEstudiante ce ) {
+        if ( !this.carreraEstudiante.contains(ce) ) {
+            this.carreraEstudiante.add(ce);
+            return true;
+    }
+        return false;
+    }
+
+    public boolean removeCareer(CarreraEstudiante ce ) {
+        return this.carreraEstudiante.remove( ce );
     }
 
     @Override
@@ -54,7 +75,7 @@ public class Estudiante {
                 ", edad=" + edad +
                 ", genero='" + genero + '\'' +
                 ", ciudadResidencia='" + ciudadResidencia + '\'' +
-                ", carreraEstudiante=" + carreraEstudiante +
+                ", cantidadDeCarreras='" + this.carreraEstudiante.size() + '\'' +
                 '}';
     }
 }

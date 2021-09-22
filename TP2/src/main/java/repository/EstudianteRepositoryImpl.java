@@ -1,10 +1,12 @@
 package repository;
 
+import entity.Carrera;
+import entity.CarreraEstudiante;
 import entity.Estudiante;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+
+import javax.persistence.*;
+import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -19,9 +21,27 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
 
     @Override
     public void save(Estudiante e) {
-        em.getTransaction().begin();
-        em.persist(e);
-        em.getTransaction().commit();
+        this.em.getTransaction().begin();
+        this.em.persist( e );
+        this.em.getTransaction().commit();
+    }
+
+    @Override
+    public void update ( Estudiante e ){
+        this.em.getTransaction().begin();
+        this.em.merge( e );
+        this.em.getTransaction().commit();
+    }
+
+    @Override
+    public Estudiante findByDocumento ( int doc ) {
+        if ( !this.em.isOpen() )
+            this.em.getTransaction().begin();
+        String jpql = "SELECT e FROM Estudiante e WHERE e.documento = :doc";
+        Query q = this.em.createQuery( jpql, Estudiante.class );
+        q.setParameter( "doc", doc);
+        Estudiante e = (Estudiante) q.getSingleResult();
+        return e;
     }
 
     @Override
@@ -76,16 +96,14 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
         return estudiantes;
     }
 
-    /*
     @Override
-    public Address findById(int id) {
-        em.getTransaction().begin();
-        String jpql = "SELECT e FROM Address e WHERE e.id = :id";
-        Query q = this.em.createQuery( jpql, Address.class );
-        q.setParameter( "id", id );
-        Address address = (Address) q.getSingleResult();
-        return address;
+    public void addCareer(Carrera c, Estudiante e, LocalDate fechaIngreso, LocalDate fechaEgreso ) {
+        e.addCareer( new CarreraEstudiante( c, e, fechaIngreso, fechaEgreso ));
     }
-     */
+
+    @Override
+    public void removeCareer(Carrera c, Estudiante e ) {
+        e.removeCareer(new CarreraEstudiante(c, e, null, null));
+    }
 
 }

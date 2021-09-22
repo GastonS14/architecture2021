@@ -3,52 +3,49 @@ package dto;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.time.LocalDate;
+import javax.persistence.Table;
+import java.math.BigInteger;
+
 
 @Entity
+@Table (name = "carrera_report")
 public class CarreraReportDto {
-
 	@Id
 	private int idCarrera;
 	@Column
-	private String nombre;
-	@Column
-	private String apellido;
-	@Column
-	private int libretaEstudiante;
-	@Column
-	private LocalDate fechaIngreso;
-	@Column
-	private LocalDate fechaEgreso;
-	@Column
 	private String nombreCarrera;
 	@Column
-	private long egresadosPorAnio;
+	private int añoIngreso;
+	@Column
+	private int añoEgreso;
+	@Column ( name = "cantidad_de_egresados")
+	private BigInteger cantEgresados;
+	@Column ( name = "cantidad_de_inscriptos")
+	private BigInteger cantInscriptos;
 
 	public CarreraReportDto() {}
 
-	public CarreraReportDto(int idCarrera, String nombre, String apellido, int libretaEstudiante, LocalDate fechaIngreso, LocalDate fechaEgreso, String nombreCarrera, long egresadosPorAnio) {
+	public CarreraReportDto(int idCarrera, String nombreCarrera, int añoIngreso, int añoEgreso,
+							BigInteger cantInscriptos, BigInteger cantEgresados ) {
 		this.idCarrera = idCarrera;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.libretaEstudiante = libretaEstudiante;
-		this.fechaIngreso = fechaIngreso;
-		this.fechaEgreso = fechaEgreso;
+		this.añoIngreso = añoIngreso;
+		this.añoEgreso = añoEgreso;
 		this.nombreCarrera = nombreCarrera;
-		this.egresadosPorAnio = egresadosPorAnio;
+		this.cantEgresados = cantEgresados;
+		this.cantInscriptos = cantInscriptos;
 	}
+
+
 
 	@Override
 	public String toString() {
 		return "CarreraReportDto{" +
 				"idCarrera=" + idCarrera +
-				", nombre='" + nombre + '\'' +
-				", apellido='" + apellido + '\'' +
-				", libretaEstudiante=" + libretaEstudiante +
-				", fechaIngreso=" + fechaIngreso +
-				", fechaEgreso=" + fechaEgreso +
 				", nombreCarrera='" + nombreCarrera + '\'' +
-				", egresadosPorAnio=" + egresadosPorAnio +
+				", fechaIngreso=" + añoIngreso +
+				", fechaEgreso=" + añoEgreso +
+				", cantEgresados=" + cantEgresados +
+				", cantInscriptos=" + cantInscriptos +
 				'}';
 	}
 }
