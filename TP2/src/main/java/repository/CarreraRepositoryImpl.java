@@ -4,6 +4,8 @@ import dto.*;
 import entity.Carrera;
 import entity.CarreraEstudiante;
 import entity.Estudiante;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.time.LocalDate;
@@ -13,6 +15,7 @@ import java.util.List;
 public class CarreraRepositoryImpl implements CarreraRepository {
 
     private final EntityManager em;
+    private static final Logger logger = LoggerFactory.getLogger(CarreraRepositoryImpl.class);
 
     public CarreraRepositoryImpl () {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Integrador2");
@@ -27,13 +30,17 @@ public class CarreraRepositoryImpl implements CarreraRepository {
         String query = "SELECT c FROM Carrera c WHERE c.id_carrera = :id";
         Query q = this.em.createQuery( query );
         q.setParameter( "id", idCarrera );
-        Carrera c = ( Carrera ) q.getSingleResult();
-        return c;
+        try {
+            return ( Carrera ) q.getSingleResult();
+        } catch(NoResultException e) {
+            logger.info("Not result founded for idCarrera = " + idCarrera);
+            return null;
+        }
     }
 
     /**
-     * Carrera has an unique name, so this method is better than the one above
-     * @param name
+     * Carrera has a unique name, so this method is better than the one above
+     * @param name carrer to
      * @return carrera, if exists any with that name, else it will throw an exception
      */
     @Override
@@ -41,8 +48,12 @@ public class CarreraRepositoryImpl implements CarreraRepository {
         String query = "SELECT c FROM Carrera c WHERE c.nombre = :nombre";
         Query q = this.em.createQuery( query );
         q.setParameter( "nombre", name );
-        Carrera c = ( Carrera ) q.getSingleResult();
-        return c;
+        try {
+            return ( Carrera ) q.getSingleResult();
+        } catch(NoResultException e) {
+            logger.info("Not result founded for name = " + name);
+            return null;
+        }
     }
 
     @Override
@@ -61,17 +72,13 @@ public class CarreraRepositoryImpl implements CarreraRepository {
 
     @Override
     public List<Carrera> findAll() {
-        em.getTransaction().begin();
         String jpql = "SELECT c FROM Carrera c";
         Query q = this.em.createQuery( jpql );
-        List<Carrera> carreras = q.getResultList();
-        em.getTransaction().commit();
-        return carreras;
+        return (List<Carrera>) q.getResultList();
     }
 
     @Override
     public List<CarreraDto> findAllByInscriptosOrderByCount() {
-        this.em.getTransaction().begin();
         String sql = """
                 SELECT new CarreraDto( c.id_carrera, c.nombre, count(*) )
                 FROM Carrera c 
@@ -81,9 +88,7 @@ public class CarreraRepositoryImpl implements CarreraRepository {
                 ORDER BY 3 DESC
                 """.trim();
         Query q = this.em.createQuery(sql, CarreraDto.class);
-        List<CarreraDto> carreraDto = q.getResultList();
-        em.getTransaction().commit();
-        return carreraDto;
+        return (List<CarreraDto>) q.getResultList();
     }
 
     @Override
@@ -92,35 +97,30 @@ public class CarreraRepositoryImpl implements CarreraRepository {
     }
 
     @Override
-    public void removeStudent ( Carrera c, Estudiante e ) {
-        c.removeStudent( new CarreraEstudiante( c, e, null,null));
+    public void removeStudent ( Carrera c, CarreraEstudiante carreraEstudiante ) {
+        c.removeStudent( carreraEstudiante );
     }
 
     /**
-     * To house Gaston ahahaha
-     * @return
+     * @return a report list
      */
     @Override
     public List<CarreraReportDto> report() {
-        this.em.getTransaction().begin();
         String query = """ 
-                select c.id_carrera, c.nombre ,
+                SELECT c.id_carrera, c.nombre ,
                         year(fechaIngreso) as añoIngreso, year(fechaEgreso) as añoEgreso,
                         count(idEstudiante) OVER (wIngresos) as ingresos,
                         count(idEstudiante) OVER (PARTITION BY c.id_carrera,year(fechaEgreso)) as egresos  
-                    from carrera c join carrera_estudiante  ce on c.id_carrera = ce.idCarrera
+                    FROM carrera c join carrera_estudiante  ce on c.id_carrera = ce.idCarrera
                 WINDOW wIngresos AS (PARTITION BY c.id_carrera,year(fechaIngreso))
-                ORDER BY c.nombre,year(fechaIngreso), year(fechaEgreso)  """.trim();
+                ORDER BY c.nombre, year(fechaIngreso), year(fechaEgreso)  """.trim();
         Query q = this.em.createNativeQuery( query);
         List<Object[]> report = q.getResultList();
-        ArrayList<CarreraReportDto> carreraReport = this.mapper( report );
-        this.em.getTransaction().commit();
-        return carreraReport;
+        return this.mapper( report );
     }
 
     private ArrayList<CarreraReportDto> mapper(List<Object[]> report) {
         ArrayList<CarreraReportDto> carreraReport = new ArrayList<>();
-        CarreraReportDto cr ;
         for ( Object[] o : report ) {
             carreraReport.add( new CarreraReportDto( (int)o[0], (String) o[1],
                         (int) o[2], (int) o[3],

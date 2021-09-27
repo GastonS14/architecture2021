@@ -18,7 +18,8 @@ public class Carrera {
     @OneToMany (mappedBy = "carrera",
             fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL},
-            orphanRemoval = true) // this remove references
+            orphanRemoval = true
+    ) // this remove references
     private List<CarreraEstudiante> estudianteCarreras;
 
     public Carrera () {}
@@ -36,16 +37,14 @@ public class Carrera {
         return this.nombre;
     }
 
-    public boolean addStudent ( CarreraEstudiante ce ) {
+    public void addStudent ( CarreraEstudiante ce ) {
         if (!this.estudianteCarreras.contains(ce) ) {
             this.estudianteCarreras.add(ce);
-            return true;
         }
-        return false;
     }
 
-    public boolean removeStudent ( CarreraEstudiante ce ) {
-        return this.estudianteCarreras.remove( ce );
+    public void removeStudent ( CarreraEstudiante ce ) {
+        this.estudianteCarreras.remove( ce );
     }
 
     @Override

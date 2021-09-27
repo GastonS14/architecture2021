@@ -4,5 +4,5 @@ import entity.CarreraEstudiante;
 
 public interface CarreraEstudianteRepository {
 
-	void save(CarreraEstudiante carreraEstudiante);
+	CarreraEstudiante findByIdCarreraAndIdEstudiante(int idCarrera, int idEstudiante);
 }

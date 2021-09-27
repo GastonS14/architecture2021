@@ -1,10 +1,8 @@
 package entity;
 
-import com.sun.istack.NotNull;
-import com.sun.istack.Nullable;
-
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table ( name = "carrera_estudiante")
@@ -46,14 +44,15 @@ public class CarreraEstudiante {
 	}
 
 	@Override
-	public boolean equals ( Object ce ) {
-		try {
-			CarreraEstudiante auxCE = (CarreraEstudiante) ce;
-			return auxCE.getIdEstudiante() == this.getIdEstudiante() &&
-						 auxCE.getIdCarrera() == this.getIdCarrera();
-		}catch ( Exception e ) {
-			return false;
-		}
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof CarreraEstudiante that)) return false;
+		return Objects.equals(carreraEstudiantePk, that.carreraEstudiantePk);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(carreraEstudiantePk);
 	}
 
 	@Override

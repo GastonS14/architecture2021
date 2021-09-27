@@ -1,45 +1,60 @@
 package service;
 
 import entity.Carrera;
+import entity.CarreraEstudiante;
 import entity.Estudiante;
-import repository.EstudianteRepository;
-import repository.EstudianteRepositoryImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import repository.*;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
 public class EstudianteService {
 
-    private final EstudianteRepository repository;
+    private final EstudianteRepository estudianteRepository;
+    private final CarreraRepository carreraRepository;
+    private final CarreraEstudianteRepository carreraEstudianteRepository;
+    private static final Logger logger = LoggerFactory.getLogger(EstudianteService.class);
 
     public EstudianteService(){
-        this.repository = new EstudianteRepositoryImpl();
+        this.estudianteRepository = new EstudianteRepositoryImpl();
+        this.carreraRepository = new CarreraRepositoryImpl();
+        this.carreraEstudianteRepository = new CarreraEstudianteRepositoryImpl();
     }
 
     public void save(Estudiante e) {
-        repository.save(e);
+        Estudiante estudiante = estudianteRepository.findByDocumento(e.getId());
+        if(estudiante == null){
+            estudianteRepository.save(e);
+        } else {
+            estudianteRepository.update(e);
+        }
     }
 
     public List<Estudiante> findAllOrderByDocumento() {
-        return repository.findAllOrderByDocumento();
+        return estudianteRepository.findAllOrderByDocumento();
     }
 
     public Estudiante findByLibreta(int libreta) {
-        return repository.findByLibreta(libreta);
+        return estudianteRepository.findByLibreta(libreta);
+    }
+
+    public Estudiante findByDocumento(int documento) {
+        return estudianteRepository.findByDocumento(documento);
     }
 
     public List<Estudiante> findAllByGenero(String genero) {
-        return repository.findAllByGenero(genero);
+        return estudianteRepository.findAllByGenero(genero);
     }
 
     public List<Estudiante> findAllByCarreraAndCiudad(int idCarrera, String ciudad) {
-        return this.repository.findAllByCarreraAndCiudad(idCarrera, ciudad);
+        return this.estudianteRepository.findAllByCarreraAndCiudad(idCarrera, ciudad);
     }
 
     public void addCarrera (Carrera c, Estudiante e, LocalDate fechaIngreso, LocalDate fechaEgreso ){
-        this.repository.addCareer( c, e, fechaIngreso, fechaEgreso );
-        this.repository.update ( e );
+        this.estudianteRepository.addCareer( c, e, fechaIngreso, fechaEgreso );
+        this.estudianteRepository.update ( e );
     }
 
     /**
@@ -49,11 +64,25 @@ public class EstudianteService {
      * @param c career that you want to delete
      * @param e the student that you want to update
      */
-    public void removeCarrera (Carrera c, Estudiante e ){
-        this.repository.removeCareer( c, e );
-        this.repository.update( e );
+    public void removeCarreraJuan (Carrera c, Estudiante e ){
+        this.estudianteRepository.removeCareerJuan( c, e );
+        this.estudianteRepository.update( e );
     }
 
-
+    public void removeCarrera( int idCarrera, int documento ){
+        Carrera carrera = carreraRepository.findById( idCarrera );
+        Estudiante estudiante = estudianteRepository.findByDocumento(documento);
+        if(carrera != null) {
+            if(estudiante != null) {
+                CarreraEstudiante carreraEstudiante = carreraEstudianteRepository.findByIdCarreraAndIdEstudiante(idCarrera, documento);
+                this.estudianteRepository.removeCareer( estudiante, carreraEstudiante );
+                this.estudianteRepository.update ( estudiante );
+            } else {
+                logger.info("The student doesn't exists");
+            }
+        } else {
+            logger.info("The career doesn't exists");
+        }
+    }
 
 }

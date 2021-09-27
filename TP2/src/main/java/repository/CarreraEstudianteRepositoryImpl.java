@@ -1,43 +1,36 @@
 package repository;
 
-import dto.CarreraReportDto;
-import entity.Carrera;
 import entity.CarreraEstudiante;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 
 public class CarreraEstudianteRepositoryImpl implements CarreraEstudianteRepository{
 
 	private final EntityManager em;
+	private static final Logger logger = LoggerFactory.getLogger(CarreraEstudianteRepositoryImpl.class);
 
 	public CarreraEstudianteRepositoryImpl () {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("Integrador2");
 		this.em = emf.createEntityManager();
 	}
 
-	public void save(CarreraEstudiante carreraEstudiante) {
-		em.getTransaction().begin();
-		em.persist(carreraEstudiante);
-		em.getTransaction().commit();
+	public CarreraEstudiante findByIdCarreraAndIdEstudiante(int idCarrera, int idEstudiante) {
+		String query = """
+				SELECT ce  
+				FROM CarreraEstudiante ce 
+				WHERE ce.carreraEstudiantePk.idCarrera = :idCarrera 
+				AND ce.carreraEstudiantePk.idEstudiante = :idEstudiante""".trim();
+		Query q = this.em.createQuery( query );
+		q.setParameter( "idCarrera", idCarrera );
+		q.setParameter( "idEstudiante", idEstudiante );
+		try {
+			return ( CarreraEstudiante ) q.getSingleResult();
+		} catch(NoResultException e) {
+			logger.info("Not result founded for idCarrera = " + idCarrera + " and idEstudiante = " + idEstudiante);
+			return null;
+		}
 	}
 
-	// Generar un reporte de las carreras, que para cada carrera incluya información de los
-	// inscriptos y egresados por año.
-	// Se deben ordenar las carreras alfabéticamente y fechaIngreso Desc
-	/*
-	public CarreraReportDto report2() {
-		String jpql = """
-                SELECT new CarreraReportDto() 
-                FROM Carrera c
-                JOIN CarreraEstudiante ce
-                ON c.id_carrera = ce.carrera.id_carrera
-                JOIN Estudiante e
-                ON ce.estudiante.documento = e.documento
-				""".trim();
-		return new CarreraReportDto();
-	}
-
-	 */
 }

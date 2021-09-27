@@ -35,8 +35,6 @@ public class CarreraReportDto {
 		this.cantInscriptos = cantInscriptos;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "CarreraReportDto{" +
