@@ -56,11 +56,22 @@ public class CarreraRepositoryImpl implements CarreraRepository {
         }
     }
 
+    private boolean exist ( Carrera c ) {
+        String jqpl = "SELECT c FROM Carrera c WHERE c.id_carrera = :id";
+        Query q = this.em.createQuery( jqpl );
+        q.setParameter("id", c.getId() );
+        try {
+            q.getSingleResult();
+            return true;
+        } catch ( NoResultException exc ) {
+            return false;
+        }
+    }
+
     @Override
     public void save( Carrera carrera ) {
-        Carrera c = this.findByName( carrera.getNombre() );
         this.em.getTransaction().begin();
-        if ( c != null )
+        if ( this.exist( carrera ) )
             this.em.merge( carrera );
         else
             this.em.persist( carrera );

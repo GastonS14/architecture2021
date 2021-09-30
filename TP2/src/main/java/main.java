@@ -63,13 +63,16 @@ public class main {
 		estudianteService.addCarrera(c, e2, LocalDate.now(), LocalDate.of(2027, 8, 10));
 
 		// Solutions
-		System.out.println( estudianteService.findAllOrderByDocumento() );
-		System.out.println( estudianteService.findByLibreta( 2 ) );
-		System.out.println( estudianteService.findAllByGenero( "masculino" ) );
-		System.out.println( carreraService.findAllByInscriptosOrderByCount() );
-		Carrera career = carreraService.findByName("arqui");
-		System.out.println( estudianteService.findAllByCarreraAndCiudad( career.getId(), "tandil") );
-		System.out.println( carreraService.report() );
+
+		//System.out.println( estudianteService.findAllOrderByDocumento() );
+		//System.out.println( estudianteService.findByLibreta( 2 ) );
+		//System.out.println( estudianteService.findAllByGenero( "masculino" ) );
+		//System.out.println( carreraService.findAllByInscriptosOrderByCount() );
+		//Carrera career = carreraService.findByName("arqui");
+		//System.out.println( estudianteService.findAllByCarreraAndCiudad( career.getId(), "tandil") );
+		//System.out.println( carreraService.report() );
+		//estudianteService.removeCarrera( career.getId(), 0);
 	}
+
 }
 

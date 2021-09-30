@@ -22,13 +22,24 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
 
     @Override
     public void save (Estudiante e) {
-        Estudiante student = this.findByDocumento( e.getId() );
         this.em.getTransaction().begin();
-        if ( student != null )
-            this.em.merge( e );
-        else
+        if ( this.exist( e ) ) {
+            this.em.merge(e);
+        }else
             this.em.persist( e );
         this.em.getTransaction().commit();
+    }
+
+    private boolean exist ( Estudiante e ) {
+        String jpql = "SELECT e FROM Estudiante e WHERE e.documento = :doc";
+        Query q = this.em.createQuery(jpql, Estudiante.class);
+        q.setParameter("doc", e.getId());
+        try {
+            q.getSingleResult();
+            return true;
+        } catch ( NoResultException exc ) {
+            return false;
+        }
     }
 
     @Override
