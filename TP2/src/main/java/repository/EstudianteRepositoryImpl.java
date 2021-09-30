@@ -1,13 +1,10 @@
 package repository;
 
-import entity.Carrera;
 import entity.CarreraEstudiante;
 import entity.Estudiante;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
 
 public class EstudianteRepositoryImpl implements EstudianteRepository {
@@ -33,7 +30,7 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
     private boolean exist ( Estudiante e ) {
         String jpql = "SELECT e FROM Estudiante e WHERE e.documento = :doc";
         Query q = this.em.createQuery(jpql, Estudiante.class);
-        q.setParameter("doc", e.getId());
+        q.setParameter("doc", e.getDocumento());
         try {
             q.getSingleResult();
             return true;
@@ -98,16 +95,6 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
         q.setParameter( "ciudad", ciudad );
         q.setParameter( "idCarrera", idCarrera );
         return (List<Estudiante>) q.getResultList();
-    }
-
-    @Override
-    public void addCareer(Carrera c, Estudiante e, LocalDate fechaIngreso, LocalDate fechaEgreso ) {
-        e.addCareer( new CarreraEstudiante( c, e, fechaIngreso, fechaEgreso ));
-    }
-
-    @Override
-    public void removeCareer(Estudiante estudiante, CarreraEstudiante carreraEstudiante ) {
-        estudiante.removeCareer(carreraEstudiante);
     }
 
 }

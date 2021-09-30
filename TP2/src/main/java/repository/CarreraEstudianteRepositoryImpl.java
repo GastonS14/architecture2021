@@ -33,4 +33,12 @@ public class CarreraEstudianteRepositoryImpl implements CarreraEstudianteReposit
 		}
 	}
 
+	@Override
+	public boolean exist ( CarreraEstudiante ce ) {
+		CarreraEstudiante carreraEstudiante = (CarreraEstudiante) this.em.find( CarreraEstudiante.class, ce.getPk());
+		if ( carreraEstudiante != null)
+			return true;
+		return false;
+	}
+
 }

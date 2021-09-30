@@ -1,6 +1,9 @@
 package entity;
 
+import repository.*;
+import repository.EstudianteRepositoryImpl;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +31,12 @@ public class Estudiante {
             orphanRemoval = true) // this remove references
     private List<CarreraEstudiante> carreraEstudiante;
 
-    public Estudiante (){}
+    @Transient
+    protected EstudianteRepositoryImpl repository;
+    @Transient
+    private CarreraEstudianteRepository repositoryCE;
 
-    public Estudiante (int doc){
-        this.documento = doc;
-    }
+    public Estudiante (){}
 
     public Estudiante ( int doc, String nombre, String apellido, int edad, int libretaUniversitaria, String genero , String ciudadResidencia) {
         this.documento = doc;
@@ -43,26 +47,106 @@ public class Estudiante {
         this.libretaUniversitaria = libretaUniversitaria;
         this.ciudadResidencia = ciudadResidencia;
         this.carreraEstudiante = new ArrayList<>();
+        this.repository = new EstudianteRepositoryImpl();
+        this.repositoryCE = new CarreraEstudianteRepositoryImpl();
+    }
+    public int getDocumento() {
+        return this.documento;
     }
 
-    public int getId() {
-        return this.documento;
+    public void setDocumento( int documento ) {
+        this.documento = documento;
+        this.repository.save( this );
     }
 
     public String getName ( ) {
         return this.nombre;
     }
 
-    public boolean addCareer(CarreraEstudiante ce ) {
-        if ( !this.carreraEstudiante.contains(ce) ) {
-            this.carreraEstudiante.add(ce);
-            return true;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+        this.repository.save( this );
     }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+        this.repository.save( this );
+    }
+
+    public int getLibretaUniversitaria() {
+        return libretaUniversitaria;
+    }
+
+    public void setLibretaUniversitaria(int libretaUniversitaria) {
+        this.libretaUniversitaria = libretaUniversitaria;
+        this.repository.save( this );
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+        this.repository.save( this );
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+        this.repository.save( this );
+    }
+
+    public String getCiudadResidencia() {
+        return ciudadResidencia;
+    }
+
+    public void setCiudadResidencia(String ciudadResidencia) {
+        this.ciudadResidencia = ciudadResidencia;
+        this.repository.save( this );
+    }
+
+    public List<CarreraEstudiante> getCarreraEstudiante() {
+        return carreraEstudiante;
+    }
+
+    /**
+     * Dilema: Si en el main se instancia un Estudiante, tendra la lista vacia de carreras, pero puede que
+     *  ese id con el que se instanció este en la db. Entonces,¿ Cómo manejamos el add y el remove ? Ya que puede
+     *  que ese idEstudiante tenga carreras asociadas...
+     *  Nosotros decidimos preguntar en la base e ignorar la lista que tiene el objeto. Esto hace que funcione
+     *  en todos los casos. El problema es que no sera performante en los casos que la lista este actualizada con
+     *  respecto a la db.
+     */
+    public boolean addCareer(Carrera c, LocalDate fIngreso, LocalDate fEgreso ) {
+        CarreraEstudiante ce = new CarreraEstudiante(c,this, fIngreso,fEgreso);
+        if ( !this.repositoryCE.exist(ce) ) {
+            this.carreraEstudiante.add(ce);
+            this.repository.save( this );
+            return true;
+        }
         return false;
     }
 
-    public boolean removeCareer(CarreraEstudiante ce ) {
-        return this.carreraEstudiante.remove( ce );
+    /**
+     * En este caso, al igual que en el add, el dilema es el mismo. Puede que la lista este vacia. Generando
+     * una posible inconsistencia en el programa, ya que podria tener en la db carreras...
+     * En particular en este metodo nosotros obligamos al usuario a traer el estudiante desde la db, en el
+     * caso que se instancie en el main y luego se quiera borrar una carrera, este metodo retornara false.
+     */
+    public boolean removeCareer( CarreraEstudiante ce ) {
+        if ( this.carreraEstudiante.remove( ce ) ) {
+            this.repository.save(this);
+            return true;
+        }
+        return false;
     }
 
     @Override

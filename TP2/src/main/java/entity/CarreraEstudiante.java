@@ -32,7 +32,7 @@ public class CarreraEstudiante {
 		this.fechaEgreso = fechaEgreso;
 		this.carrera = carrera;
 		this.estudiante = estudiante;
-		this.carreraEstudiantePk = new CarreraEstudiantePk(carrera.getId(), estudiante.getId());
+		this.carreraEstudiantePk = new CarreraEstudiantePk(carrera.getId(), estudiante.getDocumento());
 	}
 
 	public int getIdEstudiante () {

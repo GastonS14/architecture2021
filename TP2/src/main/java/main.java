@@ -50,17 +50,17 @@ public class main {
 		carreraService.save(c11);
 
 		// Add some careers
-		estudianteService.addCarrera(c, e, LocalDate.of(2021, 3, 15), LocalDate.of(2022, 1, 10));
-		estudianteService.addCarrera(c1, e, LocalDate.of(2019, 3, 15), LocalDate.of(2022, 6, 16));
-		estudianteService.addCarrera(c2, e, LocalDate.of(2018, 3, 15), LocalDate.of(2022, 3, 17));
+		e.addCareer( c, LocalDate.of(2021, 3, 15), LocalDate.of(2022, 1, 10));
+		e.addCareer( c1, LocalDate.of(2019, 3, 15), LocalDate.of(2022, 6, 16));
+		e.addCareer( c2, LocalDate.of(2018, 3, 15), LocalDate.of(2022, 3, 17));
 
 		// Add more careers
-		estudianteService.addCarrera(c3, e, LocalDate.of(2019, 7, 15), LocalDate.of(2022, 8, 10));
-		estudianteService.addCarrera(c4, e, LocalDate.of(2014, 3, 15), LocalDate.of(2023, 8, 10));
-		estudianteService.addCarrera(c5, e, LocalDate.of(2016, 3, 15), LocalDate.of(2024, 8, 10));
-		estudianteService.addCarrera(c6, e, LocalDate.of(2015, 3, 15), LocalDate.of(2025, 8, 10));
-		estudianteService.addCarrera(c, e1, LocalDate.of(2020, 3, 23), LocalDate.of(2022, 8, 10));
-		estudianteService.addCarrera(c, e2, LocalDate.now(), LocalDate.of(2027, 8, 10));
+		e.addCareer( c3, LocalDate.of(2019, 7, 15), LocalDate.of(2022, 8, 10));
+		e.addCareer( c4, LocalDate.of(2014, 3, 15), LocalDate.of(2023, 8, 10));
+		e.addCareer( c5, LocalDate.of(2016, 3, 15), LocalDate.of(2024, 8, 10));
+		e.addCareer( c6, LocalDate.of(2015, 3, 15), LocalDate.of(2025, 8, 10));
+		e1.addCareer( c, LocalDate.of(2020, 3, 23), LocalDate.of(2022, 8, 10));
+		e2.addCareer( c, LocalDate.now(), LocalDate.of(2027, 8, 10));
 
 		// Solutions
 

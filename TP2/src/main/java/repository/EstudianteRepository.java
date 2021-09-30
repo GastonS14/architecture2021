@@ -15,7 +15,5 @@ public interface EstudianteRepository {
     Estudiante findByDocumento( int doc );
     List<Estudiante> findAllByGenero( String genero );
     List<Estudiante> findAllByCarreraAndCiudad( int idCarrera, String ciudad);
-    void addCareer(Carrera c, Estudiante e, LocalDate fechaIngreso, LocalDate fechaEgreso );
-    void removeCareer(Estudiante estudiante, CarreraEstudiante carreraEstudiante );
 
 }

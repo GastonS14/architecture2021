@@ -46,22 +46,14 @@ public class EstudianteService {
         return this.estudianteRepository.findAllByCarreraAndCiudad(idCarrera, ciudad);
     }
 
-    public void addCarrera (Carrera c, Estudiante e, LocalDate fechaIngreso, LocalDate fechaEgreso ){
-        this.estudianteRepository.addCareer( c, e, fechaIngreso, fechaEgreso );
-        this.estudianteRepository.save ( e );
-    }
-
     public void removeCarrera( int idCarrera, int documento ){
         Carrera carrera = carreraRepository.findById( idCarrera );
         Estudiante estudiante = estudianteRepository.findByDocumento(documento);
         if(carrera != null) {
-            if(estudiante != null) {
-                CarreraEstudiante carreraEstudiante = carreraEstudianteRepository.findByIdCarreraAndIdEstudiante(idCarrera, documento);
-                this.estudianteRepository.removeCareer( estudiante, carreraEstudiante );
-                this.estudianteRepository.save ( estudiante );
-            } else {
+            if(estudiante != null)
+                estudiante.removeCareer( new CarreraEstudiante(carrera,estudiante,null,null));
+            else
                 logger.info("The student doesn't exists");
-            }
         } else {
             logger.info("The career doesn't exists");
         }
