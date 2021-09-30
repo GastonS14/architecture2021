@@ -72,39 +72,4 @@ public class main {
 		System.out.println( carreraService.report() );
 	}
 }
-	/*
-		TESTING MAIN
 
-
-	public static void main(String[]args) {
-		CarreraService cs = new CarreraService();
-		EstudianteService es = new EstudianteService();
-
-		Estudiante e = new Estudiante(0,"p","p",2,159,"m","asd");
-		//es.save( e );
-		//cs.removeStudent(515,0); // it's working
-		//cs.addStudent( cs.findByName("docker"),e,LocalDate.now(),null);
-
-		// System.out.println( cs.findAllByInscriptosOrderByCount() ); // working
-		//System.out.println( cs.findAll() ); // working
-		//System.out.println( cs.findById(507) ); // working
-		//System.out.println( cs.findByName("web1") ); // working
-		//System.out.println( cs.findById(2)); // working -> doesn't exist-> return null
-		//System.out.println( cs.report() ); // working
-
-		//System.out.println( es.findByLibreta(3) ); // working
-
-		Carrera c = new Carrera("redes");
-		//cs.save( c ); // working
-		// es.addCarrera( c, e, LocalDate.now(), null ); // working
-		// es.removeCarrera(cs.findByName("redes").getId(), e.getId() ); // working
-		//System.out.println( es.findByDocumento(233) ); // working
-		//System.out.println( es.findAllByGenero("a casa") ); // working
-		//System.out.println( es.findAllOrderByDocumento() ); // working
-		//System.out.println( es.findAllByCarreraAndCiudad(506,"con el trabajo") ); // working
-		es.removeCarrera(516,0);
-	}
-
-}
-
-	 */
