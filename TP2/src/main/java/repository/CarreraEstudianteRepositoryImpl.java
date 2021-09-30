@@ -28,7 +28,7 @@ public class CarreraEstudianteRepositoryImpl implements CarreraEstudianteReposit
 		try {
 			return ( CarreraEstudiante ) q.getSingleResult();
 		} catch(NoResultException e) {
-			logger.info("Not result founded for idCarrera = " + idCarrera + " and idEstudiante = " + idEstudiante);
+			logger.info("Didn't find result for idCarrera = " + idCarrera + " and idEstudiante = " + idEstudiante);
 			return null;
 		}
 	}

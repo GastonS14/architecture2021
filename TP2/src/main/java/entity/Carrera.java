@@ -44,6 +44,7 @@ public class Carrera {
     }
 
     public void removeStudent ( CarreraEstudiante ce ) {
+
         this.estudianteCarreras.remove( ce );
     }
 

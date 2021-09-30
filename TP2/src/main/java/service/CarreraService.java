@@ -25,12 +25,7 @@ public class CarreraService {
     }
 
     public void save(Carrera carrera) {
-        Carrera c = carreraRepository.findById(carrera.getId());
-        if(c == null){
-            this.carreraRepository.save(carrera);
-        } else {
-            this.carreraRepository.update(carrera);
-        }
+        this.carreraRepository.save(carrera);
     }
 
     public List<Carrera> findAll() {
@@ -43,7 +38,7 @@ public class CarreraService {
 
     public void addStudent ( Carrera c, Estudiante e, LocalDate fechaIngreso, LocalDate fechaEgreso ){
         this.carreraRepository.addStudent( c, e, fechaIngreso, fechaEgreso );
-        this.carreraRepository.update ( c );
+        this.carreraRepository.save ( c );
     }
 
     public void removeStudent( int idCarrera, int documento ){
@@ -53,7 +48,7 @@ public class CarreraService {
             if(estudiante != null) {
                 CarreraEstudiante carreraEstudiante = carreraEstudianteRepository.findByIdCarreraAndIdEstudiante(idCarrera, documento);
                 this.carreraRepository.removeStudent( carrera, carreraEstudiante );
-                this.carreraRepository.update ( carrera );
+                this.carreraRepository.save ( carrera );
             } else {
                 logger.info("The student doesn't exists");
             }

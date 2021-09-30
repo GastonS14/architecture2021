@@ -33,7 +33,7 @@ public class CarreraRepositoryImpl implements CarreraRepository {
         try {
             return ( Carrera ) q.getSingleResult();
         } catch(NoResultException e) {
-            logger.info("Not result founded for idCarrera = " + idCarrera);
+            logger.info("Didn't find result for idCarrera = " + idCarrera);
             return null;
         }
     }
@@ -51,22 +51,19 @@ public class CarreraRepositoryImpl implements CarreraRepository {
         try {
             return ( Carrera ) q.getSingleResult();
         } catch(NoResultException e) {
-            logger.info("Not result founded for name = " + name);
+            logger.info("Didn't find result for name = " + name);
             return null;
         }
     }
 
     @Override
     public void save( Carrera carrera ) {
-        em.getTransaction().begin();
-        this.em.persist( carrera );
-        em.getTransaction().commit();
-    }
-
-    @Override
-    public void update(Carrera c) {
-        em.getTransaction().begin();
-        this.em.merge( c );
+        Carrera c = this.findByName( carrera.getNombre() );
+        this.em.getTransaction().begin();
+        if ( c != null )
+            this.em.merge( carrera );
+        else
+            this.em.persist( carrera );
         em.getTransaction().commit();
     }
 

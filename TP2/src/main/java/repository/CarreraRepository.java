@@ -12,7 +12,6 @@ import java.util.List;
 public interface CarreraRepository {
 
     void save( Carrera c );
-    void update( Carrera c );
     List<Carrera> findAll();
     List<CarreraDto> findAllByInscriptosOrderByCount();
     List<CarreraReportDto> report();

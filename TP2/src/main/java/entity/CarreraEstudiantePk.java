@@ -31,4 +31,14 @@ public class CarreraEstudiantePk implements Serializable {
 	public String toString ( ) {
 		return " id_estudiante: " + this.idEstudiante + ", id_carrera: " + this.idCarrera;
 	}
+
+	@Override
+	public boolean equals ( Object o ) {
+		try {
+			CarreraEstudiantePk cePK = (CarreraEstudiantePk) o;
+			return this.idCarrera == cePK.getIdCarrera() && this.idEstudiante == cePK.getIdEstudiante();
+		} catch ( Exception e ) {
+			return false;
+		}
+	}
 }

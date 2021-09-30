@@ -43,11 +43,18 @@ public class CarreraEstudiante {
 		return this.carreraEstudiantePk.getIdCarrera();
 	}
 
+	public CarreraEstudiantePk getPk ( ) {
+		return this.carreraEstudiantePk;
+	}
+
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof CarreraEstudiante that)) return false;
-		return Objects.equals(carreraEstudiantePk, that.carreraEstudiantePk);
+		try{
+			CarreraEstudiante ce = (CarreraEstudiante) o;
+			return ce.getPk().equals( this.carreraEstudiantePk);
+		}catch (Exception e ) {
+			return false;
+		}
 	}
 
 	@Override

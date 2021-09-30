@@ -22,15 +22,12 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
 
     @Override
     public void save (Estudiante e) {
+        Estudiante student = this.findByDocumento( e.getId() );
         this.em.getTransaction().begin();
-        this.em.persist( e );
-        this.em.getTransaction().commit();
-    }
-
-    @Override
-    public void update ( Estudiante e ){
-        this.em.getTransaction().begin();
-        this.em.merge( e );
+        if ( student != null )
+            this.em.merge( e );
+        else
+            this.em.persist( e );
         this.em.getTransaction().commit();
     }
 
@@ -42,7 +39,7 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
         try {
             return (Estudiante) q.getSingleResult();
         } catch (NoResultException e) {
-            logger.info("No result founded for documento: " + doc);
+            logger.info("Didn't find result for documento: " + doc);
             return null;
         }
     }
@@ -55,7 +52,7 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
         try {
             return (Estudiante) q.getSingleResult();
         } catch (NoResultException e) {
-            logger.info("No result founded for libreta: " + libreta);
+            logger.info("Didn't find result for libreta: " + libreta);
             return null;
         }
     }
@@ -95,11 +92,6 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
     @Override
     public void addCareer(Carrera c, Estudiante e, LocalDate fechaIngreso, LocalDate fechaEgreso ) {
         e.addCareer( new CarreraEstudiante( c, e, fechaIngreso, fechaEgreso ));
-    }
-
-    @Override
-    public void removeCareerJuan(Carrera c, Estudiante e ) {
-        e.removeCareer(new CarreraEstudiante(c, e, null, null));
     }
 
     @Override

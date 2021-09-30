@@ -6,7 +6,6 @@ import entity.Estudiante;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import repository.*;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,12 +23,7 @@ public class EstudianteService {
     }
 
     public void save(Estudiante e) {
-        Estudiante estudiante = estudianteRepository.findByDocumento(e.getId());
-        if(estudiante == null){
-            estudianteRepository.save(e);
-        } else {
-            estudianteRepository.update(e);
-        }
+        this.estudianteRepository.save( e );
     }
 
     public List<Estudiante> findAllOrderByDocumento() {
@@ -54,19 +48,7 @@ public class EstudianteService {
 
     public void addCarrera (Carrera c, Estudiante e, LocalDate fechaIngreso, LocalDate fechaEgreso ){
         this.estudianteRepository.addCareer( c, e, fechaIngreso, fechaEgreso );
-        this.estudianteRepository.update ( e );
-    }
-
-    /**
-     * If you want to remove some career, first you need the student.
-     * So in main, you should write something like this:
-     *      se.removeCarrera( carrera, se.findByLibreta( 22 ) );
-     * @param c career that you want to delete
-     * @param e the student that you want to update
-     */
-    public void removeCarreraJuan (Carrera c, Estudiante e ){
-        this.estudianteRepository.removeCareerJuan( c, e );
-        this.estudianteRepository.update( e );
+        this.estudianteRepository.save ( e );
     }
 
     public void removeCarrera( int idCarrera, int documento ){
@@ -76,7 +58,7 @@ public class EstudianteService {
             if(estudiante != null) {
                 CarreraEstudiante carreraEstudiante = carreraEstudianteRepository.findByIdCarreraAndIdEstudiante(idCarrera, documento);
                 this.estudianteRepository.removeCareer( estudiante, carreraEstudiante );
-                this.estudianteRepository.update ( estudiante );
+                this.estudianteRepository.save ( estudiante );
             } else {
                 logger.info("The student doesn't exists");
             }
