@@ -4,7 +4,7 @@ import entity.Estudiante;
 import repository.*;
 import java.util.List;
 
-public class EstudianteService {
+public final class EstudianteService {
 
     private static final EstudianteRepository estudianteRepository = EstudianteRepositoryImpl.getInstance();
 

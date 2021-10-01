@@ -9,21 +9,20 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarreraRepositoryImpl implements CarreraRepository {
+public final class CarreraRepositoryImpl implements CarreraRepository {
 
-    private final EntityManager em;
+    private EntityManager em = Persistence.createEntityManagerFactory("Integrador2").createEntityManager();
     private static final Logger logger = LoggerFactory.getLogger(CarreraRepositoryImpl.class);
-    private static CarreraRepositoryImpl instance;
+    private static CarreraRepositoryImpl repoInstance;
 
     private CarreraRepositoryImpl () {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Integrador2");
-        this.em = emf.createEntityManager();
+
     }
 
     public static CarreraRepositoryImpl getInstance( ) {
-        if ( instance == null )
-            instance = new CarreraRepositoryImpl();
-        return instance;
+        if ( repoInstance == null )
+            repoInstance = new CarreraRepositoryImpl();
+        return repoInstance;
     }
 
     /**
@@ -31,15 +30,7 @@ public class CarreraRepositoryImpl implements CarreraRepository {
      */
     @Override
     public Carrera findById ( int idCarrera ) {
-        String query = "SELECT c FROM Carrera c WHERE c.id_carrera = :id";
-        Query q = this.em.createQuery( query );
-        q.setParameter( "id", idCarrera );
-        try {
-            return ( Carrera ) q.getSingleResult();
-        } catch(NoResultException e) {
-            logger.info("Didn't find result for idCarrera = " + idCarrera);
-            return null;
-        }
+       return this.em.find( Carrera.class, idCarrera);
     }
 
     /**
@@ -50,7 +41,7 @@ public class CarreraRepositoryImpl implements CarreraRepository {
     @Override
     public Carrera findByName( String name ) {
         String query = "SELECT c FROM Carrera c WHERE c.nombre = :nombre";
-        Query q = this.em.createQuery( query );
+        Query q = this.em.createQuery( query, Carrera.class );
         q.setParameter( "nombre", name );
         try {
             return ( Carrera ) q.getSingleResult();

@@ -6,7 +6,7 @@ import entity.Carrera;
 import repository.*;
 import java.util.List;
 
-public class CarreraService {
+public final class CarreraService {
 
     private static final CarreraRepository carreraRepository = CarreraRepositoryImpl.getInstance();
 

@@ -6,16 +6,13 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.*;
 import java.util.List;
 
-public class EstudianteRepositoryImpl implements EstudianteRepository {
+public final class EstudianteRepositoryImpl implements EstudianteRepository {
 
-    private final EntityManager em;
+    private final EntityManager em = Persistence.createEntityManagerFactory("Integrador2").createEntityManager();
     private static final Logger logger = LoggerFactory.getLogger(EstudianteRepositoryImpl.class);
     private static EstudianteRepositoryImpl instance;
 
-    private EstudianteRepositoryImpl ( ){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Integrador2");
-        this.em = emf.createEntityManager();
-    }
+    private EstudianteRepositoryImpl ( ){}
 
     public static EstudianteRepositoryImpl getInstance( ) {
         if ( instance == null )
@@ -39,15 +36,7 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
 
     @Override
     public Estudiante findByDocumento ( int doc ) {
-        String jpql = "SELECT e FROM Estudiante e WHERE e.documento = :doc";
-        Query q = this.em.createQuery( jpql, Estudiante.class );
-        q.setParameter( "doc", doc);
-        try {
-            return (Estudiante) q.getSingleResult();
-        } catch (NoResultException e) {
-            logger.info("Didn't find result for documento: " + doc);
-            return null;
-        }
+        return this.em.find( Estudiante.class, doc);
     }
 
     @Override

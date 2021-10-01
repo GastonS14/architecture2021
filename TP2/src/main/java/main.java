@@ -11,6 +11,7 @@ public class main {
 	public static void main(String[] args) {
 
 		// Entities
+
 		Estudiante e = new Estudiante(0, "juanse", "cr", 4, 0, "masculino", "tandil");
 		Estudiante e1 = new Estudiante(1, "gaston", "ss", 4, 1, "femenino", "montevideo");
 		Estudiante e2 = new Estudiante(2, "pablo", "c", 4, 2, "masculino", "buenos aires");
@@ -60,13 +61,14 @@ public class main {
 
 		// Solutions
 
-		//System.out.println( EstudianteService.findAllOrderByDocumento() );
-		//System.out.println( EstudianteService.findByLibreta( 2 ) );
-		//System.out.println( EstudianteService.findAllByGenero( "masculino" ) );
-		//System.out.println( CarreraService.findAllByInscriptosOrderByCount() );
-		//Carrera career = CarreraService.findByName("arqui");
-		//System.out.println( EstudianteService.findAllByCarreraAndCiudad( career.getId(), "tandil") );
-		//System.out.println( CarreraService.report() );
+		System.out.println( EstudianteService.findAllOrderByDocumento() );
+		System.out.println( EstudianteService.findByLibreta( 0) );
+		System.out.println( EstudianteService.findAllByGenero( "masculino" ) );
+		System.out.println( CarreraService.findAllByInscriptosOrderByCount() );
+		Carrera career = CarreraService.findByName("arqui");
+		System.out.println( EstudianteService.findAllByCarreraAndCiudad( career.getId(), "tandil") );
+		System.out.println( CarreraService.report() );
+
 
 	}
 

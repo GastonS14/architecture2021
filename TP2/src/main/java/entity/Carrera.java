@@ -1,6 +1,9 @@
 package entity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import repository.CarreraEstudianteRepository;
+import repository.CarreraEstudianteRepositoryImpl;
 import repository.CarreraRepository;
 import repository.CarreraRepositoryImpl;
 import javax.persistence.*;
@@ -25,17 +28,18 @@ public class Carrera {
             orphanRemoval = true
     ) // this remove references
     private List<CarreraEstudiante> estudianteCarreras;
-    @Transient
-    private CarreraRepository repository;
-    @Transient
-    private CarreraEstudianteRepository repositoryCE;
 
-    public Carrera () {}
+    private static CarreraRepository repository = CarreraRepositoryImpl.getInstance();
+    private static CarreraEstudianteRepository repositoryCE = CarreraEstudianteRepositoryImpl.getInstance();
+    private static final Logger logger = LoggerFactory.getLogger( Carrera.class );
+
+    public Carrera () {
+
+    }
 
     public Carrera( String nombre) {
         this.nombre = nombre;
         this.estudianteCarreras = new ArrayList<>();
-        this.repository = CarreraRepositoryImpl.getInstance();
     }
 
     public int getId() {
@@ -48,16 +52,18 @@ public class Carrera {
 
     public void setNombre ( String nombre ) {
         this.nombre = nombre;
-        this.repository.save( this );
+        repository.save( this );
     }
 
     public boolean addStudent (Estudiante e, LocalDate fIngreso, LocalDate fEgreso ) {
         CarreraEstudiante ce = new CarreraEstudiante(this,e, fIngreso,fEgreso);
-        if ( !this.repositoryCE.exist(ce) ) {
+        if ( !repositoryCE.exist(ce) ) {
             this.estudianteCarreras.add(ce);
-            this.repository.save( this );
+            repository.save( this );
             return true;
         }
+        logger.info("There's already been a student with document: " + e.getDocumento() +
+                " and career id: " + this.id_carrera);
         return false;
     }
 

@@ -1,5 +1,7 @@
 package entity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import repository.*;
 import repository.EstudianteRepositoryImpl;
 import javax.persistence.*;
@@ -31,12 +33,11 @@ public class Estudiante {
             orphanRemoval = true) // this remove references
     private List<CarreraEstudiante> carreraEstudiante;
 
-    @Transient
-    protected EstudianteRepositoryImpl repository;
-    @Transient
-    private CarreraEstudianteRepository repositoryCE;
+    private static final Logger logger = LoggerFactory.getLogger( Estudiante.class );
+    private static final EstudianteRepositoryImpl repository = EstudianteRepositoryImpl.getInstance();
+    private static final CarreraEstudianteRepository repositoryCE = CarreraEstudianteRepositoryImpl.getInstance();
 
-    public Estudiante (){}
+    public Estudiante (){ }
 
     public Estudiante ( int doc, String nombre, String apellido, int edad, int libretaUniversitaria, String genero , String ciudadResidencia) {
         this.documento = doc;
@@ -47,8 +48,6 @@ public class Estudiante {
         this.libretaUniversitaria = libretaUniversitaria;
         this.ciudadResidencia = ciudadResidencia;
         this.carreraEstudiante = new ArrayList<>();
-        this.repository = EstudianteRepositoryImpl.getInstance();
-        this.repositoryCE = CarreraEstudianteRepositoryImpl.getInstance();
     }
     public int getDocumento() {
         return this.documento;
@@ -56,7 +55,7 @@ public class Estudiante {
 
     public void setDocumento( int documento ) {
         this.documento = documento;
-        this.repository.save( this );
+        repository.save( this );
     }
 
     public String getName ( ) {
@@ -65,7 +64,7 @@ public class Estudiante {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-        this.repository.save( this );
+        repository.save( this );
     }
 
     public String getApellido() {
@@ -74,7 +73,7 @@ public class Estudiante {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
-        this.repository.save( this );
+        repository.save( this );
     }
 
     public int getLibretaUniversitaria() {
@@ -83,7 +82,7 @@ public class Estudiante {
 
     public void setLibretaUniversitaria(int libretaUniversitaria) {
         this.libretaUniversitaria = libretaUniversitaria;
-        this.repository.save( this );
+        repository.save( this );
     }
 
     public int getEdad() {
@@ -92,7 +91,7 @@ public class Estudiante {
 
     public void setEdad(int edad) {
         this.edad = edad;
-        this.repository.save( this );
+        repository.save( this );
     }
 
     public String getGenero() {
@@ -101,7 +100,7 @@ public class Estudiante {
 
     public void setGenero(String genero) {
         this.genero = genero;
-        this.repository.save( this );
+        repository.save( this );
     }
 
     public String getCiudadResidencia() {
@@ -110,11 +109,7 @@ public class Estudiante {
 
     public void setCiudadResidencia(String ciudadResidencia) {
         this.ciudadResidencia = ciudadResidencia;
-        this.repository.save( this );
-    }
-
-    public List<CarreraEstudiante> getCarreraEstudiante() {
-        return carreraEstudiante;
+        repository.save( this );
     }
 
     /**
@@ -127,11 +122,12 @@ public class Estudiante {
      */
     public boolean addCareer(Carrera c, LocalDate fIngreso, LocalDate fEgreso ) {
         CarreraEstudiante ce = new CarreraEstudiante(c,this, fIngreso,fEgreso);
-        if ( !this.repositoryCE.exist(ce) ) {
+        if ( !repositoryCE.exist(ce) ) {
             this.carreraEstudiante.add(ce);
-            this.repository.save( this );
+            repository.save( this );
             return true;
         }
+        logger.info("There's already been a career with id: " + c.getId() + " and student document " + this.documento);
         return false;
     }
 
