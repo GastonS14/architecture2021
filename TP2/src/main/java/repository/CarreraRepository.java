@@ -15,8 +15,6 @@ public interface CarreraRepository {
     List<Carrera> findAll();
     List<CarreraDto> findAllByInscriptosOrderByCount();
     List<CarreraReportDto> report();
-    void addStudent(Carrera c, Estudiante e, LocalDate fIngreso, LocalDate fEgreso );
-    void removeStudent ( Carrera c, CarreraEstudiante carreraEstudiante );
     Carrera findById(int idCarrera);
     Carrera findByName ( String name );
 }

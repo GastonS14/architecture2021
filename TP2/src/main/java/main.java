@@ -10,10 +10,6 @@ public class main {
 
 	public static void main(String[] args) {
 
-		// Services
-		EstudianteService estudianteService = new EstudianteService();
-		CarreraService carreraService = new CarreraService();
-
 		// Entities
 		Estudiante e = new Estudiante(0, "juanse", "cr", 4, 0, "masculino", "tandil");
 		Estudiante e1 = new Estudiante(1, "gaston", "ss", 4, 1, "femenino", "montevideo");
@@ -32,22 +28,22 @@ public class main {
 		Carrera c11 = new Carrera("metodologias");
 
 		// Save entities
-		estudianteService.save(e);
-		estudianteService.save(e1);
-		estudianteService.save(e2);
+		EstudianteService.save(e);
+		EstudianteService.save(e1);
+		EstudianteService.save(e2);
 
-		carreraService.save(c);
-		carreraService.save(c1);
-		carreraService.save(c2);
-		carreraService.save(c3);
-		carreraService.save(c4);
-		carreraService.save(c5);
-		carreraService.save(c6);
-		carreraService.save(c7);
-		carreraService.save(c8);
-		carreraService.save(c9);
-		carreraService.save(c10);
-		carreraService.save(c11);
+		CarreraService.save(c);
+		CarreraService.save(c1);
+		CarreraService.save(c2);
+		CarreraService.save(c3);
+		CarreraService.save(c4);
+		CarreraService.save(c5);
+		CarreraService.save(c6);
+		CarreraService.save(c7);
+		CarreraService.save(c8);
+		CarreraService.save(c9);
+		CarreraService.save(c10);
+		CarreraService.save(c11);
 
 		// Add some careers
 		e.addCareer( c, LocalDate.of(2021, 3, 15), LocalDate.of(2022, 1, 10));
@@ -64,14 +60,14 @@ public class main {
 
 		// Solutions
 
-		//System.out.println( estudianteService.findAllOrderByDocumento() );
-		//System.out.println( estudianteService.findByLibreta( 2 ) );
-		//System.out.println( estudianteService.findAllByGenero( "masculino" ) );
-		//System.out.println( carreraService.findAllByInscriptosOrderByCount() );
-		//Carrera career = carreraService.findByName("arqui");
-		//System.out.println( estudianteService.findAllByCarreraAndCiudad( career.getId(), "tandil") );
-		//System.out.println( carreraService.report() );
-		//estudianteService.removeCarrera( career.getId(), 0);
+		//System.out.println( EstudianteService.findAllOrderByDocumento() );
+		//System.out.println( EstudianteService.findByLibreta( 2 ) );
+		//System.out.println( EstudianteService.findAllByGenero( "masculino" ) );
+		//System.out.println( CarreraService.findAllByInscriptosOrderByCount() );
+		//Carrera career = CarreraService.findByName("arqui");
+		//System.out.println( EstudianteService.findAllByCarreraAndCiudad( career.getId(), "tandil") );
+		//System.out.println( CarreraService.report() );
+
 	}
 
 }

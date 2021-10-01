@@ -2,13 +2,10 @@ package repository;
 
 import dto.*;
 import entity.Carrera;
-import entity.CarreraEstudiante;
-import entity.Estudiante;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.persistence.*;
 import java.math.BigInteger;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +13,17 @@ public class CarreraRepositoryImpl implements CarreraRepository {
 
     private final EntityManager em;
     private static final Logger logger = LoggerFactory.getLogger(CarreraRepositoryImpl.class);
+    private static CarreraRepositoryImpl instance;
 
-    public CarreraRepositoryImpl () {
+    private CarreraRepositoryImpl () {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Integrador2");
         this.em = emf.createEntityManager();
+    }
+
+    public static CarreraRepositoryImpl getInstance( ) {
+        if ( instance == null )
+            instance = new CarreraRepositoryImpl();
+        return instance;
     }
 
     /**
@@ -57,15 +61,7 @@ public class CarreraRepositoryImpl implements CarreraRepository {
     }
 
     private boolean exist ( Carrera c ) {
-        String jqpl = "SELECT c FROM Carrera c WHERE c.id_carrera = :id";
-        Query q = this.em.createQuery( jqpl );
-        q.setParameter("id", c.getId() );
-        try {
-            q.getSingleResult();
-            return true;
-        } catch ( NoResultException exc ) {
-            return false;
-        }
+        return this.em.find( Carrera.class, c.getId()) != null;
     }
 
     @Override
@@ -97,16 +93,6 @@ public class CarreraRepositoryImpl implements CarreraRepository {
                 """.trim();
         Query q = this.em.createQuery(sql, CarreraDto.class);
         return (List<CarreraDto>) q.getResultList();
-    }
-
-    @Override
-    public void addStudent (Carrera c, Estudiante e, LocalDate fechaIngreso, LocalDate fechaEgreso ) {
-        c.addStudent(new CarreraEstudiante(c, e, fechaIngreso, fechaEgreso));
-    }
-
-    @Override
-    public void removeStudent ( Carrera c, CarreraEstudiante carreraEstudiante ) {
-        c.removeStudent( carreraEstudiante );
     }
 
     /**

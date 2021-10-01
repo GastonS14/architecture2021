@@ -3,17 +3,23 @@ package repository;
 import entity.CarreraEstudiante;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.persistence.*;
 
 public class CarreraEstudianteRepositoryImpl implements CarreraEstudianteRepository{
 
 	private final EntityManager em;
 	private static final Logger logger = LoggerFactory.getLogger(CarreraEstudianteRepositoryImpl.class);
+	private static CarreraEstudianteRepositoryImpl instance;
 
-	public CarreraEstudianteRepositoryImpl () {
+	private CarreraEstudianteRepositoryImpl () {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("Integrador2");
 		this.em = emf.createEntityManager();
+	}
+
+	public static CarreraEstudianteRepositoryImpl getInstance( ) {
+		if ( instance == null )
+			instance = new CarreraEstudianteRepositoryImpl();
+		return instance;
 	}
 
 	public CarreraEstudiante findByIdCarreraAndIdEstudiante(int idCarrera, int idEstudiante) {
@@ -35,10 +41,7 @@ public class CarreraEstudianteRepositoryImpl implements CarreraEstudianteReposit
 
 	@Override
 	public boolean exist ( CarreraEstudiante ce ) {
-		CarreraEstudiante carreraEstudiante = (CarreraEstudiante) this.em.find( CarreraEstudiante.class, ce.getPk());
-		if ( carreraEstudiante != null)
-			return true;
-		return false;
+		return this.em.find( CarreraEstudiante.class, ce.getPk()) != null;
 	}
 
 }

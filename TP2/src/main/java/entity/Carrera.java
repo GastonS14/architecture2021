@@ -1,6 +1,10 @@
 package entity;
 
+import repository.CarreraEstudianteRepository;
+import repository.CarreraRepository;
+import repository.CarreraRepositoryImpl;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +25,17 @@ public class Carrera {
             orphanRemoval = true
     ) // this remove references
     private List<CarreraEstudiante> estudianteCarreras;
+    @Transient
+    private CarreraRepository repository;
+    @Transient
+    private CarreraEstudianteRepository repositoryCE;
 
     public Carrera () {}
 
     public Carrera( String nombre) {
         this.nombre = nombre;
         this.estudianteCarreras = new ArrayList<>();
+        this.repository = CarreraRepositoryImpl.getInstance();
     }
 
     public int getId() {
@@ -37,15 +46,19 @@ public class Carrera {
         return this.nombre;
     }
 
-    public void addStudent ( CarreraEstudiante ce ) {
-        if (!this.estudianteCarreras.contains(ce) ) {
-            this.estudianteCarreras.add(ce);
-        }
+    public void setNombre ( String nombre ) {
+        this.nombre = nombre;
+        this.repository.save( this );
     }
 
-    public void removeStudent ( CarreraEstudiante ce ) {
-
-        this.estudianteCarreras.remove( ce );
+    public boolean addStudent (Estudiante e, LocalDate fIngreso, LocalDate fEgreso ) {
+        CarreraEstudiante ce = new CarreraEstudiante(this,e, fIngreso,fEgreso);
+        if ( !this.repositoryCE.exist(ce) ) {
+            this.estudianteCarreras.add(ce);
+            this.repository.save( this );
+            return true;
+        }
+        return false;
     }
 
     @Override

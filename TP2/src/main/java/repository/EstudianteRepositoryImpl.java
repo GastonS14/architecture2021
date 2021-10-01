@@ -1,6 +1,5 @@
 package repository;
 
-import entity.CarreraEstudiante;
 import entity.Estudiante;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,10 +10,17 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
 
     private final EntityManager em;
     private static final Logger logger = LoggerFactory.getLogger(EstudianteRepositoryImpl.class);
+    private static EstudianteRepositoryImpl instance;
 
-    public EstudianteRepositoryImpl ( ){
+    private EstudianteRepositoryImpl ( ){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Integrador2");
         this.em = emf.createEntityManager();
+    }
+
+    public static EstudianteRepositoryImpl getInstance( ) {
+        if ( instance == null )
+            instance = new EstudianteRepositoryImpl();
+        return instance;
     }
 
     @Override
@@ -28,15 +34,7 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
     }
 
     private boolean exist ( Estudiante e ) {
-        String jpql = "SELECT e FROM Estudiante e WHERE e.documento = :doc";
-        Query q = this.em.createQuery(jpql, Estudiante.class);
-        q.setParameter("doc", e.getDocumento());
-        try {
-            q.getSingleResult();
-            return true;
-        } catch ( NoResultException exc ) {
-            return false;
-        }
+        return this.em.find( Estudiante.class, e.getDocumento() ) != null;
     }
 
     @Override

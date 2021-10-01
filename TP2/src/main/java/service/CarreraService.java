@@ -3,73 +3,36 @@ package service;
 import dto.CarreraDto;
 import dto.CarreraReportDto;
 import entity.Carrera;
-import entity.CarreraEstudiante;
-import entity.Estudiante;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import repository.*;
-import java.time.LocalDate;
 import java.util.List;
 
 public class CarreraService {
 
-    private final CarreraRepository carreraRepository;
-    private final EstudianteRepository estudianteRepository;
-    private final CarreraEstudianteRepository carreraEstudianteRepository;
-    private static final Logger logger = LoggerFactory.getLogger(CarreraService.class);
+    private static final CarreraRepository carreraRepository = CarreraRepositoryImpl.getInstance();
 
-    public CarreraService() {
-        this.carreraRepository = new CarreraRepositoryImpl();
-        this.estudianteRepository = new EstudianteRepositoryImpl();
-        this.carreraEstudianteRepository = new CarreraEstudianteRepositoryImpl();
+    private CarreraService() { }
+
+    public static void save(Carrera carrera) {
+        carreraRepository.save(carrera);
     }
 
-    public void save(Carrera carrera) {
-        this.carreraRepository.save(carrera);
+    public static List<Carrera> findAll() {
+        return carreraRepository.findAll();
     }
 
-    public List<Carrera> findAll() {
-        return this.carreraRepository.findAll();
+    public static List<CarreraDto> findAllByInscriptosOrderByCount() {
+        return carreraRepository.findAllByInscriptosOrderByCount();
     }
 
-    public List<CarreraDto> findAllByInscriptosOrderByCount() {
-        return this.carreraRepository.findAllByInscriptosOrderByCount();
+    public static Carrera findById( int idCarrera ) {
+       return carreraRepository.findById( idCarrera );
     }
 
-    public void addStudent ( Carrera c, Estudiante e, LocalDate fechaIngreso, LocalDate fechaEgreso ){
-        this.carreraRepository.addStudent( c, e, fechaIngreso, fechaEgreso );
-        this.carreraRepository.save ( c );
+    public static Carrera findByName ( String name ) {
+        return carreraRepository.findByName( name );
     }
 
-    public void removeStudent( int idCarrera, int documento ){
-        Carrera carrera = carreraRepository.findById( idCarrera );
-        Estudiante estudiante = estudianteRepository.findByDocumento(documento);
-        if(carrera != null) {
-            if(estudiante != null) {
-                CarreraEstudiante carreraEstudiante = carreraEstudianteRepository.findByIdCarreraAndIdEstudiante(idCarrera, documento);
-                this.carreraRepository.removeStudent( carrera, carreraEstudiante );
-                this.carreraRepository.save ( carrera );
-            } else {
-                logger.info("The student doesn't exists");
-            }
-        } else {
-            logger.info("The career doesn't exists");
-        }
-    }
-
-    /**
-     * @param idCarrera career identification
-     * @return some career that match with idCarrera
-     */
-    public Carrera findById( int idCarrera ) {
-       return this.carreraRepository.findById( idCarrera );
-    }
-
-    public Carrera findByName ( String name ) {
-        return this.carreraRepository.findByName( name );
-    }
-
-    public List<CarreraReportDto> report () {
-        return this.carreraRepository.report();
+    public static List<CarreraReportDto> report () {
+        return carreraRepository.report();
     }
 }

@@ -47,8 +47,8 @@ public class Estudiante {
         this.libretaUniversitaria = libretaUniversitaria;
         this.ciudadResidencia = ciudadResidencia;
         this.carreraEstudiante = new ArrayList<>();
-        this.repository = new EstudianteRepositoryImpl();
-        this.repositoryCE = new CarreraEstudianteRepositoryImpl();
+        this.repository = EstudianteRepositoryImpl.getInstance();
+        this.repositoryCE = CarreraEstudianteRepositoryImpl.getInstance();
     }
     public int getDocumento() {
         return this.documento;
@@ -130,20 +130,6 @@ public class Estudiante {
         if ( !this.repositoryCE.exist(ce) ) {
             this.carreraEstudiante.add(ce);
             this.repository.save( this );
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * En este caso, al igual que en el add, el dilema es el mismo. Puede que la lista este vacia. Generando
-     * una posible inconsistencia en el programa, ya que podria tener en la db carreras...
-     * En particular en este metodo nosotros obligamos al usuario a traer el estudiante desde la db, en el
-     * caso que se instancie en el main y luego se quiera borrar una carrera, este metodo retornara false.
-     */
-    public boolean removeCareer( CarreraEstudiante ce ) {
-        if ( this.carreraEstudiante.remove( ce ) ) {
-            this.repository.save(this);
             return true;
         }
         return false;
