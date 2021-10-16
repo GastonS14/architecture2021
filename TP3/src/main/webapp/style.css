@@ -1,0 +1,27 @@
+.myHeader {
+    background-repeat: no-repeat;
+    background-position: center;
+    max-height: 150px;
+}
+
+img.myImg {
+    max-width: 1000px !important;
+    max-height: 250px !important;
+}
+
+.myContainer {
+    max-height: 400px !important;
+    overflow-y: scroll !important;
+}
+
+.myCard:hover {
+    border: 2px solid tomato;
+    border-radius: 2%;
+}
+
+.myContainer::-webkit-scrollbar {
+    display: none;
+}
+.myContainer::-webkit-scrollbar:hover {
+    display: flex;
+}
