@@ -6,7 +6,7 @@ import java.util.List;
 
 public final class EstudianteService {
 
-    private static final EstudianteRepository estudianteRepository = EstudianteRepositoryImpl.getInstance();
+    private static final EstudianteRepositoryImpl estudianteRepository = EstudianteRepositoryImpl.getInstance();
 
     private EstudianteService(){}
 
@@ -14,7 +14,7 @@ public final class EstudianteService {
         estudianteRepository.save( e );
     }
 
-    public static List<Estudiante> findAllOrderByDocumento() {
+    public static List<Estudiante> findAllOrderByDocumento( ) {
         return estudianteRepository.findAllOrderByDocumento();
     }
 

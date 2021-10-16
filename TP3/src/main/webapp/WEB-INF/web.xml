@@ -5,7 +5,7 @@
          version="4.0">
     <display-name>MyJersey</display-name>
     <servlet>
-        <servlet-name>jersey</servlet-name>
+        <servlet-name>rest</servlet-name>
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 
         <init-param>
@@ -14,7 +14,8 @@
         </init-param>
     </servlet>
     <servlet-mapping>
-        <servlet-name>jersey</servlet-name>
+        <servlet-name>rest</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
+
 </web-app>

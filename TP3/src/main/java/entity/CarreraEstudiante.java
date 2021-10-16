@@ -1,5 +1,8 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -20,9 +23,11 @@ public class CarreraEstudiante {
 	private Estudiante estudiante;
 
 	@Column
+	//@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private LocalDate fechaIngreso;
 
 	@Column
+	//@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private LocalDate fechaEgreso;
 
 	public CarreraEstudiante() {}
@@ -32,7 +37,7 @@ public class CarreraEstudiante {
 		this.fechaEgreso = fechaEgreso;
 		this.carrera = carrera;
 		this.estudiante = estudiante;
-		this.carreraEstudiantePk = new CarreraEstudiantePk(carrera.getId(), estudiante.getDocumento());
+		this.carreraEstudiantePk = new CarreraEstudiantePk(carrera.getId_carrera(), estudiante.getDocumento());
 	}
 
 	public int getIdEstudiante () {
@@ -43,8 +48,25 @@ public class CarreraEstudiante {
 		return this.carreraEstudiantePk.getIdCarrera();
 	}
 
+	@JsonIgnore
 	public CarreraEstudiantePk getPk ( ) {
 		return this.carreraEstudiantePk;
+	}
+
+	public String getFechaIngreso() {
+		return fechaIngreso.toString();
+	}
+
+	public void setFechaIngreso(LocalDate fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
+	}
+
+	public String getFechaEgreso() {
+		return fechaEgreso.toString();
+	}
+
+	public void setFechaEgreso(LocalDate fechaEgreso) {
+		this.fechaEgreso = fechaEgreso;
 	}
 
 	@Override

@@ -16,8 +16,8 @@ public class StudentController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Estudiante> getStudents() {
-        return EstudianteService.findAll();
+    public List<Estudiante> getStudents( ) {
+        return EstudianteService.findAll( );
     }
 
     @GET
@@ -51,14 +51,35 @@ public class StudentController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/orderByDoc")
+    @Path("/inOrder")
     public List<Estudiante> getStudentsInOrderByDoc ( ) {
-        return EstudianteService.findAllOrderByDocumento();
+        return EstudianteService.findAllOrderByDocumento( );
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * JSON FORMAT:
+     *      {
+     *          "documento": 5,
+     *          "nombre": "postman",
+     *          "apellido": "desde",
+     *          "libretaUniversitaria": 34,
+     *          "edad": 24,
+     *          "genero": "masculino",
+     *          "ciudadResidencia": "tandil",
+     *          "carreraEstudiante": [
+     *                  {
+     *                  "fechaIngreso": "2020-07-17",
+     *                  "fechaEgreso": "2025-12-01",
+     *                  "idCarrera": 11,
+     *                  "idEstudiante": 5
+     *                  }
+     *                  ]
+     *     }
+     *     If you want, you can add a student without carreraEstudiante attribute
+     */
     public Response addStudent ( Estudiante s ) {
         EstudianteService.save( s );
         return Response.status(201).entity(s).build();
@@ -69,6 +90,14 @@ public class StudentController {
     @Path("/{id}/addCareer")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    /**
+     * JSON FORMAT:
+     *      {
+     *          "idCarrera":11,
+     *          "fIngreso":"2020-07-17",
+     *          "fEgreso":"2025-12-01"
+     *      }
+     */
     public Response addCareer ( @PathParam("id") int doc, CarreraEstudianteDto c )  {
         Estudiante student = EstudianteService.findByDocumento( doc );
         Carrera career = CarreraService.findById( c.getIdCarrera() );

@@ -6,13 +6,15 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.*;
 import java.util.List;
 
-public final class EstudianteRepositoryImpl implements EstudianteRepository {
+public final class EstudianteRepositoryImpl extends BaseRepository<Estudiante> implements EstudianteRepository {
 
     private final EntityManager em = Persistence.createEntityManagerFactory("Integrador3").createEntityManager();
     private static final Logger logger = LoggerFactory.getLogger(EstudianteRepositoryImpl.class);
     private static EstudianteRepositoryImpl instance;
 
-    private EstudianteRepositoryImpl ( ){}
+    private EstudianteRepositoryImpl ( ){
+        super( Estudiante.class );
+    }
 
     public static EstudianteRepositoryImpl getInstance( ) {
         if ( instance == null )
@@ -20,23 +22,18 @@ public final class EstudianteRepositoryImpl implements EstudianteRepository {
         return instance;
     }
 
-    @Override
-    public void save (Estudiante e) {
-        this.em.getTransaction().begin();
-        if ( this.exist( e ) ) {
-            this.em.merge(e);
-        }else
-            this.em.persist( e );
-        this.em.getTransaction().commit();
+    public Estudiante save (Estudiante e) {
+        if ( this.exist( e ) )
+            return super.update( e );
+        return super.save( e );
     }
 
     private boolean exist ( Estudiante e ) {
-        return this.em.find( Estudiante.class, e.getDocumento() ) != null;
+        return this.find( e.getDocumento() ) != null;
     }
 
-    @Override
     public Estudiante findByDocumento ( int doc ) {
-        return this.em.find( Estudiante.class, doc);
+        return this.find( doc );
     }
 
     @Override
@@ -53,9 +50,9 @@ public final class EstudianteRepositoryImpl implements EstudianteRepository {
     }
 
     @Override
-    public List<Estudiante> findAllOrderByDocumento() {
-        String jpql = "SELECT e FROM Estudiante e ORDER BY e.documento";
-        Query q = this.em.createQuery( jpql );
+    public List<Estudiante> findAllOrderByDocumento( ) {
+        String jpql = "SELECT * FROM estudiante e ORDER BY e.documento";
+        Query q = this.em.createNativeQuery( jpql );
         return (List<Estudiante>) q.getResultList();
     }
 

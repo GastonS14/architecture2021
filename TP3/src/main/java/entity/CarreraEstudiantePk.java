@@ -1,10 +1,13 @@
 package entity;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
+@JsonIgnoreType
 public class CarreraEstudiantePk implements Serializable {
 
 	@Column(name = "idEstudiante")

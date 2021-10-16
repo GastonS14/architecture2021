@@ -1,10 +1,10 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import repository.CarreraEstudianteRepository;
 import repository.CarreraEstudianteRepositoryImpl;
-import repository.CarreraRepository;
 import repository.CarreraRepositoryImpl;
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,6 +17,7 @@ public class Carrera {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
+    @JsonProperty( access = JsonProperty.Access.READ_ONLY)
     private int id_carrera;
 
     @Column ( unique = true, nullable = false )
@@ -29,7 +30,7 @@ public class Carrera {
     ) // this remove references
     private List<CarreraEstudiante> estudianteCarreras;
 
-    private static CarreraRepository repository = CarreraRepositoryImpl.getInstance();
+    private static CarreraRepositoryImpl repository = CarreraRepositoryImpl.getInstance();
     private static CarreraEstudianteRepository repositoryCE = CarreraEstudianteRepositoryImpl.getInstance();
     private static final Logger logger = LoggerFactory.getLogger( Carrera.class );
 
@@ -42,17 +43,28 @@ public class Carrera {
         this.estudianteCarreras = new ArrayList<>();
     }
 
-    public int getId() {
-        return this.id_carrera;
+    public int getId_carrera() {
+        return id_carrera;
     }
 
     public String getNombre() {
-        return this.nombre;
+        return nombre;
     }
 
-    public void setNombre ( String nombre ) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
-        repository.save( this );
+    }
+
+    public void setId_carrera( int id_carrera ) {
+        this.id_carrera = id_carrera;
+    }
+
+    public List<CarreraEstudiante> getEstudianteCarreras() {
+        return estudianteCarreras;
+    }
+
+    public void setEstudianteCarreras(List<CarreraEstudiante> estudianteCarreras) {
+        this.estudianteCarreras = estudianteCarreras;
     }
 
     public boolean addStudent (Estudiante e, LocalDate fIngreso, LocalDate fEgreso ) {

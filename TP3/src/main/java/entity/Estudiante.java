@@ -33,9 +33,9 @@ public class Estudiante {
             orphanRemoval = true) // this remove references
     private List<CarreraEstudiante> carreraEstudiante;
 
-    private static final Logger logger = LoggerFactory.getLogger( Estudiante.class );
-    private static final EstudianteRepositoryImpl repository = EstudianteRepositoryImpl.getInstance();
-    private static final CarreraEstudianteRepository repositoryCE = CarreraEstudianteRepositoryImpl.getInstance();
+    private static EstudianteRepositoryImpl repository = EstudianteRepositoryImpl.getInstance();
+    private static CarreraEstudianteRepository repositoryCE = CarreraEstudianteRepositoryImpl.getInstance();
+    private static Logger logger = LoggerFactory.getLogger( Estudiante.class );
 
     public Estudiante (){ }
 
@@ -106,6 +106,14 @@ public class Estudiante {
         this.ciudadResidencia = ciudadResidencia;
     }
 
+    public List<CarreraEstudiante> getCarreraEstudiante() {
+        return carreraEstudiante;
+    }
+
+    public void setCarreraEstudiante(List<CarreraEstudiante> carreraEstudiante) {
+        this.carreraEstudiante = carreraEstudiante;
+    }
+
     /**
      * Dilema: Si en el main se instancia un Estudiante, tendra la lista vacia de carreras, pero puede que
      *  ese id con el que se instanció este en la db. Entonces,¿ Cómo manejamos el add y el remove ? Ya que puede
@@ -121,7 +129,7 @@ public class Estudiante {
             repository.save( this );
             return true;
         }
-        logger.info("There's already been a career with id: " + c.getId() + " and student document " + this.documento);
+        logger.info("There's already been a career with id: " + c.getId_carrera() + " and student document " + this.documento);
         return false;
     }
 
