@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import repository.CarreraEstudianteRepository;
 import repository.CarreraEstudianteRepositoryImpl;
-import repository.CarreraRepository;
 import repository.CarreraRepositoryImpl;
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -29,7 +28,7 @@ public class Carrera {
     ) // this remove references
     private List<CarreraEstudiante> estudianteCarreras;
 
-    private static CarreraRepository repository = CarreraRepositoryImpl.getInstance();
+    private static CarreraRepositoryImpl repository = CarreraRepositoryImpl.getInstance();
     private static CarreraEstudianteRepository repositoryCE = CarreraEstudianteRepositoryImpl.getInstance();
     private static final Logger logger = LoggerFactory.getLogger( Carrera.class );
 

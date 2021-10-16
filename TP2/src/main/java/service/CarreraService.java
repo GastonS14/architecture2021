@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class CarreraService {
 
-    private static final CarreraRepository carreraRepository = CarreraRepositoryImpl.getInstance();
+    private static final CarreraRepositoryImpl carreraRepository = CarreraRepositoryImpl.getInstance();
 
     private CarreraService() { }
 

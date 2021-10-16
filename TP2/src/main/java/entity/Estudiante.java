@@ -33,9 +33,9 @@ public class Estudiante {
             orphanRemoval = true) // this remove references
     private List<CarreraEstudiante> carreraEstudiante;
 
-    private static final Logger logger = LoggerFactory.getLogger( Estudiante.class );
-    private static final EstudianteRepositoryImpl repository = EstudianteRepositoryImpl.getInstance();
-    private static final CarreraEstudianteRepository repositoryCE = CarreraEstudianteRepositoryImpl.getInstance();
+    private static EstudianteRepositoryImpl repository = EstudianteRepositoryImpl.getInstance();
+    private static CarreraEstudianteRepository repositoryCE = CarreraEstudianteRepositoryImpl.getInstance();
+    private static Logger logger = LoggerFactory.getLogger( Estudiante.class );
 
     public Estudiante (){ }
 

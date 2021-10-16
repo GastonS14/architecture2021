@@ -6,7 +6,7 @@ import java.util.List;
 
 public final class EstudianteService {
 
-    private static final EstudianteRepository estudianteRepository = EstudianteRepositoryImpl.getInstance();
+    private static final EstudianteRepositoryImpl estudianteRepository = EstudianteRepositoryImpl.getInstance();
 
     private EstudianteService(){}
 
