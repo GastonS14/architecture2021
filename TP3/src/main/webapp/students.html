@@ -79,36 +79,42 @@
         <form>
             <div class="row">
                 <div class="col">
-                    <label f class="form-label">Document</label>
-                    <input type="number" class="form-control" id="documento" aria-describedby="emailHelp">
+                    <label class="form-label">Document</label>
+                    <input type="number" class="form-control" id="documento"
+                           aria-required="true" required >
                 </div>
                 <div class="col">
                     <label  class="form-label">Name</label>
-                    <input type="text" class="form-control" id="nombre" aria-describedby="emailHelp">
+                    <input type="text" class="form-control" id="nombre" aria-required="true" required>
 
                 </div>
                 <div class="col">
                     <label class="form-label">Sur Name</label>
-                    <input type="text" class="form-control" id="apellido" aria-describedby="emailHelp">
+                    <input type="text" class="form-control" id="apellido" aria-required="true" required>
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col">
                     <label class="form-label">Age</label>
-                    <input type="number" class="form-control" id="edad" aria-describedby="emailHelp">
+                    <input type="number" class="form-control" id="edad"
+                           aria-required="true" required>
                 </div>
                 <div class="col">
                     <label class="form-label">City</label>
-                    <input type="text" class="form-control" id="ciudad" aria-describedby="emailHelp">
+                    <input type="text" class="form-control" id="ciudad" aria-required="true" required>
                 </div>
                 <div class="col">
                     <label class="form-label">Genre</label>
-                    <input type="text" class="form-control" id="genero" aria-describedby="emailHelp">
-
+                    <select id="genero" class="form-select" aria-required="true"
+                            aria-label="Default select example" required>
+                        <option value="masculino"> Male </option>
+                        <option value="femenino"> Female </option>
+                    </select>
                 </div>
                 <div class="col">
                     <label class="form-label">SchoolId</label>
-                    <input type="number" class="form-control" id="libreta" aria-describedby="emailHelp">
+                    <input type="number" class="form-control" id="libreta"
+                           aria-required="true" required>
                 </div>
             </div>
             <button id="addStudent" type="button" class="btn btn-primary mt-4">Submit</button>
@@ -120,23 +126,24 @@
             <div class="row">
                 <div class="col">
                     <label f class="form-label">Document</label>
-                    <input type="number" class="form-control" id="docStudent" aria-describedby="emailHelp">
+                    <input required="required" type="number" class="form-control" id="docStudent"
+                           aria-required="true" required>
                 </div>
                 <div class="col">
                     <label class="form-label">Career</label>
-                    <select id="idCareer" class="form-select" aria-label="Default select example">
-                        <option selected> Choose a career </option>
+                    <select id="idCareer" class="form-select"
+                            aria-label="Default select example" aria-required="true" required>
                     </select>
                 </div>
                 <div class="col">
                     <label class="form-label">Entry date</label>
-                    <input type="text" class="form-control" id="fIngreso"
-                           placeholder="yyyy-mm-dd" aria-describedby="emailHelp">
+                    <input type="date" class="form-control" id="fIngreso"
+                           placeholder="yyyy-mm-dd" max="2021-10-01" aria-required="true" required>
                 </div>
                 <div class="col">
                     <label class="form-label">Graduate date</label>
-                    <input type="text" class="form-control" id="fEgreso"
-                           placeholder="yyyy-mm-dd" aria-describedby="emailHelp">
+                    <input type="date" class="form-control" id="fEgreso" aria-required="true"
+                           placeholder="yyyy-mm-dd" required>
                 </div>
             </div>
                 <button type="button" class="btn btn-primary mt-4" id="matricular"> Submit </button>

@@ -5,7 +5,7 @@ document.getElementById("orderBy").addEventListener("change", orderBy);
 document.getElementById("order").addEventListener("change", orderBy);
 document.getElementById("filterGenero").addEventListener("change", filter);
 document.getElementById("filterCiudad").addEventListener("change", filter);
-const base_url = "http://localhost:8080/university";
+const base_url = "http://localhost:8080/university/api/";
 
 
 function loadingPage () {
@@ -13,18 +13,18 @@ function loadingPage () {
 }
 
 function getContent () {
-    fetch(base_url+'/api/student')
+    fetch(base_url+'students')
         .then( response =>{
             if ( response.ok ) {
                 response.json().then(students => generateCardsStudent(students))
-                fetch( base_url+'/api/student/cities')
+                fetch( base_url+'students/cities')
                     .then( r => {
                         if ( r.ok )
                             r.json().then( cities => showCities( cities ) )
                         else
                             showError();
                     })
-                    fetch(base_url + '/api/career')
+                    fetch(base_url + 'careers')
                         .then(r => {
                             if (r.ok)
                                 r.json().then(careers => loadCareersInForm(careers));
@@ -88,10 +88,9 @@ function createOption ( career ) {
     select.appendChild( option );
 }
 
-function addStudent ( event ) {
-    event.preventDefault();
+function addStudent ( ) {
     const data = createJSON();
-    fetch( base_url+'/api/student', {
+    fetch( base_url+'students', {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -124,15 +123,14 @@ function createJSON () {
     return data;
 }
 
-function matricular ( event ) {
-    event.preventDefault();
+function matricular () {
     const json = {
         "idCarrera": document.getElementById("idCareer").value,
         "fIngreso": document.getElementById("fIngreso").value,
         "fEgreso": document.getElementById("fEgreso").value
     }
     docStudent = document.getElementById("docStudent").value;
-    fetch( base_url+"/api/"+docStudent+"addCareer", {
+    fetch( base_url+"students/"+docStudent+"/career", {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -140,9 +138,9 @@ function matricular ( event ) {
         },
         body: JSON.stringify( json )
     }).then( r => {
-        if ( r.status === 201 )
+        if ( r.status === 201 ) {
             r.json().then( alert("Se agrego") )
-        else
+        } else
             alert( "Something went wrong")
     })
 }
@@ -150,7 +148,7 @@ function matricular ( event ) {
 function orderBy () {
     const sortBy = document.getElementById("orderBy").value;
     const sortOrder = document.getElementById("order").value;
-    fetch ( base_url+'/api/student/sort/?attribute='+sortBy+"&sortOrder="+sortOrder)
+    fetch ( base_url+'students/sort/?attribute='+sortBy+"&sortOrder="+sortOrder)
         .then( r => {
             if (r.ok)
                 r.json().then(students => generateCardsStudent(students))
@@ -178,7 +176,7 @@ function createOptionCity( c ) {
 function filter ( ) {
     const genre = document.getElementById("filterGenero").value;
     const city = document.getElementById("filterCiudad").value;
-    fetch( base_url+'/api/student/filter/?genre='+genre+'&city='+city)
+    fetch( base_url+'students/filter/?genre='+genre+'&city='+city)
         .then( r => {
             if ( r.ok )
                 r.json().then( students => generateCardsStudent( students ) );

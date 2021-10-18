@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 import java.util.List;
 
-@Path("/student")
+@Path("/students")
 public class StudentController {
 
     @GET
@@ -36,7 +36,7 @@ public class StudentController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/filter/")
+    @Path("/filter")
     public List<Estudiante> getStudentsByGenero(@DefaultValue("masculino")@QueryParam("genre") String genero,
                                         @DefaultValue("tandil")@QueryParam("city") String ciudad ) {
         return EstudianteService.filterBy( genero, ciudad );
@@ -59,7 +59,7 @@ public class StudentController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/sort/")
+    @Path("/sort")
     public List<Estudiante> getStudentsInOrderBy ( @DefaultValue("documento") @QueryParam("attribute") String attribute,
                                                    @DefaultValue("ASC")@QueryParam("sortOrder") String sortOrder) {
         return EstudianteService.findAllOrderBy( attribute, sortOrder);
@@ -96,7 +96,7 @@ public class StudentController {
     }
 
     @POST
-    @Path("/{id}/addCareer")
+    @Path("/{id}/career")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     /**
