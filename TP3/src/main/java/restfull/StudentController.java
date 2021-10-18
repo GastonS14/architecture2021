@@ -36,9 +36,17 @@ public class StudentController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/genero/{value}")
-    public List<Estudiante> getStudentsByGenero(@PathParam("value") String genero ) {
-        return EstudianteService.findAllByGenero( genero );
+    @Path("/filter/")
+    public List<Estudiante> getStudentsByGenero(@DefaultValue("masculino")@QueryParam("genre") String genero,
+                                        @DefaultValue("tandil")@QueryParam("city") String ciudad ) {
+        return EstudianteService.filterBy( genero, ciudad );
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/cities")
+    public List<String> getAllCities() {
+        return EstudianteService.getAllCities( );
     }
 
     @GET
@@ -51,9 +59,10 @@ public class StudentController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/inOrder")
-    public List<Estudiante> getStudentsInOrderByDoc ( ) {
-        return EstudianteService.findAllOrderByDocumento( );
+    @Path("/sort/")
+    public List<Estudiante> getStudentsInOrderBy ( @DefaultValue("documento") @QueryParam("attribute") String attribute,
+                                                   @DefaultValue("ASC")@QueryParam("sortOrder") String sortOrder) {
+        return EstudianteService.findAllOrderBy( attribute, sortOrder);
     }
 
     @POST
@@ -101,7 +110,12 @@ public class StudentController {
     public Response addCareer ( @PathParam("id") int doc, CarreraEstudianteDto c )  {
         Estudiante student = EstudianteService.findByDocumento( doc );
         Carrera career = CarreraService.findById( c.getIdCarrera() );
-        student.addCareer( career, LocalDate.parse(c.getfIngreso()), LocalDate.parse( c.getfEgreso() ) );
-        return Response.status(201).entity(student).build();
+        try {
+            student.addCareer( career, LocalDate.parse(c.getfIngreso()), LocalDate.parse( c.getfEgreso() ) );
+            return Response.status(201).entity(student).build();
+        } catch ( Exception e ) {
+           return Response.status(400).entity(null).build();
+        }
     }
+
 }

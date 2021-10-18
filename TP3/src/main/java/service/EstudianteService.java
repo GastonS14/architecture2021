@@ -37,4 +37,16 @@ public final class EstudianteService {
     public static List<Estudiante> findAll() {
         return estudianteRepository.findAll();
     }
+
+    public static List<Estudiante> findAllOrderBy( String attribute, String sortOrder ) {
+        return estudianteRepository.findAllOrderBy( attribute, sortOrder );
+    }
+
+    public static List<String> getAllCities() {
+        return estudianteRepository.getAllCities();
+    }
+
+    public static List<Estudiante> filterBy(String genero, String ciudad) {
+        return estudianteRepository.getStudentsByFilter( genero, ciudad );
+    }
 }

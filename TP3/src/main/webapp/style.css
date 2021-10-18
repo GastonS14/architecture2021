@@ -25,3 +25,7 @@ img.myImg {
 .myContainer::-webkit-scrollbar:hover {
     display: flex;
 }
+
+.dontShow {
+    display: none!important;
+}

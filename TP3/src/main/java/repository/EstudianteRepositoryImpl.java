@@ -87,4 +87,27 @@ public final class EstudianteRepositoryImpl extends BaseRepository<Estudiante> i
         return q.getResultList();
     }
 
+    @Override
+    public List<Estudiante> findAllOrderBy( String attribute, String sortOrder ) {
+        String query = "SELECT e FROM Estudiante e ORDER BY "+"e."+ attribute +" "+ sortOrder;
+        Query q = this.em.createQuery( query );
+        return (List<Estudiante>) q.getResultList();
+    }
+
+    @Override
+    public List<String> getAllCities() {
+        String query = "SELECT distinct e.ciudadResidencia FROM Estudiante e";
+        Query q = this.em.createQuery( query, String.class );
+        return q.getResultList();
+    }
+
+    @Override
+    public List<Estudiante> getStudentsByFilter(String genero, String ciudad) {
+        String query = "SELECT e FROM Estudiante e WHERE e.genero =:genero and e.ciudadResidencia= :ciudad";
+        Query q = this.em.createQuery( query, Estudiante.class );
+        q.setParameter("genero", genero );
+        q.setParameter( "ciudad", ciudad);
+        return q.getResultList();
+    }
+
 }

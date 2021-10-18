@@ -15,4 +15,7 @@ public interface EstudianteRepository {
     List<Estudiante> findAllByGenero( String genero );
     List<Estudiante> findAllByCarreraAndCiudad( int idCarrera, String ciudad);
     List<Estudiante> findAll();
+    List<Estudiante> findAllOrderBy(String attribute, String sortOrder);
+    List getAllCities();
+    List<Estudiante> getStudentsByFilter(String genero, String ciudad);
 }
