@@ -1,3 +1,3 @@
-# architecture2021
+# Architecture2021
 
-## Sanchez Sanchez, Gaston Adrian - Castaño Rossi, Juan Segundo - Cutropia, Pablo
+### Sanchez Sanchez, Gaston Adrian - Castaño Rossi, Juan Segundo.
