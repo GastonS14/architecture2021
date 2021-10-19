@@ -9,7 +9,7 @@
 
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>restfull</param-value>
+            <param-value>restful</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

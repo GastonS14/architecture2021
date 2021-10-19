@@ -18,7 +18,7 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:derby:MyDerbyDb;create=true" /> -->
 
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Integrador2" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Integrador3" />
             <property name="javax.persistence.jdbc.user" value="root" />
             <property name="javax.persistence.jdbc.password" value="password" />
 

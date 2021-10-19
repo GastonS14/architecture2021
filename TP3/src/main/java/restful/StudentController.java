@@ -1,4 +1,4 @@
-package restfull;
+package restful;
 
 import dto.CarreraEstudianteDto;
 import entity.Carrera;

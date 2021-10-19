@@ -1,0 +1,572 @@
+{
+	"info": {
+		"_postman_id": "1b1fc412-4389-438e-84cd-e44963bdddf1",
+		"name": "UniversityAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/university/api/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "byId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/university/api/students/0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"students",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "byLibreta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/university/api/students/libreta/0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"students",
+								"libreta",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/university/api/students/filter/?genre=femenino&city=montevideo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"students",
+								"filter",
+								""
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "femenino"
+								},
+								{
+									"key": "city",
+									"value": "montevideo"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/university/api/students/cities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"students",
+								"cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "byCareer&City",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/university/api/students/career/11/city/tandil",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"students",
+								"career",
+								"11",
+								"city",
+								"tandil"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sort",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/university/api/students/sort?attribute=documento&sortOrder=ASC",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"students",
+								"sort"
+							],
+							"query": [
+								{
+									"key": "attribute",
+									"value": "documento"
+								},
+								{
+									"key": "sortOrder",
+									"value": "ASC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addStudent",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"documento\": 6,\r\n    \"nombre\": \"desde\",\r\n    \"apellido\": \"postman\",\r\n    \"libretaUniversitaria\": 6,\r\n    \"edad\": 24,\r\n    \"genero\": \"masculino\",\r\n    \"ciudadResidencia\": \"tandil\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/university/api/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"students"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "addStudent",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"documento\": 6,\r\n    \"nombre\": \"desde\",\r\n    \"apellido\": \"postman\",\r\n    \"libretaUniversitaria\": 6,\r\n    \"edad\": 24,\r\n    \"genero\": \"masculino\",\r\n    \"ciudadResidencia\": \"tandil\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/university/api/students",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"university",
+										"api",
+										"students"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "162"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Oct 2021 15:45:23 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=20"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"documento\": 6,\n    \"nombre\": \"desde\",\n    \"apellido\": \"postman\",\n    \"libretaUniversitaria\": 6,\n    \"edad\": 24,\n    \"genero\": \"masculino\",\n    \"ciudadResidencia\": \"tandil\",\n    \"carreraEstudiante\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "addCareer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCarrera\":6,\r\n    \"fIngreso\":\"2020-07-17\",\r\n    \"fEgreso\":\"2025-12-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/university/api/students/6/career",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"students",
+								"6",
+								"career"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "addCareer",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idCarrera\":6,\r\n    \"fIngreso\":\"2020-07-17\",\r\n    \"fEgreso\":\"2025-12-01\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/university/api/students/6/career",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"university",
+										"api",
+										"students",
+										"6",
+										"career"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "247"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Oct 2021 15:51:33 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=20"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"documento\": 6,\n    \"nombre\": \"desde\",\n    \"apellido\": \"postman\",\n    \"libretaUniversitaria\": 6,\n    \"edad\": 24,\n    \"genero\": \"masculino\",\n    \"ciudadResidencia\": \"tandil\",\n    \"carreraEstudiante\": [\n        {\n            \"fechaIngreso\": \"2020-07-17\",\n            \"fechaEgreso\": \"2025-12-01\",\n            \"idEstudiante\": 6,\n            \"idCarrera\": 6\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Careers",
+			"item": [
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/university/api/careers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"careers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "byId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/university/api/careers/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"careers",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "byName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/university/api/careers/name/arqui",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"careers",
+								"name",
+								"arqui"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "report",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/university/api/careers/report",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"careers",
+								"report"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "joined",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/university/api/careers/inscriptos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"careers",
+								"inscriptos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"redes\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/university/api/careers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"university",
+								"api",
+								"careers"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "add",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"redes\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/university/api/careers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"university",
+										"api",
+										"careers"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "60"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Oct 2021 16:05:47 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=20"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id_carrera\": 13,\n    \"nombre\": \"redes\",\n    \"estudianteCarreras\": null\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}

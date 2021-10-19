@@ -1,4 +1,4 @@
-package restfull;
+package restful;
 
 import dto.CarreraDto;
 import dto.CarreraReportDto;
