@@ -1,15 +1,15 @@
+const BASE_URL = "http://localhost:8080/university/api/";
 
 document.addEventListener("DOMContentLoaded", loadingPage );
 document.getElementById("addCareer").addEventListener("click", addCareer);
 document.getElementById("btnReport").addEventListener("click", showReport );
-const base_url = "http://localhost:8080/university/api/";
 
 function loadingPage () {
     getContent();
 }
 
 function getContent () {
-    fetch(base_url+'careers')
+    fetch(BASE_URL+'careers')
         .then( response => {
             if ( response.ok )
                 response.json().then( careers => generateCardsCareer( careers ))
@@ -59,7 +59,7 @@ function addCareer () {
         showError();
         return;
     }
-    fetch( base_url+'careers', {
+    fetch( BASE_URL+'careers', {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -77,7 +77,7 @@ function addCareer () {
 function showReport () {
     document.getElementById("containerReport").classList.remove("dontShow");
     document.getElementById("btnReport").classList.add("dontShow");
-    fetch( base_url+'careers/report')
+    fetch( BASE_URL+'careers/report')
         .then( r => {
             if ( r.ok )
                 r.json().then( report => createTable( report ));

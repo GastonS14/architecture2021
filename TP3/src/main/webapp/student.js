@@ -5,26 +5,38 @@ document.getElementById("orderBy").addEventListener("change", orderBy);
 document.getElementById("order").addEventListener("change", orderBy);
 document.getElementById("filterGenero").addEventListener("change", filter);
 document.getElementById("filterCiudad").addEventListener("change", filter);
-const base_url = "http://localhost:8080/university/api/";
 
+let documentStudent = document.getElementById("documento");
+let name =document.getElementById("nombre");
+let surname = document.getElementById("apellido");
+let age = document.getElementById("edad");
+let genre = document.getElementById("genero");
+let cityResidence = document.getElementById("ciudad");
+let universityNotebook = document.getElementById("libreta");
+let documStudent = document.getElementById("docStudent");
+let idCareer = document.getElementById("idCareer");
+let fIngreso = document.getElementById("fIngreso");
+let fEgreso = document.getElementById("fEgreso");
+
+const BASE_URL = "http://localhost:8080/university/api/";
 
 function loadingPage () {
     getContent()
 }
 
 function getContent () {
-    fetch(base_url+'students')
+    fetch(BASE_URL+'students')
         .then( response =>{
             if ( response.ok ) {
                 response.json().then(students => generateCardsStudent(students))
-                fetch( base_url+'students/cities')
+                fetch( BASE_URL+'students/cities')
                     .then( r => {
                         if ( r.ok )
                             r.json().then( cities => showCities( cities ) )
                         else
                             showError();
                     })
-                    fetch(base_url + 'careers')
+                    fetch(BASE_URL + 'careers')
                         .then(r => {
                             if (r.ok)
                                 r.json().then(careers => loadCareersInForm(careers));
@@ -89,8 +101,12 @@ function createOption ( career ) {
 }
 
 function addStudent ( ) {
+    if(!validateInputsStudent()) {
+        showErrorStudent();
+        return;
+    }
     const data = createJSON();
-    fetch( base_url+'students', {
+    fetch( BASE_URL+'students', {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -110,27 +126,60 @@ function showError() {
     alert( "Something went wrong" );
 }
 
+function showErrorStudent() {
+    alert( "Something went wrong with the student fields" );
+}
+
+function showErrorCareerStudent() {
+    alert( "Something went wrong with the student career fields" );
+}
+
 function createJSON () {
-    let data = {
-        "documento": parseInt(document.getElementById("documento").value ),
-        "nombre": document.getElementById("nombre").value,
-        "apellido": document.getElementById("apellido").value,
-        "edad": parseInt(document.getElementById("edad").value ),
-        "genero": document.getElementById("genero").value,
-        "ciudadResidencia": document.getElementById("ciudad").value,
-        "libretaUniversitaria": parseInt(document.getElementById("libreta").value)
-    }
-    return data;
+    return {
+        "documento": documentStudent.value,
+        "nombre": name.value,
+        "apellido": surname.value,
+        "edad": age.value,
+        "genero": genre.value,
+        "ciudadResidencia":  cityResidence.value,
+        "libretaUniversitaria": universityNotebook.value
+    };
+}
+
+function validateInput(inputValueToValidate) {
+    if(typeof inputValueToValidate === 'number') return !(inputValueToValidate === '' || isNaN(inputValueToValidate));
+    return !(inputValueToValidate === undefined || inputValueToValidate === null || inputValueToValidate === '');
+}
+
+function validateInputsStudent() {
+    if(!validateInput(parseInt(documentStudent.value))) return false;
+    if(!validateInput(name.value)) return false;
+    if(!validateInput(surname.value)) return false;
+    if(!validateInput(parseInt(age.value))) return false;
+    if(!validateInput(genre.value)) return false;
+    if(!validateInput(cityResidence.value)) return false;
+    return validateInput(parseInt(universityNotebook.value));
+}
+
+function validateInputsAddCareer() {
+    if(!validateInput(parseInt(documStudent.value))) return false;
+    if(!validateInput(parseInt(idCareer.value))) return false;
+    if(!validateInput(parseInt(fIngreso.value))) return false;
+    return validateInput(parseInt(fEgreso.value))
 }
 
 function matricular () {
+    if(!validateInputsAddCareer()) {
+        showErrorCareerStudent();
+        return;
+    }
     const json = {
         "idCarrera": document.getElementById("idCareer").value,
         "fIngreso": document.getElementById("fIngreso").value,
         "fEgreso": document.getElementById("fEgreso").value
     }
     docStudent = document.getElementById("docStudent").value;
-    fetch( base_url+"students/"+docStudent+"/career", {
+    fetch( BASE_URL+"students/"+docStudent+"/career", {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -148,7 +197,7 @@ function matricular () {
 function orderBy () {
     const sortBy = document.getElementById("orderBy").value;
     const sortOrder = document.getElementById("order").value;
-    fetch ( base_url+'students/sort/?attribute='+sortBy+"&sortOrder="+sortOrder)
+    fetch ( BASE_URL+'students/sort/?attribute='+sortBy+"&sortOrder="+sortOrder)
         .then( r => {
             if (r.ok)
                 r.json().then(students => generateCardsStudent(students))
@@ -176,7 +225,7 @@ function createOptionCity( c ) {
 function filter ( ) {
     const genre = document.getElementById("filterGenero").value;
     const city = document.getElementById("filterCiudad").value;
-    fetch( base_url+'students/filter/?genre='+genre+'&city='+city)
+    fetch( BASE_URL+'students/filter/?genre='+genre+'&city='+city)
         .then( r => {
             if ( r.ok )
                 r.json().then( students => generateCardsStudent( students ) );
