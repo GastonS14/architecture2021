@@ -8,6 +8,7 @@ import service.EstudianteService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -113,8 +114,8 @@ public class StudentController {
         try {
             student.addCareer( career, LocalDate.parse(c.getfIngreso()), LocalDate.parse( c.getfEgreso() ) );
             return Response.status(201).entity(student).build();
-        } catch ( Exception e ) {
-           return Response.status(400).entity(null).build();
+        } catch ( DateTimeException e ) {
+           return Response.status(400).entity("Date format should be like: YYYY-MM-DD").build();
         }
     }
 
