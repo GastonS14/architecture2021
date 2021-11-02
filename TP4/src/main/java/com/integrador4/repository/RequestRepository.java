@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Date;
 import java.util.List;
 
-public interface RequestRepo extends CrudRepository<RequestVentaEntidad, Integer> {
+public interface RequestRepository extends CrudRepository<RequestVentaEntidad, Integer> {
 
     @Query( value = "SELECT new RequestVentaEntidad (vp.sale.idSale,vp.product.idProduct, vp.quantity )" +
             "FROM Sale s JOIN " +

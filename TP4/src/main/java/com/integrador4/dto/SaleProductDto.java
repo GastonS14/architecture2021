@@ -16,7 +16,7 @@ public class SaleProductDto {
         this.productosCantidad = new ArrayList<>(rv);
     }
 
-    public Integer getCliente() {
+    public Integer getClient() {
         return cliente;
     }
 
