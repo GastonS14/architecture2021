@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface RequestRepository extends CrudRepository<RequestVentaEntidad, Integer> {
 
-    @Query( value = "SELECT new RequestVentaEntidad (vp.sale.idSale,vp.product.idProduct, vp.quantity )" +
+    @Query(value = "SELECT new RequestVentaEntidad (vp.sale.idSale,vp.product.idProduct, vp.quantity )" +
             "FROM Sale s JOIN " +
             "SaleProduct vp ON s.idSale = vp.sale.idSale JOIN Client c ON c.idClient = s.client.idClient" +
             " WHERE s.date = :date AND c.idClient = :idClient")

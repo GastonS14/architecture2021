@@ -28,10 +28,14 @@ public class SaleController {
         return this.saleService.findAll();
     }
 
+    /**
+     * @param date to filter by day
+     * @return all the sales by day
+     */
     @GetMapping("/filter")
-    public List<Sale> getAll(@RequestParam("date") Date fecha, HttpServletRequest request) {
+    public List<Sale> getAll(@RequestParam Date date, HttpServletRequest request) {
         logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
-        return this.saleService.findByFecha( fecha );
+        return this.saleService.findByDate(date);
     }
 
     @GetMapping("/{id}")
@@ -40,9 +44,12 @@ public class SaleController {
         return this.saleService.findById(id);
     }
 
+    /**
+     * @return sales by day and client
+     */
     @GetMapping("/report")
     public List<Sale> report() {
-        return this.saleService.getReport();
+        return this.saleService.getReportByClientAndSales();
     }
 
     @PostMapping
@@ -51,7 +58,7 @@ public class SaleController {
             "method={} uri={} body={}",
             request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)
         );
-        return this.saleService.save( body );
+        return this.saleService.save(body);
     }
 
     @PutMapping("/{id}")

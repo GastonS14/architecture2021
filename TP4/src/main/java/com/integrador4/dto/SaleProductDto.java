@@ -4,31 +4,31 @@ import java.util.ArrayList;
 
 public class SaleProductDto {
 
-    private Integer cliente;
-    private ArrayList<RequestVenta> productosCantidad;
+    private Integer client;
+    private ArrayList<RequestVenta> productQuantity;
 
     public SaleProductDto() {
-        this.productosCantidad = new ArrayList<>();
+        this.productQuantity = new ArrayList<>();
     }
 
-    public SaleProductDto(Integer cliente, ArrayList<RequestVenta> rv ) {
-        this.cliente = cliente;
-        this.productosCantidad = new ArrayList<>(rv);
+    public SaleProductDto(Integer client, ArrayList<RequestVenta> rv ) {
+        this.client = client;
+        this.productQuantity = new ArrayList<>(rv);
     }
 
     public Integer getClient() {
-        return cliente;
+        return client;
     }
 
-    public void setCliente(Integer cliente) {
-        this.cliente = cliente;
+    public void setClient(Integer client) {
+        this.client = client;
     }
 
-    public ArrayList<RequestVenta> getProductosCantidad() {
-        return productosCantidad;
+    public ArrayList<RequestVenta> getProductQuantity() {
+        return productQuantity;
     }
 
-    public void setProductosCantidad( ArrayList<RequestVenta> productosCantidad) {
-        this.productosCantidad = productosCantidad;
+    public void setProductQuantity(ArrayList<RequestVenta> productQuantity) {
+        this.productQuantity = new ArrayList<>(productQuantity);
     }
 }

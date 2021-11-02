@@ -4,9 +4,9 @@ import com.integrador4.entity.SaleProduct;
 import com.integrador4.entity.VentaProductoPk;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface VentaProductoRepo extends JpaRepository<SaleProduct, VentaProductoPk> {
+public interface VentaProductoRepository extends JpaRepository<SaleProduct, VentaProductoPk> {
 /*
-    @Query ( nativeQuery = true,
+    @Query(nativeQuery = true,
             value = " SELECT SUM(unidades) AS unidades, v.idProducto FROM  " +
                         "SELECT v, vp.unidades FROM Venta v " +
                             "JOIN VentaProducto vp ON v.id = vp.id_venta ) AS totalVentas" +
