@@ -6,23 +6,23 @@ import java.util.ArrayList;
 
 public class VentaProductoDto {
 
-    private long cliente;
+    private Integer cliente;
     private ArrayList<RequestVenta> productosCantidad;
 
     public VentaProductoDto () {
         this.productosCantidad = new ArrayList<>();
     }
 
-    public VentaProductoDto ( long cliente, List rv ) {
+    public VentaProductoDto ( Integer cliente, List rv ) {
         this.cliente = cliente;
         this.productosCantidad = (ArrayList<RequestVenta>) rv;
     }
 
-    public long getCliente() {
+    public Integer getCliente() {
         return cliente;
     }
 
-    public void setCliente(long cliente) {
+    public void setCliente(Integer cliente) {
         this.cliente = cliente;
     }
 

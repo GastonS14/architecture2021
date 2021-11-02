@@ -13,9 +13,9 @@ public class VentaProductoPk implements Serializable {
 
     public VentaProductoPk () {}
 
-    public VentaProductoPk(Producto product, Venta sale ){
+    public VentaProductoPk(Product product, Venta sale ){
         this.id_sale = sale.getId_sale();
-        this.id_product = product.getId_product();
+        this.id_product = product.getIdProduct();
     }
 
     public Long getId_sale() {

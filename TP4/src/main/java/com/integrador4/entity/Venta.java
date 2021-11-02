@@ -15,7 +15,7 @@ public class Venta {
     @Column
     private Date date;
     @ManyToOne @JoinColumn( referencedColumnName = "id_client")
-    private Cliente client;
+    private Client client;
     @Column
     private double amount;
     @OneToMany ( mappedBy = "sale", cascade = {CascadeType.ALL}, orphanRemoval = true)
@@ -46,11 +46,11 @@ public class Venta {
         this.date = date;
     }
 
-    public Cliente getClient() {
+    public Client getClient() {
         return client;
     }
 
-    public void setClient( Cliente client) {
+    public void setClient( Client client) {
         this.client = client;
     }
 

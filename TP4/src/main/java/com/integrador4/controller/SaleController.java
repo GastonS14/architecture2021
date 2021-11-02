@@ -11,36 +11,37 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/sales")
 public class SaleController {
+
     @Autowired
     private VentaService saleService;
 
     @GetMapping
-    public List<Venta> getAll () {
+    public List<Venta> getAll() {
         return this.saleService.findAll();
     }
 
     @GetMapping(path = "/filter")
-    public List<Venta> getAll (@RequestParam("date") Date fecha ) {
+    public List<Venta> getAll(@RequestParam("date") Date fecha ) {
         return this.saleService.findByFecha( fecha );
     }
 
     @GetMapping("/{id}")
-    public Venta getById ( @PathVariable("id") long id ) {
+    public Venta getById(@PathVariable("id") long id ) {
         return this.saleService.findById( id );
     }
 
     @GetMapping("/report")
-    public List<Venta> report () {
+    public List<Venta> report() {
         return this.saleService.getReport();
     }
 
     @PostMapping
-    public Venta newVenta (@RequestBody VentaProductoDto vp ){
+    public Venta save(@RequestBody VentaProductoDto vp ){
         return this.saleService.save( vp );
     }
 
     @PutMapping
-    public Venta updateVenta ( @RequestBody Venta venta ) {
+    public Venta update(@RequestBody Venta venta) {
         return this.saleService.update( venta );
     }
 

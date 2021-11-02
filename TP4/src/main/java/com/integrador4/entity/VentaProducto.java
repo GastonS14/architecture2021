@@ -13,7 +13,7 @@ public class VentaProducto {
     @Column ( nullable = false ) private int quantity;
 
     @ManyToOne @JoinColumn ( name = "id_product", insertable=false, updatable=false)
-    private Producto product;
+    private Product product;
     @JsonIgnore
     @ManyToOne @JoinColumn ( name = "id_sale", insertable=false, updatable=false)
     private Venta sale;
@@ -21,7 +21,7 @@ public class VentaProducto {
     public VentaProducto(){
     }
 
-    public VentaProducto ( int quantity, Producto p , Venta v ){
+    public VentaProducto (int quantity, Product p , Venta v ){
         this.productSaleID = new VentaProductoPk( p, v );
         this.product = p;
         this.sale = v;
@@ -32,11 +32,11 @@ public class VentaProducto {
         return productSaleID;
     }
 
-    public Producto getProduct() {
+    public Product getProduct() {
         return product;
     }
 
-    public void setProduct(Producto product) {
+    public void setProduct(Product product) {
         this.product = product;
     }
 

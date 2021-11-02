@@ -1,40 +1,65 @@
 package com.integrador4.controller;
 
-import com.integrador4.entity.Cliente;
+import com.integrador4.dto.ClientRequestDto;
+import com.integrador4.entity.Client;
+import com.integrador4.extensions.ObjectExtension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.annotation.AliasFor;
-import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.web.bind.annotation.*;
-import com.integrador4.service.ClienteService;
-
-import javax.websocket.server.PathParam;
+import com.integrador4.service.ClientService;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @RestController
-@RequestMapping( path = "/clients")
+@RequestMapping("/clients")
 public class ClientController {
+
+    private final Logger logger = LoggerFactory.getLogger(ClientController.class);
+
     @Autowired
-    private ClienteService clientService;
+    private ClientService clientService;
 
     @GetMapping
-    public Iterable<Cliente> getAll() {
+    public Iterable<Client> getAll(HttpServletRequest request) {
+        logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
         return this.clientService.getAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<Cliente> getById (@PathVariable("id") long id ) {
-        return this.clientService.getById( id );
+    public Optional<Client> getById (@PathVariable Integer id, HttpServletRequest request) {
+        logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
+        return this.clientService.getById(id);
     }
 
     @PostMapping
-    public Cliente newClient (@RequestBody Cliente c ) {
-        return this.clientService.save( c );
+    public Client save(@RequestBody ClientRequestDto body, HttpServletRequest request) {
+        logger.info(
+            "method={} uri={} body={}",
+            request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)
+        );
+        return this.clientService.save(body);
     }
 
-    @PutMapping
-    public Cliente updateClient ( @RequestBody Cliente c ) {
-        return this.clientService.save( c );
+    /**
+     *
+     * @param id of a client
+     * @param body to update a client
+     * @return a Client entity
+     * // @throws javassist.NotFoundException if the client doesn't exist
+     */
+    @PutMapping("/{id}")
+    public Client update(
+        @PathVariable Integer id,
+        @RequestBody ClientRequestDto body,
+        HttpServletRequest request
+    ) {
+        logger.info(
+            "method={} uri={} body={}",
+            request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)
+        );
+        return this.clientService.update(id, body);
     }
+
+
 }

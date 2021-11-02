@@ -1,41 +1,45 @@
 package com.integrador4.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
 @Table( name = "product")
-public class Producto {
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Product {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
-    private BigDecimal id_product;
+    private BigDecimal idProduct;
     @Column
     private String name;
     @Column
-    private double price;
+    private Double price;
     @Column @JsonIgnore
-    private int stock;
+    private Integer stock;
 
-    public Producto () {}
+    public Product() {}
 
-    public Producto ( Producto p ) {
-        this.id_product = p.getId_product();
-        this.name = p.getName();
-        this.price = p.getPrice();
-        this.stock = p.getStock();
-    }
-
-    public Producto ( String name, double precio, int stock ){
+    public Product(BigDecimal id, String name, double price, int stock ){
+        this.idProduct = id;
         this.name = name;
-        this.price = precio;
+        this.price = price;
         this.stock = stock;
     }
 
-    public BigDecimal getId_product() {
-        return id_product;
+    public Product(String name, double price, int stock ){
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+    }
+
+    public BigDecimal getIdProduct() {
+        return idProduct;
     }
 
     public String getName() {

@@ -1,6 +1,9 @@
 package com.integrador4.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,26 +11,34 @@ import java.util.List;
 
 @Entity
 @Table( name = "client")
-public class Cliente {
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Client {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
-    private long id_client;
+    private Integer idClient;
     @Column private String name;
     @Column private String surname;
     @JsonIgnore
     @OneToMany( mappedBy = "id_sale", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<Venta> sales;
 
-    public Cliente (){}
+    public Client(){}
 
-    public Cliente ( String name, String surname ) {
+    public Client(String name, String surname ) {
         this.name = name;
         this.surname = surname;
     }
 
-    public long getId() {
-        return id_client;
+    public Client(Integer idClient, String name, String surname ) {
+        this.idClient = idClient;
+        this.name = name;
+        this.surname = surname;
+    }
+
+    public Integer getId() {
+        return idClient;
     }
 
     public String getName() {
@@ -51,7 +62,7 @@ public class Cliente {
     }
 
     public void setSales(ArrayList<Venta> sales) {
-        this.sales = sales;
+        this.sales = new ArrayList<>(sales);
     }
 
 }
