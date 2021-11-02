@@ -1,48 +1,69 @@
 package com.integrador4.controller;
 
-import com.integrador4.dto.VentaProductoDto;
-import com.integrador4.entity.Venta;
+import com.integrador4.dto.SaleRequest;
+import com.integrador4.dto.SaleProductDto;
+import com.integrador4.entity.Sale;
+import com.integrador4.extensions.ObjectExtension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.integrador4.service.VentaService;
+import com.integrador4.service.SaleService;
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/sales")
+@RequestMapping("/sales")
 public class SaleController {
 
+    private final Logger logger = LoggerFactory.getLogger(SaleController.class);
+
     @Autowired
-    private VentaService saleService;
+    private SaleService saleService;
 
     @GetMapping
-    public List<Venta> getAll() {
+    public List<Sale> getAll(HttpServletRequest request) {
+        logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
         return this.saleService.findAll();
     }
 
-    @GetMapping(path = "/filter")
-    public List<Venta> getAll(@RequestParam("date") Date fecha ) {
+    @GetMapping("/filter")
+    public List<Sale> getAll(@RequestParam("date") Date fecha, HttpServletRequest request) {
+        logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
         return this.saleService.findByFecha( fecha );
     }
 
     @GetMapping("/{id}")
-    public Venta getById(@PathVariable("id") long id ) {
-        return this.saleService.findById( id );
+    public Sale getById(@PathVariable("id") long id, HttpServletRequest request ) {
+        logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
+        return this.saleService.findById(id);
     }
 
     @GetMapping("/report")
-    public List<Venta> report() {
+    public List<Sale> report() {
         return this.saleService.getReport();
     }
 
     @PostMapping
-    public Venta save(@RequestBody VentaProductoDto vp ){
-        return this.saleService.save( vp );
+    public Sale save(@RequestBody SaleProductDto body, HttpServletRequest request){
+        logger.info(
+            "method={} uri={} body={}",
+            request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)
+        );
+        return this.saleService.save( body );
     }
 
-    @PutMapping
-    public Venta update(@RequestBody Venta venta) {
-        return this.saleService.update( venta );
+    @PutMapping("/{id}")
+    public Sale update(
+        @RequestBody SaleRequest body,
+        @PathVariable Integer id,
+        HttpServletRequest request) {
+        logger.info(
+            "method={} uri={} body={}",
+            request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)
+        );
+        return this.saleService.update(id, body);
     }
 
 

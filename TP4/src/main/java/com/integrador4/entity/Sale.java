@@ -1,5 +1,8 @@
 package com.integrador4.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -7,35 +10,52 @@ import java.util.List;
 
 @Entity
 @Table( name = "sale")
-public class Venta {
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Sale {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
-    private long id_sale;
+    private long idSale;
+
     @Column
     private Date date;
+
     @ManyToOne @JoinColumn( referencedColumnName = "id_client")
     private Client client;
+
     @Column
     private double amount;
-    @OneToMany ( mappedBy = "sale", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    private List<VentaProducto> productsSold;
 
-    public Venta() {
+    @OneToMany ( mappedBy = "sale", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    private List<SaleProduct> productsSold;
+
+    public Sale() {
         this.productsSold = new ArrayList<>();
     }
 
-    public Venta ( Venta v ) {
+    public Sale(Client client, Date date) {
+        this.date = date;
+        this.client = client;
+    }
+
+    public Sale(Integer id, Client client, Date date) {
+        this.idSale = id;
+        this.date = date;
+        this.client = client;
+    }
+
+    public Sale(Sale v ) {
         this.amount = v.getAmount();
         this.date = v.getDate();
         this.client = v.getClient();
-        this.id_sale = v.getId_sale();
+        this.idSale = v.getIdSale();
         //this.productsSold = new ArrayList<>();
         this.productsSold = v.getProductsSold();
     }
 
-    public long getId_sale() {
-        return id_sale;
+    public long getIdSale() {
+        return idSale;
     }
 
     public Date getDate() {
@@ -62,19 +82,19 @@ public class Venta {
         this.amount = amount;
     }
 
-    public List<VentaProducto> getProductsSold() {
+    public List<SaleProduct> getProductsSold() {
         return productsSold;
     }
 
-    public void setProductsSold(ArrayList<VentaProducto> productsSold) {
+    public void setProductsSold(ArrayList<SaleProduct> productsSold) {
         this.productsSold = productsSold;
     }
 
-    public boolean addProduct ( VentaProducto vp ) {
+    public void addProduct ( SaleProduct vp ) {
         if ( this.productsSold.contains( vp ) ) {
-            VentaProducto repeated = this.productsSold.get( this.productsSold.indexOf( vp ) );
+            SaleProduct repeated = this.productsSold.get( this.productsSold.indexOf( vp ) );
             vp.setQuantity( vp.getQuantity() + repeated.getQuantity() );
         }
-        return this.productsSold.add( vp );
+        this.productsSold.add( vp );
     }
 }

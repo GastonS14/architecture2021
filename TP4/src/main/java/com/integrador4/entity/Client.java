@@ -18,11 +18,16 @@ public class Client {
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
     private Integer idClient;
-    @Column private String name;
-    @Column private String surname;
+
+    @Column
+    private String name;
+
+    @Column
+    private String surname;
+
     @JsonIgnore
-    @OneToMany( mappedBy = "id_sale", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    private List<Venta> sales;
+    @OneToMany( mappedBy = "idSale", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    private List<Sale> sales;
 
     public Client(){}
 
@@ -57,11 +62,11 @@ public class Client {
         this.surname = surname;
     }
 
-    public List<Venta> getSales() {
+    public List<Sale> getSales() {
         return sales;
     }
 
-    public void setSales(ArrayList<Venta> sales) {
+    public void setSales(ArrayList<Sale> sales) {
         this.sales = new ArrayList<>(sales);
     }
 

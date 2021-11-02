@@ -1,21 +1,19 @@
 package com.integrador4.dto;
 
-import com.sun.xml.bind.v2.schemagen.xmlschema.List;
-
 import java.util.ArrayList;
 
-public class VentaProductoDto {
+public class SaleProductDto {
 
     private Integer cliente;
     private ArrayList<RequestVenta> productosCantidad;
 
-    public VentaProductoDto () {
+    public SaleProductDto() {
         this.productosCantidad = new ArrayList<>();
     }
 
-    public VentaProductoDto ( Integer cliente, List rv ) {
+    public SaleProductDto(Integer cliente, ArrayList<RequestVenta> rv ) {
         this.cliente = cliente;
-        this.productosCantidad = (ArrayList<RequestVenta>) rv;
+        this.productosCantidad = new ArrayList<>(rv);
     }
 
     public Integer getCliente() {

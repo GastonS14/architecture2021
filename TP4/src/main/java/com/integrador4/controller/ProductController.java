@@ -1,6 +1,6 @@
 package com.integrador4.controller;
 
-import com.integrador4.dto.ProductRequestDto;
+import com.integrador4.dto.ProductRequest;
 import com.integrador4.entity.Product;
 import com.integrador4.extensions.ObjectExtension;
 import org.slf4j.Logger;
@@ -35,7 +35,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product save(@RequestBody ProductRequestDto body, HttpServletRequest request) {
+    public Product save(@RequestBody ProductRequest body, HttpServletRequest request) {
         logger.info(
             "method={} uri={} body={}",
             request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)
@@ -45,9 +45,10 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public Product update(
-        @RequestBody ProductRequestDto body,
+        @RequestBody ProductRequest body,
         @PathVariable BigDecimal id,
-        HttpServletRequest request) {
+        HttpServletRequest request
+    ) {
         logger.info(
             "method={} uri={} body={}",
             request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)

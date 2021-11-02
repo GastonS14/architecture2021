@@ -4,10 +4,8 @@ import com.integrador4.dto.RequestVenta;
 import com.integrador4.entity.Client;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-
 import java.util.Date;
 import java.util.List;
-
 
 public interface ClientRepository extends CrudRepository<Client, Integer> {
 

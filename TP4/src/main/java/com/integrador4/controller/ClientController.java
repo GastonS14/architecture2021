@@ -1,6 +1,6 @@
 package com.integrador4.controller;
 
-import com.integrador4.dto.ClientRequestDto;
+import com.integrador4.dto.ClientRequest;
 import com.integrador4.entity.Client;
 import com.integrador4.extensions.ObjectExtension;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public Client save(@RequestBody ClientRequestDto body, HttpServletRequest request) {
+    public Client save(@RequestBody ClientRequest body, HttpServletRequest request) {
         logger.info(
             "method={} uri={} body={}",
             request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)
@@ -51,7 +51,7 @@ public class ClientController {
     @PutMapping("/{id}")
     public Client update(
         @PathVariable Integer id,
-        @RequestBody ClientRequestDto body,
+        @RequestBody ClientRequest body,
         HttpServletRequest request
     ) {
         logger.info(

@@ -1,16 +1,15 @@
 package com.integrador4.dto;
 
 import com.integrador4.entity.Product;
-
 import java.math.BigDecimal;
 
-public class ProductRequestDto {
+public class ProductRequest {
 
 	private final String name;
 	private final Double price;
 	private final Integer stock;
 
-	public ProductRequestDto(String name, Double price, Integer stock) {
+	public ProductRequest(String name, Double price, Integer stock) {
 		this.name = name;
 		this.price = price;
 		this.stock = stock;
@@ -29,11 +28,11 @@ public class ProductRequestDto {
 	}
 
 	public Product toProduct(BigDecimal id) {
-		return new Product(id, this.name, this.price, this.stock);
+		return new Product(id, this.getName(), this.getPrice(), this.getStock());
 	}
 
 	public Product toProduct() {
-		return new Product(this.name, this.price, this.stock);
+		return new Product(this.getName(), this.getPrice(), this.getStock());
 	}
 
 }

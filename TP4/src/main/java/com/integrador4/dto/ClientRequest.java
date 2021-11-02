@@ -2,12 +2,12 @@ package com.integrador4.dto;
 
 import com.integrador4.entity.Client;
 
-public class ClientRequestDto {
+public class ClientRequest {
 
 	private final String name;
 	private final String surname;
 
-	public ClientRequestDto(String name, String surname) {
+	public ClientRequest(String name, String surname) {
 		this.name = name;
 		this.surname = surname;
 	}

@@ -1,6 +1,6 @@
 package com.integrador4.service;
 
-import com.integrador4.dto.ProductRequestDto;
+import com.integrador4.dto.ProductRequest;
 import com.integrador4.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,11 @@ public class ProductService {
 
     public ProductService(){}
 
-    public Product save(ProductRequestDto requestDto) {
+    public Product save(ProductRequest requestDto) {
         return this.productRepository.save(requestDto.toProduct());
     }
 
-    public Product update(BigDecimal id, ProductRequestDto requestDto) {
+    public Product update(BigDecimal id, ProductRequest requestDto) {
         return this.productRepository.save(requestDto.toProduct(id));
     }
 

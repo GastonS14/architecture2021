@@ -1,67 +1,66 @@
 package com.integrador4.service;
 
 import com.integrador4.dto.RequestVenta;
-import com.integrador4.dto.VentaProductoDto;
+import com.integrador4.dto.SaleRequest;
+import com.integrador4.dto.SaleProductDto;
 import com.integrador4.entity.*;
 import com.integrador4.repository.ClientRepository;
 import com.integrador4.repository.RequestRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.integrador4.repository.ProductRepository;
-import com.integrador4.repository.VentaRepo;
+import com.integrador4.repository.SaleRepository;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
-public final class VentaService {
+public final class SaleService {
 
-    @Autowired private VentaRepo ventaRepo;
+    @Autowired private SaleRepository saleRepository;
     @Autowired private ProductRepository productRepository;
     @Autowired private ClientRepository clientRepository;
     @Autowired private RequestRepo requestRepo;
 
-    public VentaService() {}
+    public SaleService() {}
 
-    public Venta save ( VentaProductoDto request ) {
-        Venta venta = new Venta ();
+    public Sale save(SaleProductDto request ) {
         Optional<Client> c = this.clientRepository.findById( request.getCliente() );
         if (c.isEmpty()) return null;
-        venta.setClient( c.get() );
-        venta.setDate( Date.valueOf( LocalDate.now() ) );
-        List<RequestVentaEntidad> currentProducts = this.requestRepo.getpurchases( Date.valueOf( LocalDate.now() ), c.get().getId() );
-        venta = this.ventaRepo.save( venta );
+        Sale sale = new Sale(c.get(), Date.valueOf(LocalDate.now()));
+
+        List<RequestVentaEntidad> currentProducts = this.requestRepo.getPurchases( Date.valueOf( LocalDate.now() ), c.get().getId() );
+        sale = this.saleRepository.save(sale);
         if ( this.verifyQuantity( request.getProductosCantidad(), currentProducts.subList(0, currentProducts.size()) ) ) {
-            if (this.addProducts(request.getProductosCantidad(), venta) ) {
-                System.out.println( venta);
-                this.ventaRepo.save(venta);
-                return this.ventaRepo.getById( venta.getId_sale() );
+            if (this.addProducts(request.getProductosCantidad(), sale) ) {
+                System.out.println(sale);
+                this.saleRepository.save(sale);
+                return this.saleRepository.getById( sale.getIdSale() );
             }
         }
         return null;
     }
 
-    public Venta update ( Venta venta ) {
-        return this.ventaRepo.save( venta );
+    public Sale update(Integer id, SaleRequest saleRequest) {
+        return this.saleRepository.save(saleRequest.toSale(id));
     }
 
-    public List<Venta> findAll () {
-        return this.ventaRepo.findAll();
+    public List<Sale> findAll() {
+        return this.saleRepository.findAll();
     }
 
-    public Venta findById ( long id ) {
-        return this.ventaRepo.getById( id );
+    public Sale findById(long id ) {
+        return this.saleRepository.getById( id );
     }
 
-    public List<Venta> findByFecha ( Date fecha ) {
-        return this.ventaRepo.getAllByFecha( fecha );
+    public List<Sale> findByFecha (Date fecha ) {
+        return this.saleRepository.getAllByFecha( fecha );
     }
 
-    public List<Venta> getReport() {
-        return this.ventaRepo.reportClienteVentas();
+    public List<Sale> getReport() {
+        return this.saleRepository.reportClienteVentas();
     }
 
     private boolean verifyQuantity ( ArrayList<RequestVenta> items, List<RequestVentaEntidad> productsBought) {
@@ -77,21 +76,7 @@ public final class VentaService {
         return true;
     }
 
-    private boolean verifyQuantity2 ( ArrayList<RequestVenta> items, List<RequestVentaEntidad> productsBought) {
-        // list.stream().map(str -> str.length()).forEach(System.out::println);
-        for ( RequestVenta item : items ) {
-            int index = productsBought.indexOf( item );
-            if ( index > 0 ) {
-                RequestVentaEntidad rv = productsBought.get( index );
-                if ( ( item.getUnidades() + rv.getUnidades() ) > 2 ) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean addProducts ( ArrayList<RequestVenta> items, Venta venta ) {
+    private boolean addProducts ( ArrayList<RequestVenta> items, Sale sale) {
         double amount = 0;
         ArrayList<Product> products = new ArrayList<>();
         System.out.println( "linea 89");
@@ -104,10 +89,10 @@ public final class VentaService {
             product.setStock( product.getStock() - rv.getUnidades() );
             products.add(product);
             amount += product.getPrice() * rv.getUnidades();
-            venta.addProduct( new VentaProducto(
-                    rv.getUnidades(), product, venta ) );
+            sale.addProduct( new SaleProduct(
+                    rv.getUnidades(), product, sale) );
         }
-        venta.setAmount( amount );
+        sale.setAmount( amount );
         this.updateProductsStock( products );
         return true;
     }
