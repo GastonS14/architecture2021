@@ -3,15 +3,14 @@ package com.integrador4.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @Table( name = "product")
-public class Producto {
+public class Product {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
-    private BigDecimal id_product;
+    private int id_product;
     @Column
     private String name;
     @Column
@@ -19,22 +18,22 @@ public class Producto {
     @Column @JsonIgnore
     private int stock;
 
-    public Producto () {}
+    public Product() {}
 
-    public Producto ( Producto p ) {
+    public Product(Product p ) {
         this.id_product = p.getId_product();
         this.name = p.getName();
         this.price = p.getPrice();
         this.stock = p.getStock();
     }
 
-    public Producto ( String name, double precio, int stock ){
+    public Product(String name, double precio, int stock ){
         this.name = name;
         this.price = precio;
         this.stock = stock;
     }
 
-    public BigDecimal getId_product() {
+    public int getId_product() {
         return id_product;
     }
 

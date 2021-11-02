@@ -1,10 +1,11 @@
 package com.integrador4.controller;
 
-import com.integrador4.dto.VentaProductoDto;
-import com.integrador4.entity.Venta;
+import com.integrador4.dto.SaleProductDto;
+import com.integrador4.entity.Sale;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.integrador4.service.VentaService;
+import com.integrador4.service.SaleService;
 import java.sql.Date;
 import java.util.List;
 
@@ -12,36 +13,36 @@ import java.util.List;
 @RequestMapping(value = "/sales")
 public class SaleController {
     @Autowired
-    private VentaService saleService;
+    private SaleService saleService;
 
     @GetMapping
-    public List<Venta> getAll () {
+    public List<Sale> getAll () {
         return this.saleService.findAll();
     }
 
     @GetMapping(path = "/filter")
-    public List<Venta> getAll (@RequestParam("date") Date fecha ) {
+    public List<Sale> getAll (@RequestParam("date") Date fecha ) {
         return this.saleService.findByFecha( fecha );
     }
 
     @GetMapping("/{id}")
-    public Venta getById ( @PathVariable("id") long id ) {
+    public ResponseEntity<Sale> getById (@PathVariable("id") int id ) {
         return this.saleService.findById( id );
     }
 
     @GetMapping("/report")
-    public List<Venta> report () {
+    public List<Sale> report () {
         return this.saleService.getReport();
     }
 
     @PostMapping
-    public Venta newVenta (@RequestBody VentaProductoDto vp ){
+    public ResponseEntity<Sale> newVenta (@RequestBody SaleProductDto vp ){
         return this.saleService.save( vp );
     }
 
     @PutMapping
-    public Venta updateVenta ( @RequestBody Venta venta ) {
-        return this.saleService.update( venta );
+    public Sale updateVenta (@RequestBody Sale sale) {
+        return this.saleService.update(sale);
     }
 
 

@@ -1,10 +1,10 @@
 package com.integrador4.repository;
 
-import com.integrador4.entity.VentaProducto;
-import com.integrador4.entity.VentaProductoPk;
+import com.integrador4.entity.SaleProduct;
+import com.integrador4.entity.SaleProductPk;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface VentaProductoRepo extends JpaRepository<VentaProducto, VentaProductoPk> {
+public interface SaleProductRepo extends JpaRepository<SaleProduct, SaleProductPk> {
 /*
     @Query ( nativeQuery = true,
             value = " SELECT SUM(unidades) AS unidades, v.idProducto FROM  " +

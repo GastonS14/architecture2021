@@ -1,9 +1,9 @@
 package com.integrador4;
 
-import com.integrador4.entity.Cliente;
-import com.integrador4.entity.Producto;
-import com.integrador4.repository.ClienteRepo;
-import com.integrador4.repository.ProductoRepo;
+import com.integrador4.entity.Client;
+import com.integrador4.entity.Product;
+import com.integrador4.repository.ClientRepo;
+import com.integrador4.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -22,34 +22,36 @@ public class Integrador4Application {
     public class DemoData implements ApplicationRunner {
 
         @Autowired
-        private final ClienteRepo clienteRepo;
+        private final ClientRepo clienteRepo;
         @Autowired
-        private final ProductoRepo productoRepo;
+        private final ProductRepo productoRepo;
 
-        public DemoData(ClienteRepo crepo, ProductoRepo prepo) {
+        public DemoData(ClientRepo crepo, ProductRepo prepo) {
             this.clienteRepo = crepo;
             this.productoRepo = prepo;
         }
 
         @Override
         public void run(ApplicationArguments args) throws Exception {
-            productoRepo.save ( new Producto( "tomate", 259.4, 480 ) );
-            productoRepo.save ( new Producto( "lechuga", 760.4, 123 ) );
-            productoRepo.save ( new Producto( "nesquik", 40.4, 600 ) );
-            productoRepo.save ( new Producto( "fernet", 150.5, 20 ) );
-            productoRepo.save ( new Producto( "leche", 85.4, 54 ) );
-            productoRepo.save ( new Producto( "yerba", 21.4, 680 ) );
-            productoRepo.save ( new Producto( "azucar", 232.4, 230 ) );
-            clienteRepo.save( new Cliente("juan","a" ) );
-            clienteRepo.save( new Cliente("pedro","b" ) );
-            clienteRepo.save( new Cliente("fran","c" ) );
-            clienteRepo.save( new Cliente("gaston","d" ) );
-            clienteRepo.save( new Cliente("manu","e" ) );
-            clienteRepo.save( new Cliente("alberto","f" ) );
-            clienteRepo.save( new Cliente("julian","g" ) );
+            productoRepo.save ( new Product( "tomate", 259.4, 480 ) );
+            productoRepo.save ( new Product( "lechuga", 760.4, 123 ) );
+            productoRepo.save ( new Product( "nesquik", 40.4, 600 ) );
+            productoRepo.save ( new Product( "fernet", 150.5, 20 ) );
+            productoRepo.save ( new Product( "leche", 85.4, 54 ) );
+            productoRepo.save ( new Product( "yerba", 21.4, 680 ) );
+            productoRepo.save ( new Product( "azucar", 232.4, 230 ) );
+            clienteRepo.save( new Client("juan","a" ) );
+            clienteRepo.save( new Client("pedro","b" ) );
+            clienteRepo.save( new Client("fran","c" ) );
+            clienteRepo.save( new Client("gaston","d" ) );
+            clienteRepo.save( new Client("manu","e" ) );
+            clienteRepo.save( new Client("alberto","f" ) );
+            clienteRepo.save( new Client("julian","g" ) );
         }
     }
-*/
+
+ */
+
 
 
 

@@ -1,16 +1,13 @@
 package com.integrador4.dto;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
-public class RequestVenta {
+public class RequestSaleDto {
 
     private int unidades;
-    private BigDecimal idProducto;
+    private int idProducto;
 
-    public RequestVenta(){}
+    public RequestSaleDto(){}
 
-    public RequestVenta ( int unidades, BigDecimal idProducto ){
+    public RequestSaleDto(int unidades, int idProducto ){
         this.unidades = unidades;
         this.idProducto = idProducto;
     }
@@ -23,17 +20,17 @@ public class RequestVenta {
         this.unidades = unidades;
     }
 
-    public BigDecimal getIdProducto() {
+    public int getIdProducto() {
         return idProducto;
     }
 
-    public void setIdProducto(BigDecimal idProducto) {
+    public void setIdProducto( int idProducto ) {
         this.idProducto = idProducto;
     }
 
     public boolean equals ( Object o ) {
         try {
-            RequestVenta rv = (RequestVenta) o;
+            RequestSaleDto rv = (RequestSaleDto) o;
             return rv.getIdProducto() == this.idProducto;
         } catch ( Exception e ) {
             return false;

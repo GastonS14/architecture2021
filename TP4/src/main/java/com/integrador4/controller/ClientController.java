@@ -1,40 +1,34 @@
 package com.integrador4.controller;
 
-import com.integrador4.entity.Cliente;
+import com.integrador4.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.annotation.AliasFor;
-import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.web.bind.annotation.*;
-import com.integrador4.service.ClienteService;
-
-import javax.websocket.server.PathParam;
+import com.integrador4.service.ClientService;
 import java.util.Optional;
 
 @RestController
 @RequestMapping( path = "/clients")
 public class ClientController {
     @Autowired
-    private ClienteService clientService;
+    private ClientService clientService;
 
     @GetMapping
-    public Iterable<Cliente> getAll() {
+    public Iterable<Client> getAll() {
         return this.clientService.getAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<Cliente> getById (@PathVariable("id") long id ) {
+    public Optional<Client> getById (@PathVariable("id") int id ) {
         return this.clientService.getById( id );
     }
 
     @PostMapping
-    public Cliente newClient (@RequestBody Cliente c ) {
+    public Client newClient (@RequestBody Client c ) {
         return this.clientService.save( c );
     }
 
     @PutMapping
-    public Cliente updateClient ( @RequestBody Cliente c ) {
+    public Client updateClient (@RequestBody Client c ) {
         return this.clientService.save( c );
     }
 }

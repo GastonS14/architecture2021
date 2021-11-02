@@ -5,46 +5,50 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-@Table( name = "venta_producto")
-public class VentaProducto {
+@Table( name = "sale_product")
+public class SaleProduct {
     @JsonIgnore
-    @EmbeddedId private VentaProductoPk productSaleID;
+    @EmbeddedId private SaleProductPk productSaleID;
 
     @Column ( nullable = false ) private int quantity;
 
     @ManyToOne @JoinColumn ( name = "id_product", insertable=false, updatable=false)
-    private Producto product;
+    private Product product;
     @JsonIgnore
     @ManyToOne @JoinColumn ( name = "id_sale", insertable=false, updatable=false)
-    private Venta sale;
+    private Sale sale;
 
-    public VentaProducto(){
+    public SaleProduct(){
     }
 
-    public VentaProducto ( int quantity, Producto p , Venta v ){
-        this.productSaleID = new VentaProductoPk( p, v );
+    public SaleProduct(int quantity, Product p , Sale v ){
+        this.productSaleID = new SaleProductPk( p, v );
         this.product = p;
         this.sale = v;
         this.quantity = quantity;
     }
 
-    public VentaProductoPk getProductSaleID() {
+    public void setSaleID( int saleID ) {
+        this.productSaleID.setId_sale( saleID );
+    }
+
+    public SaleProductPk getProductSaleID() {
         return productSaleID;
     }
 
-    public Producto getProduct() {
+    public Product getProduct() {
         return product;
     }
 
-    public void setProduct(Producto product) {
+    public void setProduct(Product product) {
         this.product = product;
     }
 
-    public Venta getSale() {
+    public Sale getSale() {
         return sale;
     }
 
-    public void setSale(Venta sale) {
+    public void setSale(Sale sale) {
         this.sale = sale;
     }
 

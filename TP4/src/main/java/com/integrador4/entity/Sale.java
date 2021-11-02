@@ -7,25 +7,25 @@ import java.util.List;
 
 @Entity
 @Table( name = "sale")
-public class Venta {
+public class Sale {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
-    private long id_sale;
+    private int id_sale;
     @Column
     private Date date;
     @ManyToOne @JoinColumn( referencedColumnName = "id_client")
-    private Cliente client;
+    private Client client;
     @Column
     private double amount;
     @OneToMany ( mappedBy = "sale", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    private List<VentaProducto> productsSold;
+    private List<SaleProduct> productsSold;
 
-    public Venta() {
+    public Sale() {
         this.productsSold = new ArrayList<>();
     }
 
-    public Venta ( Venta v ) {
+    public Sale(Sale v ) {
         this.amount = v.getAmount();
         this.date = v.getDate();
         this.client = v.getClient();
@@ -34,7 +34,7 @@ public class Venta {
         this.productsSold = v.getProductsSold();
     }
 
-    public long getId_sale() {
+    public int getId_sale() {
         return id_sale;
     }
 
@@ -46,11 +46,11 @@ public class Venta {
         this.date = date;
     }
 
-    public Cliente getClient() {
+    public Client getClient() {
         return client;
     }
 
-    public void setClient( Cliente client) {
+    public void setClient( Client client) {
         this.client = client;
     }
 
@@ -62,17 +62,17 @@ public class Venta {
         this.amount = amount;
     }
 
-    public List<VentaProducto> getProductsSold() {
+    public List<SaleProduct> getProductsSold() {
         return productsSold;
     }
 
-    public void setProductsSold(ArrayList<VentaProducto> productsSold) {
+    public void setProductsSold(ArrayList<SaleProduct> productsSold) {
         this.productsSold = productsSold;
     }
 
-    public boolean addProduct ( VentaProducto vp ) {
+    public boolean addProduct ( SaleProduct vp ) {
         if ( this.productsSold.contains( vp ) ) {
-            VentaProducto repeated = this.productsSold.get( this.productsSold.indexOf( vp ) );
+            SaleProduct repeated = this.productsSold.get( this.productsSold.indexOf( vp ) );
             vp.setQuantity( vp.getQuantity() + repeated.getQuantity() );
         }
         return this.productsSold.add( vp );

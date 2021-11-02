@@ -1,21 +1,18 @@
-package com.integrador4.entity;
-
-import com.integrador4.dto.RequestVenta;
+package com.integrador4.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.math.BigDecimal;
 
 @Entity
-public class RequestVentaEntidad {
-    @Id private long id_sale;
+public class RequestSaleEntity {
+    @Id private int id_sale;
     @Column private int quantity;
-    @Column private BigDecimal id_product;
+    @Column private int id_product;
 
-    public RequestVentaEntidad(){}
+    public RequestSaleEntity(){}
 
-    public RequestVentaEntidad ( long id, BigDecimal idProducto, int unidades){
+    public RequestSaleEntity(int id, int idProducto, int unidades){
         this.id_sale = id;
         this.quantity = unidades;
         this.id_product = idProducto;
@@ -25,7 +22,7 @@ public class RequestVentaEntidad {
         return id_sale;
     }
 
-    public void setId(long id) {
+    public void setId( int id ) {
         this.id_sale = id;
     }
 
@@ -37,17 +34,17 @@ public class RequestVentaEntidad {
         this.quantity = unidades;
     }
 
-    public BigDecimal getIdProducto() {
+    public int getIdProducto() {
         return id_product;
     }
 
-    public void setIdProducto(BigDecimal idProducto) {
+    public void setIdProducto( int idProducto) {
         this.id_product = idProducto;
     }
 
     public boolean equals ( Object o ) {
         try {
-            RequestVenta rv = (RequestVenta) o;
+            RequestSaleDto rv = (RequestSaleDto) o;
             return rv.getIdProducto() == this.id_product;
         } catch ( Exception e ) {
             return false;

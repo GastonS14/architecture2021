@@ -8,25 +8,25 @@ import java.util.List;
 
 @Entity
 @Table( name = "client")
-public class Cliente {
+public class Client {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
-    private long id_client;
+    private int id_client;
     @Column private String name;
     @Column private String surname;
     @JsonIgnore
     @OneToMany( mappedBy = "id_sale", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    private List<Venta> sales;
+    private List<Sale> sales;
 
-    public Cliente (){}
+    public Client(){}
 
-    public Cliente ( String name, String surname ) {
+    public Client(String name, String surname ) {
         this.name = name;
         this.surname = surname;
     }
 
-    public long getId() {
+    public int getId() {
         return id_client;
     }
 
@@ -46,11 +46,11 @@ public class Cliente {
         this.surname = surname;
     }
 
-    public List<Venta> getSales() {
+    public List<Sale> getSales() {
         return sales;
     }
 
-    public void setSales(ArrayList<Venta> sales) {
+    public void setSales(ArrayList<Sale> sales) {
         this.sales = sales;
     }
 
