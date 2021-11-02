@@ -2,6 +2,8 @@ package com.integrador4.controller;
 
 import com.integrador4.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.integrador4.service.ClientService;
 import java.util.Optional;
@@ -18,8 +20,11 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Client> getById (@PathVariable("id") int id ) {
-        return this.clientService.getById( id );
+    public ResponseEntity<Client> getById (@PathVariable("id") int id ) {
+        Optional<Client> client = this.clientService.getById( id );
+        if ( client.isEmpty() )
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        return new ResponseEntity(client,HttpStatus.OK);
     }
 
     @PostMapping

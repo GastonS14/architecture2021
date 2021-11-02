@@ -65,11 +65,8 @@ public final class SaleService {
         return this.saleRepo.findAll();
     }
 
-    public ResponseEntity<Sale> findById (int id ) {
-        Optional<Sale> sale = this.saleRepo.findById(id);
-        if ( sale.isEmpty() )
-            return new ResponseEntity( HttpStatus.NOT_FOUND );
-        return new ResponseEntity( sale, HttpStatus.OK);
+    public Optional<Sale> findById (int id ) {
+       return this.saleRepo.findById(id);
     }
 
     public List<Sale> findByFecha (Date fecha ) {

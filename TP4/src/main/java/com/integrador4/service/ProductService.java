@@ -15,8 +15,7 @@ public final class ProductService {
     public ProductService(){}
 
     public Product save (Product p ) {
-        this.productRepo.save( p );
-        return p;
+        return this.productRepo.save( p );
     }
 
     public Optional<Product> getById (int id ) {
