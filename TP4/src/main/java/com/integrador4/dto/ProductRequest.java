@@ -1,7 +1,6 @@
 package com.integrador4.dto;
 
 import com.integrador4.entity.Product;
-import java.math.BigDecimal;
 
 public class ProductRequest {
 
@@ -27,7 +26,7 @@ public class ProductRequest {
 		return stock;
 	}
 
-	public Product toProduct(BigDecimal id) {
+	public Product toProduct(Integer id) {
 		return new Product(id, this.getName(), this.getPrice(), this.getStock());
 	}
 

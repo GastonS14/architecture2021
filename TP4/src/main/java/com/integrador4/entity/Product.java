@@ -16,10 +16,10 @@ public class Product {
     @GeneratedValue( strategy = GenerationType.AUTO )
     private Integer idProduct;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private Double price;
 
     @Column

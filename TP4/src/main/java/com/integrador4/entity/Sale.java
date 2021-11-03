@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,8 @@ public class Sale {
     @Column
     private Date date;
 
-    @ManyToOne @JoinColumn( referencedColumnName = "id_client")
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "idClient")
     private Client client;
 
     @Column
@@ -34,14 +36,13 @@ public class Sale {
         this.productsSold = new ArrayList<>();
     }
 
-    public Sale(Client client, Date date) {
-        this.date = date;
+    public Sale(Client client) {
+        this.date = Date.valueOf(LocalDate.now());
         this.client = client;
     }
 
-    public Sale(Integer id, Client client, Date date) {
+    public Sale(Integer id, Client client) {
         this.idSale = id;
-        this.date = date;
         this.client = client;
     }
 

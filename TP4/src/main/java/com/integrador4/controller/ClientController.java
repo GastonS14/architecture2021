@@ -65,7 +65,7 @@ public class ClientController {
     ) {
         logger.info(
             "method={} uri={} body={}",
-            request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)
+            request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
         );
         return this.clientService.update(id, body);
     }

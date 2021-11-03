@@ -7,15 +7,19 @@ import javax.persistence.*;
 @Entity
 @Table( name = "sale_product")
 public class SaleProduct {
+
     @JsonIgnore
     @EmbeddedId private SaleProductPk productSaleID;
 
     @Column ( nullable = false ) private int quantity;
 
-    @ManyToOne @JoinColumn ( name = "id_product", insertable=false, updatable=false)
+    @ManyToOne
+    @JoinColumn ( name = "id_product", insertable=false, updatable=false)
     private Product product;
+
     @JsonIgnore
-    @ManyToOne @JoinColumn ( name = "id_sale", insertable=false, updatable=false)
+    @ManyToOne
+    @JoinColumn ( name = "id_sale", insertable=false, updatable=false)
     private Sale sale;
 
     public SaleProduct(){

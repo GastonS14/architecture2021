@@ -19,10 +19,10 @@ public class Client {
     @GeneratedValue( strategy = GenerationType.AUTO)
     private Integer idClient;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private String surname;
 
     @JsonIgnore
@@ -32,6 +32,12 @@ public class Client {
     public Client(){}
 
     public Client(String name, String surname ) {
+        this.name = name;
+        this.surname = surname;
+    }
+
+    public Client(Integer idClient, String name, String surname ) {
+        this.idClient = idClient;
         this.name = name;
         this.surname = surname;
     }

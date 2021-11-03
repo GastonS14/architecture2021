@@ -30,7 +30,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getById(@PathVariable BigDecimal id, HttpServletRequest request) {
+    public ResponseEntity<Product> getById(@PathVariable Integer id, HttpServletRequest request) {
         logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
         Optional<Product> product = this.productService.getById(id);
         if ( product.isEmpty() ) return new ResponseEntity<>( HttpStatus.NOT_FOUND);
@@ -49,7 +49,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public Product update(
         @RequestBody ProductRequest body,
-        @PathVariable BigDecimal id,
+        @PathVariable Integer id,
         HttpServletRequest request
     ) {
         logger.info(

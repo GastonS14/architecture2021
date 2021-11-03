@@ -1,7 +1,12 @@
 package com.integrador4.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.integrador4.entity.Client;
 
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ClientRequest {
 
 	private final String name;

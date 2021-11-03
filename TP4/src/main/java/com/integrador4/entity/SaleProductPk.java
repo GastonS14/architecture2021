@@ -7,8 +7,11 @@ import java.io.Serializable;
 @Embeddable
 public class SaleProductPk implements Serializable {
 
-    @Column private int id_sale;
-    @Column private int id_product;
+    @Column
+    private int id_sale;
+
+    @Column
+    private int id_product;
 
     public SaleProductPk() {}
 

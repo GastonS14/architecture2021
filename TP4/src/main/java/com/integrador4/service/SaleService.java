@@ -30,7 +30,7 @@ public final class SaleService {
 
         Optional<Client> c = this.clientRepository.findById(request.getClient());
         if(c.isEmpty())  return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
-        Sale sale = new Sale(c.get(), Date.valueOf(LocalDate.now()));
+        Sale sale = new Sale(c.get());
 
         List<RequestSaleEntity> currentProducts = this.requestRepository.getPurchases(Date.valueOf(LocalDate.now()), c.get().getId());
         ArrayList<RequestSaleDto> requestSaleDtos = new ArrayList<>();
