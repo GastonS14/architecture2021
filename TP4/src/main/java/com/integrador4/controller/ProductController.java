@@ -6,9 +6,10 @@ import com.integrador4.extensions.ObjectExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.integrador4.service.ProductService;
-
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -29,9 +30,11 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Product> getById(@PathVariable BigDecimal id, HttpServletRequest request) {
+    public ResponseEntity<Product> getById(@PathVariable BigDecimal id, HttpServletRequest request) {
         logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
-        return this.productService.getById(id);
+        Optional<Product> product = this.productService.getById(id);
+        if ( product.isEmpty() ) return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        return new ResponseEntity( product, HttpStatus.OK);
     }
 
     @PostMapping

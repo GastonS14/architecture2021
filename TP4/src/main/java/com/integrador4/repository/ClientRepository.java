@@ -1,6 +1,6 @@
 package com.integrador4.repository;
 
-import com.integrador4.dto.RequestVenta;
+import com.integrador4.dto.RequestSaleEntity;
 import com.integrador4.entity.Client;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -13,6 +13,6 @@ public interface ClientRepository extends CrudRepository<Client, Integer> {
             "venta_producto vp ON s.id_sale = vp.id_sale JOIN client c ON c.id_client = s.client_id_client" +
             " WHERE s.date = :date AND c.id_client = :idClient",
             nativeQuery = true)
-    List<RequestVenta> getpurchases(Date date, long idClient );
+    List<RequestSaleEntity> getPurchases(Date date, long idClient );
 
 }

@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class SaleProductDto {
 
     private Integer client;
-    private ArrayList<RequestVenta> productQuantity;
+    private ArrayList<RequestSaleDto> productQuantity;
 
     public SaleProductDto() {
         this.productQuantity = new ArrayList<>();
     }
 
-    public SaleProductDto(Integer client, ArrayList<RequestVenta> rv ) {
+    public SaleProductDto(Integer client, ArrayList<RequestSaleDto> rv ) {
         this.client = client;
         this.productQuantity = new ArrayList<>(rv);
     }
@@ -24,11 +24,11 @@ public class SaleProductDto {
         this.client = client;
     }
 
-    public ArrayList<RequestVenta> getProductQuantity() {
+    public ArrayList<RequestSaleDto> getProductQuantity() {
         return productQuantity;
     }
 
-    public void setProductQuantity(ArrayList<RequestVenta> productQuantity) {
+    public void setProductQuantity(ArrayList<RequestSaleDto> productQuantity) {
         this.productQuantity = new ArrayList<>(productQuantity);
     }
 }

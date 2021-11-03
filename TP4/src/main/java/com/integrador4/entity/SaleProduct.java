@@ -1,29 +1,19 @@
 package com.integrador4.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
 
 @Entity
-@Table( name = "venta_producto")
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Table( name = "sale_product")
 public class SaleProduct {
-
     @JsonIgnore
-    @EmbeddedId
-    private VentaProductoPk productSaleID;
+    @EmbeddedId private SaleProductPk productSaleID;
 
-    @Column (nullable = false)
-    private int quantity;
+    @Column ( nullable = false ) private int quantity;
 
-    @ManyToOne
-    @JoinColumn ( name = "id_product", insertable=false, updatable=false)
+    @ManyToOne @JoinColumn ( name = "id_product", insertable=false, updatable=false)
     private Product product;
-
     @JsonIgnore
     @ManyToOne @JoinColumn ( name = "id_sale", insertable=false, updatable=false)
     private Sale sale;
@@ -32,13 +22,17 @@ public class SaleProduct {
     }
 
     public SaleProduct(int quantity, Product p , Sale v ){
-        this.productSaleID = new VentaProductoPk( p, v );
+        this.productSaleID = new SaleProductPk( p, v );
         this.product = p;
         this.sale = v;
         this.quantity = quantity;
     }
 
-    public VentaProductoPk getProductSaleID() {
+    public void setSaleID( int saleID ) {
+        this.productSaleID.setId_sale( saleID );
+    }
+
+    public SaleProductPk getProductSaleID() {
         return productSaleID;
     }
 

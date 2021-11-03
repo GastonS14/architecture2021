@@ -1,16 +1,15 @@
 package com.integrador4.service;
 
-import com.integrador4.dto.RequestVenta;
-import com.integrador4.dto.SaleRequest;
+import com.integrador4.dto.RequestSaleDto;
+import com.integrador4.dto.RequestSaleEntity;
 import com.integrador4.dto.SaleProductDto;
+import com.integrador4.dto.SaleRequest;
 import com.integrador4.entity.*;
-import com.integrador4.repository.ClientRepository;
-import com.integrador4.repository.RequestRepository;
+import com.integrador4.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import com.integrador4.repository.ProductRepository;
-import com.integrador4.repository.SaleRepository;
-
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,18 +26,29 @@ public final class SaleService {
 
     public SaleService() {}
 
-    public Sale save(SaleProductDto request) {
+    public ResponseEntity<Sale> save(SaleProductDto request) {
 
         Optional<Client> c = this.clientRepository.findById(request.getClient());
-        if(c.isEmpty()) return null;
+        if(c.isEmpty())  return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
         Sale sale = new Sale(c.get(), Date.valueOf(LocalDate.now()));
 
-        List<RequestVentaEntidad> currentProducts = this.requestRepository.getPurchases(Date.valueOf(LocalDate.now()), c.get().getId());
-        sale = this.saleRepository.save(sale);
-        if (this.verifyQuantity(request.getProductQuantity(), currentProducts.subList(0, currentProducts.size()))) {
-            if (this.addProducts(request.getProductQuantity(), sale) ) {
-                this.saleRepository.save(sale);
-                return this.saleRepository.getById( sale.getIdSale() );
+        List<RequestSaleEntity> currentProducts = this.requestRepository.getPurchases(Date.valueOf(LocalDate.now()), c.get().getId());
+        ArrayList<RequestSaleDto> requestSaleDtos = new ArrayList<>();
+        currentProducts.forEach(
+                currentProduct -> {
+                    requestSaleDtos.add( new RequestSaleDto( currentProduct.getUnidades(), currentProduct.getIdProducto()) );
+                });
+        if (this.verifyQuantity(request.getProductQuantity(), requestSaleDtos)) {
+            ArrayList<SaleProduct> saleProducts = this.addProducts(request.getProductQuantity(), sale);
+            if (saleProducts != null) {
+                sale = this.saleRepository.save(sale);
+                Sale finalSale = sale;
+                saleProducts.forEach(sp -> {
+                    sp.setSaleID(finalSale.getIdSale());
+                    sp.setSale(finalSale);
+                });
+                sale.getProductsSold().addAll(saleProducts);
+                return new ResponseEntity<Sale>( this.saleRepository.save(sale), HttpStatus.OK);
             }
         }
         return null;
@@ -52,8 +62,8 @@ public final class SaleService {
         return this.saleRepository.findAll();
     }
 
-    public Sale findById(long id ) {
-        return this.saleRepository.getById( id );
+    public Sale findById(Integer id ) {
+        return this.saleRepository.getById(id);
     }
 
     public List<Sale> findByDate (Date date) {
@@ -64,39 +74,33 @@ public final class SaleService {
         return this.saleRepository.reportClientAndSales();
     }
 
-    private boolean verifyQuantity ( ArrayList<RequestVenta> items, List<RequestVentaEntidad> productsBought) {
-        for ( RequestVenta item : items ) {
+    private boolean verifyQuantity (ArrayList<RequestSaleDto> items, List<RequestSaleDto> productsBought) {
+        for ( RequestSaleDto item : items ) {
             int index = productsBought.indexOf( item );
             if ( index > 0 ) {
-                RequestVentaEntidad rv = productsBought.get( index );
-                if ( ( item.getUnidades() + rv.getUnidades() ) > 2 ) {
+                RequestSaleDto rv = productsBought.get( index );
+                if ( ( item.getUnidades() + rv.getUnidades() ) > 3 )
                     return false;
-                }
             }
         }
         return true;
     }
 
-    private boolean addProducts(ArrayList<RequestVenta> items, Sale sale) {
-        double amount = 0;
-        ArrayList<Product> products = new ArrayList<>();
-        for ( RequestVenta rv : items ) {
+    private ArrayList<SaleProduct> addProducts (ArrayList<RequestSaleDto> items, Sale sale) {
+        double amount = 0; ArrayList<Product> products = new ArrayList<>();
+        ArrayList<SaleProduct> saleProducts = new ArrayList<>();
+        for ( RequestSaleDto rv : items ) {
             Optional<Product> p = productRepository.findById(rv.getIdProducto());
-            if (p.isEmpty()) {
-                return false;
-            }
+            if ( p.isEmpty() )
+                return null;
             Product product = p.get();
             product.setStock( product.getStock() - rv.getUnidades() );
             products.add(product);
             amount += product.getPrice() * rv.getUnidades();
-            sale.addProduct( new SaleProduct(rv.getUnidades(), product, sale) );
+            saleProducts.add( new SaleProduct( rv.getUnidades(), product, sale) );
         }
-        sale.setAmount(amount);
-        this.updateProductsStock(products);
-        return true;
-    }
-
-    private void updateProductsStock ( ArrayList<Product> products ) {
+        sale.setAmount( amount );
         this.productRepository.saveAll(products);
+        return saleProducts;
     }
 }

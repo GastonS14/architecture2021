@@ -6,6 +6,12 @@ import com.integrador4.extensions.ObjectExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.AliasFor;
+import org.springframework.data.rest.webmvc.BasePathAwareController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.integrador4.service.ClientService;
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +33,12 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Client> getById (@PathVariable Integer id, HttpServletRequest request) {
+    public ResponseEntity<Client> getById (@PathVariable Integer id, HttpServletRequest request) {
         logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
-        return this.clientService.getById(id);
+        Optional<Client> client = this.clientService.getById( id );
+        if ( client.isEmpty() )
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        return new ResponseEntity(client, HttpStatus.OK);
     }
 
     @PostMapping
@@ -60,6 +69,4 @@ public class ClientController {
         );
         return this.clientService.update(id, body);
     }
-
-
 }

@@ -16,7 +16,7 @@ public class Sale {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
-    private long idSale;
+    private Integer idSale;
 
     @Column
     private Date date;
@@ -25,7 +25,7 @@ public class Sale {
     private Client client;
 
     @Column
-    private double amount;
+    private Double amount;
 
     @OneToMany ( mappedBy = "sale", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<SaleProduct> productsSold;
@@ -54,7 +54,7 @@ public class Sale {
         this.productsSold = v.getProductsSold();
     }
 
-    public long getIdSale() {
+    public Integer getIdSale() {
         return idSale;
     }
 

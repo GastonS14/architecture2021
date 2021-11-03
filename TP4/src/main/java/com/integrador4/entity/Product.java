@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @Table( name = "product")
@@ -15,17 +14,21 @@ public class Product {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
-    private BigDecimal idProduct;
+    private Integer idProduct;
+
     @Column
     private String name;
+
     @Column
     private Double price;
-    @Column @JsonIgnore
+
+    @Column
+    @JsonIgnore
     private Integer stock;
 
     public Product() {}
 
-    public Product(BigDecimal id, String name, double price, int stock ){
+    public Product(Integer id, String name, double price, int stock ){
         this.idProduct = id;
         this.name = name;
         this.price = price;
@@ -38,7 +41,7 @@ public class Product {
         this.stock = stock;
     }
 
-    public BigDecimal getIdProduct() {
+    public Integer getIdProduct() {
         return idProduct;
     }
 

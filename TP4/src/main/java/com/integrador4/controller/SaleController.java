@@ -7,11 +7,14 @@ import com.integrador4.extensions.ObjectExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.integrador4.service.SaleService;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/sales")
@@ -39,9 +42,12 @@ public class SaleController {
     }
 
     @GetMapping("/{id}")
-    public Sale getById(@PathVariable("id") long id, HttpServletRequest request ) {
+    public ResponseEntity<Sale> getById(@PathVariable Integer id, HttpServletRequest request ) {
         logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
-        return this.saleService.findById(id);
+        Optional<Sale> sale = Optional.of(this.saleService.findById(id));
+        if ( sale.isEmpty() )
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND );
+        return new ResponseEntity( sale, HttpStatus.OK);
     }
 
     /**
@@ -53,12 +59,12 @@ public class SaleController {
     }
 
     @PostMapping
-    public Sale save(@RequestBody SaleProductDto body, HttpServletRequest request){
+    public ResponseEntity<Sale> save(@RequestBody SaleProductDto body, HttpServletRequest request){
         logger.info(
             "method={} uri={} body={}",
             request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)
         );
-        return this.saleService.save(body);
+        return new ResponseEntity(this.saleService.save(body), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

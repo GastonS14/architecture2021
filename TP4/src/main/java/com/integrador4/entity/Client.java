@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +36,6 @@ public class Client {
         this.surname = surname;
     }
 
-    public Client(Integer idClient, String name, String surname ) {
-        this.idClient = idClient;
-        this.name = name;
-        this.surname = surname;
-    }
-
     public Integer getId() {
         return idClient;
     }
@@ -62,7 +57,7 @@ public class Client {
     }
 
     public List<Sale> getSales() {
-        return sales;
+        return new ArrayList<>(sales);
     }
 
     public void setSales(ArrayList<Sale> sales) {
