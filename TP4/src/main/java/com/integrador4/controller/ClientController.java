@@ -28,13 +28,13 @@ public class ClientController {
 
     @GetMapping
     public Iterable<Client> getAll(HttpServletRequest request) {
-        logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
+        logger.info("method={} uri={}", request.getMethod(), request.getRequestURI());
         return this.clientService.getAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Client> getById (@PathVariable Integer id, HttpServletRequest request) {
-        logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
+        logger.info("method={} uri={}", request.getMethod(), request.getRequestURI());
         Optional<Client> client = this.clientService.getById( id );
         if ( client.isEmpty() )
             return new ResponseEntity<>( HttpStatus.NOT_FOUND);
@@ -45,7 +45,7 @@ public class ClientController {
     public Client save(@RequestBody ClientRequest body, HttpServletRequest request) {
         logger.info(
             "method={} uri={} body={}",
-            request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)
+            request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
         );
         return this.clientService.save(body);
     }

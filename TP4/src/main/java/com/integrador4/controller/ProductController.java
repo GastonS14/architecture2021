@@ -25,13 +25,13 @@ public class ProductController {
 
     @GetMapping()
     public Iterable<Product> getAll(HttpServletRequest request) {
-        logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
+        logger.info("method={} uri={}", request.getMethod(), request.getRequestURI());
         return this.productService.getAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getById(@PathVariable Integer id, HttpServletRequest request) {
-        logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
+        logger.info("method={} uri={}", request.getMethod(), request.getRequestURI());
         Optional<Product> product = this.productService.getById(id);
         if ( product.isEmpty() ) return new ResponseEntity<>( HttpStatus.NOT_FOUND);
         return new ResponseEntity( product, HttpStatus.OK);
@@ -41,7 +41,7 @@ public class ProductController {
     public Product save(@RequestBody ProductRequest body, HttpServletRequest request) {
         logger.info(
             "method={} uri={} body={}",
-            request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)
+            request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
         );
         return this.productService.save(body);
     }
@@ -54,7 +54,7 @@ public class ProductController {
     ) {
         logger.info(
             "method={} uri={} body={}",
-            request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)
+            request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
         );
         return this.productService.update(id, body);
     }

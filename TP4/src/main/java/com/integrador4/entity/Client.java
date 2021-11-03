@@ -40,6 +40,7 @@ public class Client {
         this.idClient = idClient;
         this.name = name;
         this.surname = surname;
+        this.sales = this.initSales();
     }
 
     public Integer getId() {
@@ -66,8 +67,9 @@ public class Client {
         return new ArrayList<>(sales);
     }
 
-    public void setSales(ArrayList<Sale> sales) {
-        this.sales = new ArrayList<>(sales);
+    public ArrayList<Sale> initSales() {
+        if(this.sales == null) return new ArrayList<>();
+        return (ArrayList<Sale>) this.getSales();
     }
 
 }

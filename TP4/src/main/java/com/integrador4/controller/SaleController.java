@@ -27,7 +27,7 @@ public class SaleController {
 
     @GetMapping
     public List<Sale> getAll(HttpServletRequest request) {
-        logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
+        logger.info("method={} uri={}", request.getMethod(), request.getRequestURI());
         return this.saleService.findAll();
     }
 
@@ -37,13 +37,13 @@ public class SaleController {
      */
     @GetMapping("/filter")
     public List<Sale> getAll(@RequestParam Date date, HttpServletRequest request) {
-        logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
+        logger.info("method={} uri={}", request.getMethod(), request.getRequestURI());
         return this.saleService.findByDate(date);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Sale> getById(@PathVariable Integer id, HttpServletRequest request ) {
-        logger.info("method={} uri={}", request.getMethod(), request.getPathInfo());
+        logger.info("method={} uri={}", request.getMethod(), request.getRequestURI());
         Optional<Sale> sale = Optional.of(this.saleService.findById(id));
         if (sale.isEmpty())
             return new ResponseEntity<>( HttpStatus.NOT_FOUND );
@@ -62,7 +62,7 @@ public class SaleController {
     public ResponseEntity<Sale> save(@RequestBody SaleProductDto body, HttpServletRequest request){
         logger.info(
             "method={} uri={} body={}",
-            request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)
+            request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
         );
         return new ResponseEntity(this.saleService.save(body), HttpStatus.OK);
     }
@@ -74,7 +74,7 @@ public class SaleController {
         HttpServletRequest request) {
         logger.info(
             "method={} uri={} body={}",
-            request.getMethod(), request.getPathInfo(), ObjectExtension.toJson(body)
+            request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
         );
         return this.saleService.update(id, body);
     }
