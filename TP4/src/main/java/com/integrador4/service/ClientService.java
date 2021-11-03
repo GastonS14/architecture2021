@@ -20,7 +20,6 @@ public class ClientService {
     }
 
     public Client update (Integer id, ClientRequest clientRequest) {
-        // Optional<Client> client = this.clientRepository.findById(id);
         return this.clientRepository.save(clientRequest.toClient(id));
     }
 

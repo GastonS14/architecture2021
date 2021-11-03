@@ -41,8 +41,8 @@ public class Sale {
         this.client = client;
     }
 
-    public Sale(Integer id, Client client) {
-        this.idSale = id;
+    public Sale(Integer idSale, Client client) {
+        this.idSale = idSale;
         this.client = client;
     }
 

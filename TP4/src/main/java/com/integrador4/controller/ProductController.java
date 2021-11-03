@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/products")
+@RequestMapping("/products")
 public class ProductController {
 
     private final Logger logger = LoggerFactory.getLogger(ProductController.class);

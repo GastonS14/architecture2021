@@ -28,8 +28,8 @@ public class Product {
 
     public Product() {}
 
-    public Product(Integer id, String name, double price, int stock ){
-        this.idProduct = id;
+    public Product(Integer idProduct, String name, double price, int stock ){
+        this.idProduct = idProduct;
         this.name = name;
         this.price = price;
         this.stock = stock;

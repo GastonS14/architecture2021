@@ -14,12 +14,12 @@ public class SaleProduct {
     @Column ( nullable = false ) private int quantity;
 
     @ManyToOne
-    @JoinColumn ( name = "id_product", insertable=false, updatable=false)
+    @JoinColumn ( name = "idProduct", insertable=false, updatable=false)
     private Product product;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn ( name = "id_sale", insertable=false, updatable=false)
+    @JoinColumn ( name = "idSale", insertable=false, updatable=false)
     private Sale sale;
 
     public SaleProduct(){
@@ -33,7 +33,7 @@ public class SaleProduct {
     }
 
     public void setSaleID( int saleID ) {
-        this.productSaleID.setId_sale( saleID );
+        this.productSaleID.setIdSale( saleID );
     }
 
     public SaleProductPk getProductSaleID() {

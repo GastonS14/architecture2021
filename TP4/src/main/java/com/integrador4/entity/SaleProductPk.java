@@ -8,31 +8,31 @@ import java.io.Serializable;
 public class SaleProductPk implements Serializable {
 
     @Column
-    private int id_sale;
+    private int idSale;
 
     @Column
-    private int id_product;
+    private int idProduct;
 
     public SaleProductPk() {}
 
     public SaleProductPk(Product product, Sale sale ){
-        this.id_sale = sale.getIdSale();
-        this.id_product = product.getIdProduct();
+        this.idSale = sale.getIdSale();
+        this.idProduct = product.getIdProduct();
     }
 
-    public int getId_sale() {
-        return id_sale;
+    public int getIdSale() {
+        return idSale;
     }
 
-    public void setId_sale( int id_sale ) {
-        this.id_sale = id_sale;
+    public void setIdSale(int id_sale ) {
+        this.idSale = id_sale;
     }
 
-    public void setId_product( int id_product ) {
-        this.id_product = id_product;
+    public void setIdProduct(int idProduct ) {
+        this.idProduct = idProduct;
     }
 
-    public int getId_product() {
-        return id_product;
+    public int getIdProduct() {
+        return idProduct;
     }
 }

@@ -23,11 +23,11 @@ public class ProductService {
         return this.productRepository.save(requestDto.toProduct(id));
     }
 
-    public Optional<Product> getById (Integer id ) {
+    public Optional<Product> getById(Integer id ) {
         return this.productRepository.findById( id );
     }
 
-    public Iterable<Product> getAll () {
+    public Iterable<Product> getAll() {
         return this.productRepository.findAll();
     }
 
