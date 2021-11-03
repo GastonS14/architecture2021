@@ -17,7 +17,7 @@ public class Client {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
-    private Integer idClient;
+    private int idClient;
 
     @Column(nullable = false)
     private String name;
@@ -36,14 +36,14 @@ public class Client {
         this.surname = surname;
     }
 
-    public Client(Integer idClient, String name, String surname ) {
+    public Client(int idClient, String name, String surname ) {
         this.idClient = idClient;
         this.name = name;
         this.surname = surname;
         this.sales = this.initSales();
     }
 
-    public Integer getId() {
+    public int getId() {
         return idClient;
     }
 

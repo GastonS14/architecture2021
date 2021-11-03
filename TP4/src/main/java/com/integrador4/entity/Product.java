@@ -14,7 +14,7 @@ public class Product {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
-    private Integer idProduct;
+    private int idProduct;
 
     @Column(nullable = false)
     private String name;
@@ -24,11 +24,11 @@ public class Product {
 
     @Column
     @JsonIgnore
-    private Integer stock;
+    private int stock;
 
     public Product() {}
 
-    public Product(Integer idProduct, String name, double price, int stock ){
+    public Product(int idProduct, String name, double price, int stock ){
         this.idProduct = idProduct;
         this.name = name;
         this.price = price;
@@ -41,7 +41,7 @@ public class Product {
         this.stock = stock;
     }
 
-    public Integer getIdProduct() {
+    public int getIdProduct() {
         return idProduct;
     }
 

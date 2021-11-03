@@ -1,20 +1,18 @@
 package com.integrador4.service;
 
-import com.integrador4.dto.RequestSaleDto;
-import com.integrador4.dto.RequestSaleEntity;
 import com.integrador4.dto.SaleProductDto;
+import com.integrador4.dto.RequestSale;
 import com.integrador4.dto.SaleRequest;
 import com.integrador4.entity.*;
 import com.integrador4.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public final class SaleService {
@@ -26,32 +24,25 @@ public final class SaleService {
 
     public SaleService() {}
 
-    public ResponseEntity<Sale> save(SaleProductDto request) {
-
+    public Optional<Sale> save(RequestSale request) {
         Optional<Client> c = this.clientRepository.findById(request.getClient());
-        if(c.isEmpty())  return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+        if(c.isEmpty())  return Optional.empty();
         Sale sale = new Sale(c.get());
-
-        List<RequestSaleEntity> currentProducts = this.requestRepository.getPurchases(Date.valueOf(LocalDate.now()), c.get().getId());
-        ArrayList<RequestSaleDto> requestSaleDtos = new ArrayList<>();
-        currentProducts.forEach(
-                currentProduct -> {
-                    requestSaleDtos.add( new RequestSaleDto( currentProduct.getUnidades(), currentProduct.getIdProducto()) );
-                });
-        if (this.verifyQuantity(request.getProductQuantity(), requestSaleDtos)) {
-            ArrayList<SaleProduct> saleProducts = this.addProducts(request.getProductQuantity(), sale);
-            if (saleProducts != null) {
-                sale = this.saleRepository.save(sale);
-                Sale finalSale = sale;
-                saleProducts.forEach(sp -> {
-                    sp.setSaleID(finalSale.getIdSale());
-                    sp.setSale(finalSale);
-                });
-                sale.getProductsSold().addAll(saleProducts);
-                return new ResponseEntity<Sale>( this.saleRepository.save(sale), HttpStatus.OK);
-            }
+        ArrayList<SaleProductDto> saleProductDtos = request.getProductQuantity();
+        boolean rightRequest = saleProductDtos
+                .stream().anyMatch( i -> i.getUnidades() < 0 || i.getUnidades() > 3 ||
+                    productRepository.findById(i.getIdProducto()).isEmpty() ||
+                    productRepository.findById( i.getIdProducto()).get().getStock() < i.getUnidades()
+                );
+        if ( rightRequest ) return Optional.empty();
+        List<SaleProductDto> currentProducts = this.requestRepository.getPurchases(Date.valueOf(LocalDate.now()), c.get().getId());
+        List<SaleProductDto> alreadyBought = saleProductDtos.stream().filter(  currentProducts::contains ).collect(Collectors.toList());
+        if (this.verifyQuantity( alreadyBought, currentProducts) ) {
+            sale = this.saleRepository.save(sale);
+            this.addProducts(saleProductDtos, sale);
+            return Optional.of( this.saleRepository.save( sale ) );
         }
-        return null;
+        return Optional.empty();
     }
 
     public Sale update(Integer id, SaleRequest saleRequest) {
@@ -74,33 +65,20 @@ public final class SaleService {
         return this.saleRepository.reportClientAndSales();
     }
 
-    private boolean verifyQuantity (ArrayList<RequestSaleDto> items, List<RequestSaleDto> productsBought) {
-        for ( RequestSaleDto item : items ) {
-            int index = productsBought.indexOf( item );
-            if ( index > 0 ) {
-                RequestSaleDto rv = productsBought.get( index );
-                if ( ( item.getUnidades() + rv.getUnidades() ) > 3 )
-                    return false;
-            }
-        }
-        return true;
+    private boolean verifyQuantity (List<SaleProductDto> items, List<SaleProductDto> productsBought) {
+        return items.stream().noneMatch(
+                i -> i.getUnidades() + productsBought.get( productsBought.indexOf( i )).getUnidades() > 3 );
     }
 
-    private ArrayList<SaleProduct> addProducts (ArrayList<RequestSaleDto> items, Sale sale) {
-        double amount = 0; ArrayList<Product> products = new ArrayList<>();
-        ArrayList<SaleProduct> saleProducts = new ArrayList<>();
-        for ( RequestSaleDto rv : items ) {
-            Optional<Product> p = productRepository.findById(rv.getIdProducto());
-            if ( p.isEmpty() )
-                return null;
-            Product product = p.get();
+    private void addProducts (ArrayList<SaleProductDto> items, Sale sale) {
+        double amount = 0;
+        for ( SaleProductDto rv : items ) {
+            Product product = productRepository.findById(rv.getIdProducto()).get();
             product.setStock( product.getStock() - rv.getUnidades() );
-            products.add(product);
+            this.productRepository.save( product );
             amount += product.getPrice() * rv.getUnidades();
-            saleProducts.add( new SaleProduct( rv.getUnidades(), product, sale) );
+            sale.addProduct( new SaleProduct( rv.getUnidades(), product, sale ));
         }
         sale.setAmount( amount );
-        this.productRepository.saveAll(products);
-        return saleProducts;
     }
 }

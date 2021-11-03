@@ -1,7 +1,7 @@
 package com.integrador4.controller;
 
 import com.integrador4.dto.SaleRequest;
-import com.integrador4.dto.SaleProductDto;
+import com.integrador4.dto.RequestSale;
 import com.integrador4.entity.Sale;
 import com.integrador4.extensions.ObjectExtension;
 import org.slf4j.Logger;
@@ -59,12 +59,15 @@ public class SaleController {
     }
 
     @PostMapping
-    public ResponseEntity<Sale> save(@RequestBody SaleProductDto body, HttpServletRequest request){
+    public ResponseEntity<Sale> save(@RequestBody RequestSale body, HttpServletRequest request){
         logger.info(
             "method={} uri={} body={}",
             request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
         );
-        return new ResponseEntity(this.saleService.save(body), HttpStatus.OK);
+        Optional<Sale> sale = this.saleService.save( body );
+        if ( sale.isEmpty() )
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+        return new ResponseEntity( sale.get(), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

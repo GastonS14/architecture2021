@@ -17,7 +17,7 @@ public class Sale {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
-    private Integer idSale;
+    private int idSale;
 
     @Column
     private Date date;
@@ -41,7 +41,7 @@ public class Sale {
         this.client = client;
     }
 
-    public Sale(Integer idSale, Client client) {
+    public Sale(int idSale, Client client) {
         this.idSale = idSale;
         this.client = client;
     }
@@ -51,11 +51,10 @@ public class Sale {
         this.date = v.getDate();
         this.client = v.getClient();
         this.idSale = v.getIdSale();
-        //this.productsSold = new ArrayList<>();
         this.productsSold = v.getProductsSold();
     }
 
-    public Integer getIdSale() {
+    public int getIdSale() {
         return idSale;
     }
 
@@ -84,6 +83,8 @@ public class Sale {
     }
 
     public List<SaleProduct> getProductsSold() {
+        if ( this.productsSold == null )
+            this.productsSold = new ArrayList<>();
         return productsSold;
     }
 
@@ -92,6 +93,7 @@ public class Sale {
     }
 
     public void addProduct ( SaleProduct vp ) {
+        if ( this.productsSold == null ) this.productsSold = new ArrayList<>();
         if ( this.productsSold.contains( vp ) ) {
             SaleProduct repeated = this.productsSold.get( this.productsSold.indexOf( vp ) );
             vp.setQuantity( vp.getQuantity() + repeated.getQuantity() );

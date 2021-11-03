@@ -1,34 +1,45 @@
 package com.integrador4.dto;
 
-import java.util.ArrayList;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table ( name = "request_sale_dto")
 public class SaleProductDto {
+    @Column private int unidades;
+    @Id private int idProducto;
 
-    private Integer client;
-    private ArrayList<RequestSaleDto> productQuantity;
+    public SaleProductDto(){}
 
-    public SaleProductDto() {
-        this.productQuantity = new ArrayList<>();
+    public SaleProductDto(int unidades, int idProducto ){
+        this.unidades = unidades;
+        this.idProducto = idProducto;
     }
 
-    public SaleProductDto(Integer client, ArrayList<RequestSaleDto> rv ) {
-        this.client = client;
-        this.productQuantity = new ArrayList<>(rv);
+    public int getUnidades() {
+        return unidades;
     }
 
-    public Integer getClient() {
-        return client;
+    public void setUnidades(int unidades) {
+        this.unidades = unidades;
     }
 
-    public void setClient(Integer client) {
-        this.client = client;
+    public Integer getIdProducto() {
+        return idProducto;
     }
 
-    public ArrayList<RequestSaleDto> getProductQuantity() {
-        return productQuantity;
+    public void setIdProducto( int idProducto ) {
+        this.idProducto = idProducto;
     }
 
-    public void setProductQuantity(ArrayList<RequestSaleDto> productQuantity) {
-        this.productQuantity = new ArrayList<>(productQuantity);
+    public boolean equals ( Object o ) {
+        try {
+            SaleProductDto rv = (SaleProductDto) o;
+            return rv.getIdProducto() == this.idProducto;
+        } catch ( Exception e ) {
+            return false;
+        }
     }
 }
