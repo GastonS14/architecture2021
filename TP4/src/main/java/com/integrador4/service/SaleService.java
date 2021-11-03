@@ -62,8 +62,8 @@ public final class SaleService {
         return this.saleRepository.findAll();
     }
 
-    public Sale findById(Integer id ) {
-        return this.saleRepository.getById(id);
+    public Optional<Sale> findById(Integer id ) {
+        return this.saleRepository.findById(id);
     }
 
     public List<Sale> findByDate (Date date) {

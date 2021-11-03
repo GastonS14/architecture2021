@@ -44,7 +44,7 @@ public class SaleController {
     @GetMapping("/{id}")
     public ResponseEntity<Sale> getById(@PathVariable Integer id, HttpServletRequest request ) {
         logger.info("method={} uri={}", request.getMethod(), request.getRequestURI());
-        Optional<Sale> sale = Optional.of(this.saleService.findById(id));
+        Optional<Sale> sale = this.saleService.findById(id);
         if (sale.isEmpty())
             return new ResponseEntity<>( HttpStatus.NOT_FOUND );
         return new ResponseEntity(sale, HttpStatus.OK);
