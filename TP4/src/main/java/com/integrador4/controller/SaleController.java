@@ -1,7 +1,9 @@
 package com.integrador4.controller;
 
+import com.integrador4.dto.BestSellProductDto;
 import com.integrador4.dto.SaleRequest;
 import com.integrador4.dto.RequestSale;
+import com.integrador4.entity.Product;
 import com.integrador4.entity.Sale;
 import com.integrador4.extensions.ObjectExtension;
 import org.slf4j.Logger;

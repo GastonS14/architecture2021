@@ -8,7 +8,7 @@ import com.integrador4.repository.ClientRepository;
 import java.util.Optional;
 
 @Service
-public class ClientService {
+public final class ClientService {
 
     @Autowired
     private ClientRepository clientRepository;

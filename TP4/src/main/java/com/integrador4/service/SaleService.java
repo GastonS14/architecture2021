@@ -1,5 +1,6 @@
 package com.integrador4.service;
 
+import com.integrador4.dto.BestSellProductDto;
 import com.integrador4.dto.SaleProductDto;
 import com.integrador4.dto.RequestSale;
 import com.integrador4.dto.SaleRequest;
@@ -21,6 +22,7 @@ public final class SaleService {
     @Autowired private ProductRepository productRepository;
     @Autowired private ClientRepository clientRepository;
     @Autowired private RequestRepository requestRepository;
+    @Autowired private BestSellProductRepository bestSellProductRepository;
 
     public SaleService() {}
 
@@ -80,5 +82,9 @@ public final class SaleService {
             sale.addProduct( new SaleProduct( rv.getUnidades(), product, sale ));
         }
         sale.setAmount( amount );
+    }
+
+    public Optional<BestSellProductDto> getBestSell() {
+        return this.bestSellProductRepository.getBestSell();
     }
 }

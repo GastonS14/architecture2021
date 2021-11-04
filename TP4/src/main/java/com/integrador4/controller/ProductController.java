@@ -1,8 +1,10 @@
 package com.integrador4.controller;
 
+import com.integrador4.dto.BestSellProductDto;
 import com.integrador4.dto.ProductRequest;
 import com.integrador4.entity.Product;
 import com.integrador4.extensions.ObjectExtension;
+import com.integrador4.repository.BestSellProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.integrador4.service.ProductService;
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 import java.util.Optional;
 
 @RestController
@@ -19,9 +20,9 @@ import java.util.Optional;
 public class ProductController {
 
     private final Logger logger = LoggerFactory.getLogger(ProductController.class);
-
     @Autowired
     private ProductService productService;
+    @Autowired private BestSellProductRepository bestSellProductRepository;
 
     @GetMapping()
     public Iterable<Product> getAll(HttpServletRequest request) {
@@ -47,15 +48,19 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public Product update(
-        @RequestBody ProductRequest body,
-        @PathVariable Integer id,
-        HttpServletRequest request
-    ) {
+    public Product update(@RequestBody ProductRequest body, @PathVariable Integer id, HttpServletRequest request) {
         logger.info(
             "method={} uri={} body={}",
             request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
         );
         return this.productService.update(id, body);
+    }
+
+    @GetMapping( "/bestSeller")
+    public ResponseEntity<BestSellProductDto> getBestSell ( ) {
+        Optional<BestSellProductDto> bestSellProduct = this.bestSellProductRepository.getBestSell();
+        if ( bestSellProduct.isEmpty() )
+            return new ResponseEntity<>( HttpStatus.NO_CONTENT);
+        return new ResponseEntity( bestSellProduct, HttpStatus.OK);
     }
 }
