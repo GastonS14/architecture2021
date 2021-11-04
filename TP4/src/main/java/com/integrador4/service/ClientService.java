@@ -19,8 +19,10 @@ public final class ClientService {
         return this.clientRepository.save(clientRequest.toClient());
     }
 
-    public Client update (Integer id, ClientRequest clientRequest) {
-        return this.clientRepository.save(clientRequest.toClient(id));
+    public Optional<Client> update (Integer id, ClientRequest clientRequest) {
+        if ( this.clientRepository.findById( id ).isEmpty() )
+            return Optional.empty();
+        return Optional.of( this.clientRepository.save( clientRequest.toClient(id) ) );
     }
 
     public Iterable<Client> getAll () {
@@ -31,4 +33,11 @@ public final class ClientService {
         return this.clientRepository.findById( id );
     }
 
+    public Optional<Client> delete( Integer id ) {
+        Optional<Client> clientToDelete = this.clientRepository.findById( id );
+        if ( clientToDelete.isEmpty() )
+            return Optional.empty();
+        this.clientRepository.delete( clientToDelete.get() );
+        return clientToDelete;
+    }
 }

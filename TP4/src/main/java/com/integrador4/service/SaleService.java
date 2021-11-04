@@ -47,8 +47,10 @@ public final class SaleService {
         return Optional.empty();
     }
 
-    public Sale update(Integer id, SaleRequest saleRequest) {
-        return this.saleRepository.save(saleRequest.toSale(id));
+    public Optional<Sale> update(Integer id, SaleRequest saleRequest) {
+        if ( this.saleRepository.findById( id ).isEmpty() )
+            return Optional.empty();
+        return Optional.of( this.saleRepository.save(saleRequest.toSale(id)) );
     }
 
     public List<Sale> findAll() {
@@ -86,5 +88,13 @@ public final class SaleService {
 
     public Optional<BestSellProductDto> getBestSell() {
         return this.bestSellProductRepository.getBestSell();
+    }
+
+    public Optional<Sale> delete( Integer id ) {
+        Optional<Sale> saleToDelete = this.saleRepository.findById( id );
+        if ( saleToDelete.isEmpty() )
+            return Optional.empty();
+        this.saleRepository.delete( saleToDelete.get() );
+        return saleToDelete;
     }
 }

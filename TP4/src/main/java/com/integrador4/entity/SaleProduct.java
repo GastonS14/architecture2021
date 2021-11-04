@@ -14,12 +14,12 @@ public class SaleProduct {
     @Column ( nullable = false ) private int quantity;
 
     @ManyToOne
-    @JoinColumn ( name = "idProduct", insertable=false, updatable=false)
+    @JoinColumn ( name = "idProduct", insertable=false, updatable = false)
     private Product product;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn ( name = "idSale", insertable=false, updatable=false)
+    @JoinColumn ( name = "idSale", insertable=false, updatable = false)
     private Sale sale;
 
     public SaleProduct(){

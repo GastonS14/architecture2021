@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table( name = "product")
@@ -23,8 +24,11 @@ public class Product {
     private Double price;
 
     @Column
-    @JsonIgnore
     private int stock;
+
+    @JsonIgnore
+    @OneToMany( mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SaleProduct> sales;
 
     public Product() {}
 
@@ -67,6 +71,14 @@ public class Product {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public List<SaleProduct> getSales() {
+        return sales;
+    }
+
+    public void setSales(List<SaleProduct> sales) {
+        this.sales = sales;
     }
 
 }

@@ -23,7 +23,6 @@ public class Sale {
     private Date date;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "idClient")
     private Client client;
 
     @Column

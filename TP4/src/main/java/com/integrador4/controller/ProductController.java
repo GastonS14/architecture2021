@@ -48,12 +48,14 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public Product update(@RequestBody ProductRequest body, @PathVariable Integer id, HttpServletRequest request) {
-        logger.info(
-            "method={} uri={} body={}",
+    public ResponseEntity<Product> update(@RequestBody ProductRequest body, @PathVariable Integer id, HttpServletRequest request) {
+        logger.info("method={} uri={} body={}",
             request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
         );
-        return this.productService.update(id, body);
+        Optional<Product> product = this.productService.update(id, body);
+        if ( product.isEmpty() )
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND );
+        return new ResponseEntity( product, HttpStatus.OK);
     }
 
     @GetMapping( "/bestSeller")
@@ -62,5 +64,13 @@ public class ProductController {
         if ( bestSellProduct.isEmpty() )
             return new ResponseEntity<>( HttpStatus.NO_CONTENT);
         return new ResponseEntity( bestSellProduct, HttpStatus.OK);
+    }
+
+    @DeleteMapping( "/{id}")
+    public ResponseEntity delete ( @PathVariable Integer id ) {
+        Optional<Product> product = this.productService.delete( id );
+        if ( product.isEmpty() )
+            return new ResponseEntity( HttpStatus.NOT_FOUND );
+        return new ResponseEntity( product, HttpStatus.OK );
     }
 }

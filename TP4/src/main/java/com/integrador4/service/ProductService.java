@@ -19,8 +19,10 @@ public final class ProductService {
         return this.productRepository.save(requestDto.toProduct());
     }
 
-    public Product update(Integer id, ProductRequest requestDto) {
-        return this.productRepository.save(requestDto.toProduct(id));
+    public Optional<Product> update(Integer id, ProductRequest requestDto) {
+        if( this.productRepository.findById( id ).isEmpty() )
+            return Optional.empty();
+        return Optional.of( this.productRepository.save(requestDto.toProduct(id)) );
     }
 
     public Optional<Product> getById(Integer id ) {
@@ -31,4 +33,11 @@ public final class ProductService {
         return this.productRepository.findAll();
     }
 
+    public Optional<Product> delete ( Integer id ) {
+        Optional<Product> productToDelete = this.productRepository.findById( id );
+        if ( productToDelete.isEmpty() )
+            return Optional.empty();
+        this.productRepository.delete( productToDelete.get() );
+        return productToDelete;
+    }
 }

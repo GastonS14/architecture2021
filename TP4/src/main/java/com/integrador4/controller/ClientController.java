@@ -47,22 +47,26 @@ public class ClientController {
     }
 
     /**
-     *
      * @param id of a client
      * @param body to update a client
      * @return a Client entity
-     * // @throws javassist.NotFoundException if the client doesn't exist
      */
     @PutMapping("/{id}")
-    public Client update(
-        @PathVariable Integer id,
-        @RequestBody ClientRequest body,
-        HttpServletRequest request
-    ) {
-        logger.info(
-            "method={} uri={} body={}",
+    public ResponseEntity update(@PathVariable Integer id, @RequestBody ClientRequest body, HttpServletRequest request) {
+        logger.info("method={} uri={} body={}",
             request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
         );
-        return this.clientService.update(id, body);
+        Optional<Client> client = this.clientService.update(id, body);
+        if ( client.isEmpty() )
+            return new ResponseEntity( HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>( client, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete ( @PathVariable Integer id ) {
+        Optional<Client> client = this.clientService.delete( id );
+        if ( client.isEmpty() )
+            return new ResponseEntity( HttpStatus.NOT_FOUND );
+        return new ResponseEntity( client, HttpStatus.OK );
     }
 }

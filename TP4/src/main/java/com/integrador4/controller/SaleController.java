@@ -1,9 +1,7 @@
 package com.integrador4.controller;
 
-import com.integrador4.dto.BestSellProductDto;
 import com.integrador4.dto.SaleRequest;
 import com.integrador4.dto.RequestSale;
-import com.integrador4.entity.Product;
 import com.integrador4.entity.Sale;
 import com.integrador4.extensions.ObjectExtension;
 import org.slf4j.Logger;
@@ -69,19 +67,26 @@ public class SaleController {
         Optional<Sale> sale = this.saleService.save( body );
         if ( sale.isEmpty() )
             return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
-        return new ResponseEntity( sale.get(), HttpStatus.OK);
+        return new ResponseEntity( sale.get(), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public Sale update(
-        @RequestBody SaleRequest body,
-        @PathVariable Integer id,
-        HttpServletRequest request) {
-        logger.info(
-            "method={} uri={} body={}",
+    public ResponseEntity update(@RequestBody SaleRequest body, @PathVariable Integer id, HttpServletRequest request) {
+        logger.info("method={} uri={} body={}",
             request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
         );
-        return this.saleService.update(id, body);
+        Optional<Sale> sale = this.saleService.update(id, body);
+        if ( sale.isEmpty() )
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND );
+        return new ResponseEntity( sale, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete ( @PathVariable Integer id ) {
+        Optional<Sale> sale = this.saleService.delete( id );
+        if ( sale.isEmpty() )
+            return new ResponseEntity( HttpStatus.NOT_FOUND );
+        return new ResponseEntity( sale, HttpStatus.OK);
     }
 
 

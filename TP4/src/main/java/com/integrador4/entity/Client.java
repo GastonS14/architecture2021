@@ -25,8 +25,9 @@ public class Client {
     @Column(nullable = false)
     private String surname;
 
+    // No trae las ventas cuando hago GET/idCliente !!
     @JsonIgnore
-    @OneToMany( mappedBy = "idSale", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany( mappedBy = "client", cascade = {CascadeType.ALL}, orphanRemoval = true )
     private List<Sale> sales;
 
     public Client(){}
