@@ -15,8 +15,9 @@ public final class ProductService {
 
     public ProductService(){}
 
-    public Product save(ProductRequest requestDto) {
-        return this.productRepository.save(requestDto.toProduct());
+    public Optional<Product> save( ProductRequest requestDto ) {
+        Optional<Product> product = Optional.of( this.productRepository.save( requestDto.toProduct() ) );
+        return product;
     }
 
     public Optional<Product> update(Integer id, ProductRequest requestDto) {

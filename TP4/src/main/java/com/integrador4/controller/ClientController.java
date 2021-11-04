@@ -38,12 +38,14 @@ public class ClientController {
     }
 
     @PostMapping
-    public Client save(@RequestBody ClientRequest body, HttpServletRequest request) {
-        logger.info(
-            "method={} uri={} body={}",
+    public ResponseEntity save(@RequestBody ClientRequest body, HttpServletRequest request) {
+        logger.info("method={} uri={} body={}",
             request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
         );
-        return this.clientService.save(body);
+        Optional<Client> newClient = this.clientService.save(body);
+        if ( newClient.isEmpty() )
+            return new ResponseEntity( HttpStatus.BAD_REQUEST );
+        return new ResponseEntity( newClient, HttpStatus.CREATED );
     }
 
     /**

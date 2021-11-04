@@ -15,8 +15,8 @@ public final class ClientService {
 
     public ClientService(){}
 
-    public Client save (ClientRequest clientRequest) {
-        return this.clientRepository.save(clientRequest.toClient());
+    public Optional<Client> save (ClientRequest clientRequest) {
+        return Optional.of( this.clientRepository.save(clientRequest.toClient()) );
     }
 
     public Optional<Client> update (Integer id, ClientRequest clientRequest) {

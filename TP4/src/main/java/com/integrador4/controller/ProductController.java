@@ -39,12 +39,14 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product save(@RequestBody ProductRequest body, HttpServletRequest request) {
-        logger.info(
-            "method={} uri={} body={}",
+    public ResponseEntity save(@RequestBody ProductRequest body, HttpServletRequest request) {
+        logger.info("method={} uri={} body={}",
             request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
         );
-        return this.productService.save(body);
+        Optional<Product> product = this.productService.save(body);
+        if ( product.isEmpty() )
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
+        return new ResponseEntity( product, HttpStatus.CREATED );
     }
 
     @PutMapping("/{id}")

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,6 +38,7 @@ public class Product {
         this.name = name;
         this.price = price;
         this.stock = stock;
+        this.sales = new ArrayList<>();
     }
 
     public Product(String name, double price, int stock ){
@@ -74,10 +76,14 @@ public class Product {
     }
 
     public List<SaleProduct> getSales() {
+        if ( this.sales == null )
+            this.sales = new ArrayList<>();
         return sales;
     }
 
     public void setSales(List<SaleProduct> sales) {
+        if ( this.sales == null )
+            this.sales = new ArrayList<>();
         this.sales = sales;
     }
 
