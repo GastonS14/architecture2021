@@ -1,6 +1,5 @@
 package com.integrador4.controller;
 
-import com.integrador4.dto.SaleRequest;
 import com.integrador4.dto.RequestSale;
 import com.integrador4.entity.Sale;
 import com.integrador4.extensions.ObjectExtension;
@@ -68,17 +67,6 @@ public class SaleController {
         if ( sale.isEmpty() )
             return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
         return new ResponseEntity( sale.get(), HttpStatus.CREATED);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody SaleRequest body, @PathVariable Integer id, HttpServletRequest request) {
-        logger.info("method={} uri={} body={}",
-            request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
-        );
-        Optional<Sale> sale = this.saleService.update(id, body);
-        if ( sale.isEmpty() )
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND );
-        return new ResponseEntity( sale, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

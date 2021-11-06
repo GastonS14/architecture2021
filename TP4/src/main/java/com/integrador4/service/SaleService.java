@@ -3,7 +3,6 @@ package com.integrador4.service;
 import com.integrador4.dto.BestSellProductDto;
 import com.integrador4.dto.SaleProductDto;
 import com.integrador4.dto.RequestSale;
-import com.integrador4.dto.SaleRequest;
 import com.integrador4.entity.*;
 import com.integrador4.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +44,6 @@ public final class SaleService {
             return Optional.of( this.saleRepository.save( sale ) );
         }
         return Optional.empty();
-    }
-
-    public Optional<Sale> update(Integer id, SaleRequest saleRequest) {
-        if ( this.saleRepository.findById( id ).isEmpty() )
-            return Optional.empty();
-        return Optional.of( this.saleRepository.save(saleRequest.toSale(id)) );
     }
 
     public List<Sale> findAll() {

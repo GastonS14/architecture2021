@@ -81,10 +81,12 @@ function createCard( product ) {
 }
 
 function addProduct () {
+    let priceValue =document.getElementById("price").value;
+    let stockValue = document.getElementById("stock").value;
     let invalidInput = () => {
         return ( document.getElementById("nameProduct").value === "" ||
-            parseFloat(document.getElementById("price").value) < 1 ||
-            parseInt(document.getElementById("stock").value) < 1 );
+            (priceValue === '' || parseFloat(priceValue) < 1) ||
+            (stockValue === '' || parseInt(stockValue) < 1 ));
     }
     if ( invalidInput() ) {
         alert("Please complete all fields ");
@@ -92,8 +94,8 @@ function addProduct () {
     }
     const product = {
         "name" : document.getElementById("nameProduct").value,
-        "price" : parseFloat(document.getElementById("price").value),
-        "stock": parseInt(document.getElementById("stock").value)
+        "price" : parseFloat(priceValue),
+        "stock": parseInt(stockValue)
     };
     fetch( uriProduct, {
         method: "post",

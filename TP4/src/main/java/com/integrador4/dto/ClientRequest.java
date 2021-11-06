@@ -3,6 +3,7 @@ package com.integrador4.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.integrador4.entity.Client;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
