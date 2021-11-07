@@ -1,0 +1,1287 @@
+{
+	"info": {
+		"_postman_id": "779b4c05-31ce-4742-b1bf-565562981f61",
+		"name": "MarketAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SALES",
+			"item": [
+				{
+					"name": "Create Sale",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"client\": 61,\r\n    \"productQuantity\": [ \r\n        {\r\n            \"idProducto\": 1,\r\n            \"unidades\": 2\r\n        },\r\n        {\r\n            \"idProducto\": 2,\r\n            \"unidades\": 1\r\n        },\r\n        {\r\n            \"idProducto\": 3,\r\n            \"unidades\": 3\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/market/sales",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"sales"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Sale",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"client\": 61,\r\n    \"productQuantity\": [ \r\n        {\r\n            \"idProducto\": 1,\r\n            \"unidades\": 2\r\n        },\r\n        {\r\n            \"idProducto\": 2,\r\n            \"unidades\": 1\r\n        },\r\n        {\r\n            \"idProducto\": 3,\r\n            \"unidades\": 3\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/market/sales",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"sales"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:51:01 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id_sale\": 62,\n    \"date\": \"2021-11-06\",\n    \"client\": {\n        \"name\": \"Roger\",\n        \"surname\": \"Federer\",\n        \"id\": 61\n    },\n    \"amount\": 1400.3999999999999,\n    \"products_sold\": [\n        {\n            \"quantity\": 2,\n            \"product\": {\n                \"id_product\": 1,\n                \"name\": \"tomate\",\n                \"price\": 259.4,\n                \"stock\": 463\n            }\n        },\n        {\n            \"quantity\": 1,\n            \"product\": {\n                \"id_product\": 2,\n                \"name\": \"lechuga\",\n                \"price\": 760.4,\n                \"stock\": 111\n            }\n        },\n        {\n            \"quantity\": 3,\n            \"product\": {\n                \"id_product\": 3,\n                \"name\": \"nesquik\",\n                \"price\": 40.4,\n                \"stock\": 585\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Sale",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/market/sales/62",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"sales",
+								"62"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete Sale",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/market/sales/62",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"sales",
+										"62"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:51:37 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id_sale\": 62,\n    \"date\": \"2021-11-06\",\n    \"client\": {\n        \"name\": \"Roger\",\n        \"surname\": \"Federer\",\n        \"id\": 61\n    },\n    \"amount\": 1400.3999999999999,\n    \"products_sold\": [\n        {\n            \"quantity\": 2,\n            \"product\": {\n                \"id_product\": 1,\n                \"name\": \"tomate\",\n                \"price\": 259.4,\n                \"stock\": 463\n            }\n        },\n        {\n            \"quantity\": 1,\n            \"product\": {\n                \"id_product\": 2,\n                \"name\": \"lechuga\",\n                \"price\": 760.4,\n                \"stock\": 111\n            }\n        },\n        {\n            \"quantity\": 3,\n            \"product\": {\n                \"id_product\": 3,\n                \"name\": \"nesquik\",\n                \"price\": 40.4,\n                \"stock\": 585\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "GET ALL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/market/sales",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"sales"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET ALL",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/market/sales",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"sales"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:39:08 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id_sale\": 39,\n        \"date\": \"2021-11-03\",\n        \"client\": {\n            \"name\": \"fran\",\n            \"surname\": \"c\",\n            \"id\": 10\n        },\n        \"amount\": 1272.5,\n        \"products_sold\": [\n            {\n                \"quantity\": 3,\n                \"product\": {\n                    \"id_product\": 1,\n                    \"name\": \"tomate\",\n                    \"price\": 259.4,\n                    \"stock\": 465\n                }\n            },\n            {\n                \"quantity\": 2,\n                \"product\": {\n                    \"id_product\": 6,\n                    \"name\": \"yerba\",\n                    \"price\": 21.4,\n                    \"stock\": 631\n                }\n            }\n        ]\n    },\n    {\n        \"id_sale\": 47,\n        \"date\": \"2021-11-04\",\n        \"client\": {\n            \"name\": \"manu\",\n            \"surname\": \"e\",\n            \"id\": 12\n        },\n        \"amount\": 370.8,\n        \"products_sold\": []\n    },\n    {\n        \"id_sale\": 49,\n        \"date\": \"2021-11-04\",\n        \"client\": {\n            \"name\": \"fran\",\n            \"surname\": \"c\",\n            \"id\": 10\n        },\n        \"amount\": 1972.3999999999999,\n        \"products_sold\": [\n            {\n                \"quantity\": 2,\n                \"product\": {\n                    \"id_product\": 2,\n                    \"name\": \"lechuga\",\n                    \"price\": 760.4,\n                    \"stock\": 112\n                }\n            },\n            {\n                \"quantity\": 2,\n                \"product\": {\n                    \"id_product\": 3,\n                    \"name\": \"nesquik\",\n                    \"price\": 40.4,\n                    \"stock\": 588\n                }\n            }\n        ]\n    },\n    {\n        \"id_sale\": 57,\n        \"date\": \"2021-11-05\",\n        \"client\": {\n            \"name\": \"gaston\",\n            \"surname\": \"sanches sanches\",\n            \"id\": 11\n        },\n        \"amount\": 1,\n        \"products_sold\": []\n    },\n    {\n        \"id_sale\": 58,\n        \"date\": \"2021-11-05\",\n        \"client\": {\n            \"name\": \"julian\",\n            \"surname\": \"g\",\n            \"id\": 14\n        },\n        \"amount\": 69,\n        \"products_sold\": []\n    },\n    {\n        \"id_sale\": 59,\n        \"date\": \"2021-11-05\",\n        \"client\": {\n            \"name\": \"juan\",\n            \"surname\": \"Segundo\",\n            \"id\": 8\n        },\n        \"amount\": 46,\n        \"products_sold\": []\n    },\n    {\n        \"id_sale\": 60,\n        \"date\": \"2021-11-05\",\n        \"client\": {\n            \"name\": \"fran\",\n            \"surname\": \"c\",\n            \"id\": 10\n        },\n        \"amount\": 46,\n        \"products_sold\": []\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/market/sales/39",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"sales",
+								"39"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "By ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/market/sales/39",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"sales",
+										"39"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:43:48 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id_sale\": 39,\n    \"date\": \"2021-11-03\",\n    \"client\": {\n        \"name\": \"fran\",\n        \"surname\": \"c\",\n        \"id\": 10\n    },\n    \"amount\": 1272.5,\n    \"products_sold\": [\n        {\n            \"quantity\": 3,\n            \"product\": {\n                \"id_product\": 1,\n                \"name\": \"tomate\",\n                \"price\": 259.4,\n                \"stock\": 465\n            }\n        },\n        {\n            \"quantity\": 2,\n            \"product\": {\n                \"id_product\": 6,\n                \"name\": \"yerba\",\n                \"price\": 21.4,\n                \"stock\": 631\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Report by Clients & amount of sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/market/sales/report",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"sales",
+								"report"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Report",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/market/sales/report",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"sales",
+										"report"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 04:52:26 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"idClient\": 8,\n        \"name\": \"juan\",\n        \"surname\": \"Segundo\",\n        \"amount\": 46\n    },\n    {\n        \"idClient\": 10,\n        \"name\": \"fran\",\n        \"surname\": \"c\",\n        \"amount\": 3290.8999999999996\n    },\n    {\n        \"idClient\": 11,\n        \"name\": \"gaston\",\n        \"surname\": \"sanches sanches\",\n        \"amount\": 1\n    },\n    {\n        \"idClient\": 12,\n        \"name\": \"manu\",\n        \"surname\": \"e\",\n        \"amount\": 370.8\n    },\n    {\n        \"idClient\": 14,\n        \"name\": \"julian\",\n        \"surname\": \"g\",\n        \"amount\": 69\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Filter by DATE",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/market/sales/filter?date=2021-11-04",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"sales",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2021-11-04"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Filter by DATE",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/market/sales/filter?date=2021-11-04",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"sales",
+										"filter"
+									],
+									"query": [
+										{
+											"key": "date",
+											"value": "2021-11-04"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 14:01:08 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id_sale\": 47,\n        \"date\": \"2021-11-04\",\n        \"client\": {\n            \"name\": \"manu\",\n            \"surname\": \"e\",\n            \"id\": 12\n        },\n        \"amount\": 370.8,\n        \"products_sold\": []\n    },\n    {\n        \"id_sale\": 49,\n        \"date\": \"2021-11-04\",\n        \"client\": {\n            \"name\": \"fran\",\n            \"surname\": \"c\",\n            \"id\": 10\n        },\n        \"amount\": 1972.3999999999999,\n        \"products_sold\": [\n            {\n                \"quantity\": 2,\n                \"product\": {\n                    \"id_product\": 2,\n                    \"name\": \"lechuga\",\n                    \"price\": 760.4,\n                    \"stock\": 111\n                }\n            },\n            {\n                \"quantity\": 2,\n                \"product\": {\n                    \"id_product\": 3,\n                    \"name\": \"nesquik\",\n                    \"price\": 40.4,\n                    \"stock\": 585\n                }\n            }\n        ]\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "CLIENTS",
+			"item": [
+				{
+					"name": "Delete Client",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/market/clients/41",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"clients",
+								"41"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete Client",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/market/clients/41",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"clients",
+										"41"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:49:43 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"antonio\",\n    \"surname\": \"rios\",\n    \"id\": 41\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Client",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"name\": \"Roger\",\r\n    \"surname\": \"Federer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/market/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"clients"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Client",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"name\": \"Roger\",\r\n    \"surname\": \"Federer\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/market/clients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"clients"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:48:19 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"Roger\",\n    \"surname\": \"Federer\",\n    \"id\": 61\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Client",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Rafael\",\r\n    \"surname\": \"Nadal\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/market/clients/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"clients",
+								"9"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Client",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Rafael\",\r\n    \"surname\": \"Nadal\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/market/clients/9",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"clients",
+										"9"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:48:59 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"Rafael\",\n    \"surname\": \"Nadal\",\n    \"id\": 9\n}"
+						}
+					]
+				},
+				{
+					"name": "GET ALL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/market/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"clients"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET ALL",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/market/clients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"clients"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:46:52 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"name\": \"juan\",\n        \"surname\": \"Segundo\",\n        \"id\": 8\n    },\n    {\n        \"name\": \"Pedro\",\n        \"surname\": \"DeFelipe\",\n        \"id\": 9\n    },\n    {\n        \"name\": \"fran\",\n        \"surname\": \"c\",\n        \"id\": 10\n    },\n    {\n        \"name\": \"gaston\",\n        \"surname\": \"sanches sanches\",\n        \"id\": 11\n    },\n    {\n        \"name\": \"manu\",\n        \"surname\": \"e\",\n        \"id\": 12\n    },\n    {\n        \"name\": \"alberto\",\n        \"surname\": \"f\",\n        \"id\": 13\n    },\n    {\n        \"name\": \"julian\",\n        \"surname\": \"g\",\n        \"id\": 14\n    },\n    {\n        \"name\": \"antonio\",\n        \"surname\": \"rios\",\n        \"id\": 41\n    },\n    {\n        \"name\": \"Andres\",\n        \"surname\": \"Calamaro\",\n        \"id\": 50\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/market/clients/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"clients",
+								"8"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "By ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/market/clients/8",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"clients",
+										"8"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:47:33 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"juan\",\n    \"surname\": \"Segundo\",\n    \"id\": 8\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "PRODUCTS",
+			"item": [
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\": \"marlboro\",\r\n        \"price\": 270,\r\n        \"stock\": 500\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/market/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"name\": \"marlboro\",\r\n        \"price\": 270,\r\n        \"stock\": 500\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/market/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"products"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:53:57 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id_product\": 63,\n    \"name\": \"marlboro\",\n    \"price\": 270,\n    \"stock\": 500\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/market/products/63",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"products",
+								"63"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete Product",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/market/products/63",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"products",
+										"63"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:55:26 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id_product\": 63,\n    \"name\": \"camel\",\n    \"price\": 250.5,\n    \"stock\": 488\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"camel\",\r\n    \"price\": 250.5,\r\n    \"stock\": 488\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/market/products/63",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"products",
+								"63"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Product",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"camel\",\r\n    \"price\": 250.5,\r\n    \"stock\": 488\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/market/products/63",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"products",
+										"63"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:55:04 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id_product\": 63,\n    \"name\": \"camel\",\n    \"price\": 250.5,\n    \"stock\": 488\n}"
+						}
+					]
+				},
+				{
+					"name": "GET ALL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/market/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET ALL",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/market/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:44:38 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id_product\": 1,\n        \"name\": \"tomate\",\n        \"price\": 259.4,\n        \"stock\": 465\n    },\n    {\n        \"id_product\": 2,\n        \"name\": \"lechuga\",\n        \"price\": 760.4,\n        \"stock\": 112\n    },\n    {\n        \"id_product\": 3,\n        \"name\": \"nesquik\",\n        \"price\": 40.4,\n        \"stock\": 588\n    },\n    {\n        \"id_product\": 4,\n        \"name\": \"fernet\",\n        \"price\": 250.5,\n        \"stock\": 120\n    },\n    {\n        \"id_product\": 5,\n        \"name\": \"leche\",\n        \"price\": 85.4,\n        \"stock\": 21\n    },\n    {\n        \"id_product\": 6,\n        \"name\": \"yerba\",\n        \"price\": 21.4,\n        \"stock\": 631\n    },\n    {\n        \"id_product\": 7,\n        \"name\": \"azucar\",\n        \"price\": 232.4,\n        \"stock\": 230\n    },\n    {\n        \"id_product\": 56,\n        \"name\": \"edit\",\n        \"price\": 322,\n        \"stock\": 2\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/market/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "By ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/market/products/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"products",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:45:06 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id_product\": 1,\n    \"name\": \"tomate\",\n    \"price\": 259.4,\n    \"stock\": 465\n}"
+						}
+					]
+				},
+				{
+					"name": "Best Sell",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/market/products/bestSeller",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"market",
+								"products",
+								"bestSeller"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Best Sell",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/market/products/bestSeller",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"market",
+										"products",
+										"bestSeller"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 07 Nov 2021 02:58:57 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"idProduct\": 1,\n    \"name\": \"tomate\",\n    \"price\": 259.4,\n    \"stock\": 463,\n    \"amount_of_sells\": 3\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
