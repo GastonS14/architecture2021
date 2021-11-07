@@ -52,8 +52,11 @@ function createCard( product ) {
     buy.type = "button";
     buy.classList.add("btn","btn-warning", "btn-sm", "me-1");
     buy.id = product.id_product;
+    buy.setAttribute("units", product.stock);
     buy.addEventListener( "click",
-        () => document.getElementById("idProductForSale").value = event.currentTarget.id );
+        () => {
+        document.getElementById("currentUnits").value = event.currentTarget.getAttribute("units");
+        document.getElementById("idProductForSale").value = event.currentTarget.id });
     buy.setAttribute( "data-bs-toggle", "modal");
     buy.setAttribute( "data-bs-target", "#modalBuyProduct");
     let edit = document.createElement("button");
@@ -115,21 +118,23 @@ function addProduct () {
 }
 
 function edit () {
+    const newName = document.getElementById("newNameEditProduct").value;
+    const newPrice = document.getElementById("newPriceEditProduct").value;
+    const newStock = document.getElementById("newStockEditProduct").value;
     let invalidInput = () => {
         return ( document.getElementById("idProductForEdit").value === "" ||
-            document.getElementById("newNameEditProduct").value === "" ||
-            parseFloat(document.getElementById("newPriceEditProduct").value) < 1 ||
-            parseInt(document.getElementById("newStockEditProduct").value ) < 1 );
+            newName === "" || newPrice === "" || parseFloat(newPrice) < 1 ||
+            newStock === "" || parseInt( newStock ) < 1 );
     }
     if ( invalidInput() ) {
-        alert("Please complete all fields ");
+        alert("Please complete all fields. Make sure your stock or price is bigger than zero");
         return;
     }
     const id_product = parseInt(document.getElementById("idProductForEdit").value );
     const Product = {
-        "name": document.getElementById("newNameEditProduct").value,
-        "price": parseFloat( document.getElementById("newPriceEditProduct").value ),
-        "stock": parseInt( document.getElementById("newStockEditProduct").value )
+        "name": newName,
+        "price": parseFloat( newPrice ),
+        "stock": parseInt( newStock )
     }
     fetch( uriProduct+'/'+id_product, {
         method:"PUT",
@@ -139,27 +144,32 @@ function edit () {
     }).then( r => {
         if ( r.status === 200 ) {
             r.json().then( r => getProducts() );
+            clearFieldsEditProduct();
         } else
             showError();
     })
 }
 
 function sale () {
+    const clientID = document.getElementById("idClient").value;
+    const quantity = document.getElementById("quantity").value;
+    const productID = document.getElementById("idProductForSale").value;
+    const currentStock = document.getElementById("currentUnits").value;
     let invalidInput = () => {
-        return ( document.getElementById("idClient").value === "" ||
-            parseInt( document.getElementById("quantity").value ) < 1 ||
-            document.getElementById("idProductForSale").value === "" );
+        return ( clientID === "" || quantity === "" || parseInt( quantity ) < 1 ||
+            productID === "" || parseInt(quantity) > parseInt(currentStock) );
     }
     if ( invalidInput() ) {
-        alert("Please complete all fields ");
+        alert("Please complete all fields. Reminder: units should be bigger than zero; " +
+            " up to the limit of stock ");
         return;
     }
     const sale = {
-        "client": parseInt( document.getElementById("idClient").value ),
+        "client": parseInt( clientID ),
         "productQuantity" : [
             {
-                "unidades": parseInt( document.getElementById("quantity").value ),
-                "idProducto": parseInt( document.getElementById("idProductForSale").value )
+                "unidades": parseInt( quantity ),
+                "idProducto": parseInt( productID )
             }
         ]
     }
@@ -171,9 +181,9 @@ function sale () {
     }).then( r => {
         if ( r.status === 201 ) {
             r.json().then( r => getProducts() );
+            clearFieldsSale();
         } else {
             if ( r.status === 400 )
-                // probar esto:
                 alert( "Client doesn't exist or his purchases reached the limit." +
                     " Remember, you can buy just 3 units per product per day ! ");
             else
@@ -202,4 +212,15 @@ function clearFieldsAddProduct() {
     document.getElementById("nameProduct").value = "";
     document.getElementById("price").value = "";
     document.getElementById("stock").value = "";
+}
+
+function clearFieldsEditProduct() {
+    document.getElementById("newNameEditProduct").value = "";
+    document.getElementById("newPriceEditProduct").value = "";
+    document.getElementById("newStockEditProduct").value = "";
+}
+
+function clearFieldsSale () {
+    document.getElementById("idClient").value;
+    document.getElementById("quantity").value;
 }
