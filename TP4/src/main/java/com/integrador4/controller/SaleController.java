@@ -1,5 +1,6 @@
 package com.integrador4.controller;
 
+import com.integrador4.dto.ClientSaleReport;
 import com.integrador4.dto.RequestSale;
 import com.integrador4.entity.Sale;
 import com.integrador4.extensions.ObjectExtension;
@@ -50,10 +51,10 @@ public class SaleController {
     }
 
     /**
-     * @return sales by day and client
+     * @return sales by client
      */
     @GetMapping("/report")
-    public List<Sale> report() {
+    public List<ClientSaleReport> report() {
         return this.saleService.getReportByClientAndSales();
     }
 

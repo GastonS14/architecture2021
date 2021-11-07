@@ -11,7 +11,4 @@ public interface SaleRepository extends JpaRepository<Sale, Integer> {
     @Query ("SELECT s FROM Sale s WHERE s.date = :date")
     List<Sale> findByDate(Date date);
 
-    @Query ("SELECT s.client.name, s.client.surname, s.date, s.amount FROM Sale s")
-    List<Sale> reportClientAndSales();
-
 }

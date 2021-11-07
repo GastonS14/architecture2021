@@ -1,6 +1,7 @@
 package com.integrador4.service;
 
 import com.integrador4.dto.BestSellProductDto;
+import com.integrador4.dto.ClientSaleReport;
 import com.integrador4.dto.SaleProductDto;
 import com.integrador4.dto.RequestSale;
 import com.integrador4.entity.*;
@@ -22,6 +23,7 @@ public final class SaleService {
     @Autowired private ClientRepository clientRepository;
     @Autowired private RequestRepository requestRepository;
     @Autowired private BestSellProductRepository bestSellProductRepository;
+    @Autowired private ClientSaleReportRepository clientSaleReportRepository;
 
     public SaleService() {}
 
@@ -58,8 +60,8 @@ public final class SaleService {
         return this.saleRepository.findByDate(date);
     }
 
-    public List<Sale> getReportByClientAndSales() {
-        return this.saleRepository.reportClientAndSales();
+    public List<ClientSaleReport> getReportByClientAndSales() {
+        return this.clientSaleReportRepository.getClientSaleReport();
     }
 
     private boolean verifyQuantity (List<SaleProductDto> items, List<SaleProductDto> productsBought) {
