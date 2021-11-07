@@ -22,11 +22,11 @@ public class Integrador4Application {
     public class DemoData implements ApplicationRunner {
 
         @Autowired
-        private final ClientRepo clienteRepo;
+        private final ClientRepository clienteRepo;
         @Autowired
-        private final ProductRepo productoRepo;
+        private final ProductRepository productoRepo;
 
-        public DemoData(ClientRepo crepo, ProductRepo prepo) {
+        public DemoData(ClientRepository crepo, ProductRepository prepo) {
             this.clienteRepo = crepo;
             this.productoRepo = prepo;
         }
@@ -51,10 +51,4 @@ public class Integrador4Application {
     }
 
  */
-
-
-
-
-
-
 }
