@@ -1,6 +1,6 @@
 ## FIRST OF ALL
     1- Run docker-compose
-    2- Run Integrador4Application without the commented code.
+    2- Run Integrador4Application
 
 ## How can I run the Dockerfile ?
 You must be above TP4 directory and run the following command: docker-compose up -d 
