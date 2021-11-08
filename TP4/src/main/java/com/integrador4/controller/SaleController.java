@@ -2,6 +2,7 @@ package com.integrador4.controller;
 
 import com.integrador4.dto.ClientSaleReport;
 import com.integrador4.dto.RequestSale;
+import com.integrador4.dto.SalePerDay;
 import com.integrador4.entity.Sale;
 import com.integrador4.extensions.ObjectExtension;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import com.integrador4.service.SaleService;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,13 +34,18 @@ public class SaleController {
     }
 
     /**
-     * @param date to filter by day
-     * @return all the sales by day
+     * @param start initial date
+     * @param end end
+     * @return sales whose are between both dates
      */
-    @GetMapping("/filter")
-    public List<Sale> getAll(@RequestParam Date date, HttpServletRequest request) {
+    @GetMapping("/inRange")
+    public List<SalePerDay> getReportPerDay(@RequestParam(name = "startDate") Date start,
+                                   @RequestParam(name = "endDate") Date end, HttpServletRequest request) {
         logger.info("method={} uri={}", request.getMethod(), request.getRequestURI());
-        return this.saleService.findByDate(date);
+        Optional<List<SalePerDay>> sales = this.saleService.findByDate( start, end );
+        if ( sales.isEmpty() )
+            return new ArrayList<>();
+        return sales.get();
     }
 
     @GetMapping("/{id}")

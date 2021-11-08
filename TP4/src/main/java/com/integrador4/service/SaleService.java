@@ -1,9 +1,6 @@
 package com.integrador4.service;
 
-import com.integrador4.dto.BestSellProductDto;
-import com.integrador4.dto.ClientSaleReport;
-import com.integrador4.dto.SaleProductDto;
-import com.integrador4.dto.RequestSale;
+import com.integrador4.dto.*;
 import com.integrador4.entity.*;
 import com.integrador4.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +21,7 @@ public final class SaleService {
     @Autowired private RequestRepository requestRepository;
     @Autowired private BestSellProductRepository bestSellProductRepository;
     @Autowired private ClientSaleReportRepository clientSaleReportRepository;
+    @Autowired private SalePerDayRepository salePerDayRepository;
 
     public SaleService() {}
 
@@ -56,8 +54,8 @@ public final class SaleService {
         return this.saleRepository.findById(id);
     }
 
-    public List<Sale> findByDate (Date date) {
-        return this.saleRepository.findByDate(date);
+    public Optional<List<SalePerDay>> findByDate (Date start, Date end ) {
+        return this.salePerDayRepository.findByDate( start, end );
     }
 
     public List<ClientSaleReport> getReportByClientAndSales() {

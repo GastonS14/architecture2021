@@ -368,12 +368,12 @@
 					]
 				},
 				{
-					"name": "Filter by DATE",
+					"name": "Report by DATE",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/market/sales/filter?date=2021-11-04",
+							"raw": "http://localhost:8080/market/sales/inRange?startDate=2021-11-02&endDate=2021-11-08",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -382,24 +382,28 @@
 							"path": [
 								"market",
 								"sales",
-								"filter"
+								"inRange"
 							],
 							"query": [
 								{
-									"key": "date",
-									"value": "2021-11-04"
+									"key": "startDate",
+									"value": "2021-11-02"
+								},
+								{
+									"key": "endDate",
+									"value": "2021-11-08"
 								}
 							]
 						}
 					},
 					"response": [
 						{
-							"name": "Filter by DATE",
+							"name": "Report by DATE",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/market/sales/filter?date=2021-11-04",
+									"raw": "http://localhost:8080/market/sales/inRange?startDate=2021-11-02&endDate=2021-11-08",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -408,12 +412,16 @@
 									"path": [
 										"market",
 										"sales",
-										"filter"
+										"inRange"
 									],
 									"query": [
 										{
-											"key": "date",
-											"value": "2021-11-04"
+											"key": "startDate",
+											"value": "2021-11-02"
+										},
+										{
+											"key": "endDate",
+											"value": "2021-11-08"
 										}
 									]
 								}
@@ -432,7 +440,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Sun, 07 Nov 2021 14:01:08 GMT"
+									"value": "Mon, 08 Nov 2021 20:42:17 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -444,7 +452,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"id_sale\": 47,\n        \"date\": \"2021-11-04\",\n        \"client\": {\n            \"name\": \"manu\",\n            \"surname\": \"e\",\n            \"id\": 12\n        },\n        \"amount\": 370.8,\n        \"products_sold\": []\n    },\n    {\n        \"id_sale\": 49,\n        \"date\": \"2021-11-04\",\n        \"client\": {\n            \"name\": \"fran\",\n            \"surname\": \"c\",\n            \"id\": 10\n        },\n        \"amount\": 1972.3999999999999,\n        \"products_sold\": [\n            {\n                \"quantity\": 2,\n                \"product\": {\n                    \"id_product\": 2,\n                    \"name\": \"lechuga\",\n                    \"price\": 760.4,\n                    \"stock\": 111\n                }\n            },\n            {\n                \"quantity\": 2,\n                \"product\": {\n                    \"id_product\": 3,\n                    \"name\": \"nesquik\",\n                    \"price\": 40.4,\n                    \"stock\": 585\n                }\n            }\n        ]\n    }\n]"
+							"body": "[\n    {\n        \"date\": \"2021-11-03\",\n        \"amount\": 1272.5\n    },\n    {\n        \"date\": \"2021-11-04\",\n        \"amount\": 2343.2\n    },\n    {\n        \"date\": \"2021-11-05\",\n        \"amount\": 162\n    },\n    {\n        \"date\": \"2021-11-07\",\n        \"amount\": 360\n    }\n]"
 						}
 					]
 				}
