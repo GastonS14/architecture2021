@@ -36,7 +36,7 @@ public class SaleController {
     /**
      * @param start initial date
      * @param end end
-     * @return sales whose are between both dates
+     * @return sales that are between both dates
      */
     @GetMapping("/inRange")
     public List<SalePerDay> getReportPerDay(@RequestParam(name = "startDate") Date start,

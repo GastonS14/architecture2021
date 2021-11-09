@@ -21,7 +21,7 @@ public class Integrador4Application {
     public static void main(String[] args) {
         SpringApplication.run(Integrador4Application.class, args);
     }
-
+/*
     @Component
     public class DemoData implements ApplicationRunner {
 
@@ -63,5 +63,5 @@ public class Integrador4Application {
         }
     }
 
-
+*/
 }
