@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public final class SaleService {
+public class SaleService {
 
     @Autowired private SaleRepository saleRepository;
     @Autowired private ProductRepository productRepository;
@@ -25,11 +25,21 @@ public final class SaleService {
 
     public SaleService() {}
 
+    /**
+     * Solo se realizara una venta si y solo si los productos requeridos existen, las unidades
+     * requeridas son validas, la tienda tiene el stock suficiente y no se requieren mas de 3 unidades
+     * por producto por dia.
+     * @param request nueva compra
+     * @return
+     */
     public Optional<Sale> save(RequestSale request) {
         Optional<Client> c = this.clientRepository.findById(request.getClient());
         if(c.isEmpty())  return Optional.empty();
         Sale sale = new Sale(c.get());
         ArrayList<SaleProductDto> saleProductDtos = request.getProductQuantity();
+        // verifica que el producto exista,
+        // que las unidades requeridas sean validas ( unidades > 0 y unideades < 4 ) y
+        // que el stock en la tienda sea igual o mayor a lo requerido
         boolean rightRequest = saleProductDtos
                 .stream().anyMatch( i -> i.getUnidades() < 0 || i.getUnidades() > 3 ||
                     productRepository.findById(i.getIdProducto()).isEmpty() ||
@@ -38,6 +48,7 @@ public final class SaleService {
         if ( rightRequest ) return Optional.empty();
         List<SaleProductDto> currentProducts = this.requestRepository.getPurchases(Date.valueOf(LocalDate.now()), c.get().getId());
         List<SaleProductDto> alreadyBought = saleProductDtos.stream().filter(  currentProducts::contains ).collect(Collectors.toList());
+        // verifica el maximo de 3 unidades por dia por producto
         if (this.verifyQuantity( alreadyBought, currentProducts) ) {
             sale = this.saleRepository.save(sale);
             this.addProducts(saleProductDtos, sale);
@@ -62,11 +73,22 @@ public final class SaleService {
         return this.clientSaleReportRepository.getClientSaleReport();
     }
 
+    /**
+     * Verifica que la suma de unidades por producto por dia sea igual o menor a 3.
+     * @param items productos de la compra actual.
+     * @param productsBought productos ya comprados en el dia.
+     * @return
+     */
     private boolean verifyQuantity (List<SaleProductDto> items, List<SaleProductDto> productsBought) {
         return items.stream().noneMatch(
                 i -> i.getUnidades() + productsBought.get( productsBought.indexOf( i )).getUnidades() > 3 );
     }
 
+    /**
+     * Agrega los productos requeridos por el clienta a la venta y calcula el total de la misma.
+     * @param items productos requeridos por el cliente
+     * @param sale venta
+     */
     private void addProducts (ArrayList<SaleProductDto> items, Sale sale) {
         double amount = 0;
         for ( SaleProductDto rv : items ) {

@@ -7,13 +7,18 @@ You must be above TP4 directory and run the following command: docker-compose up
 
 
 ## API & WEB PAGE
-#### WEB PAGE PATH : 
-    . http://localhost:8080/market
+#### WEB PAGE : 
+- [MARKET](http://localhost:8080/market)
 
 #### API PATHS :
-    . http://localhost:8080/market/clients
-    . http://localhost:8080/market/products
-    . http://localhost:8080/market/sales
+- [CLIENTS](http://localhost:8080/market/clients)
+- [PRODUCTS](http://localhost:8080/market/products)
+- [SALES](http://localhost:8080/market/sales)
+
+#### DOCUMENTATION 
+- [Swagger interface]( http://localhost:8080/market/swagger-ui.html )
+- [Documentation in json format]( http://localhost:8080/market/v3/api-docs )
+- [Documentation in yaml format]( http://localhost:8080/market/v3/api-docs.yaml )
 
 #### FOR WORK IN POSTMAN 
     - There is a JSON file in src/resources/data called MarketAPI, you must import that file into a collection in postman.
