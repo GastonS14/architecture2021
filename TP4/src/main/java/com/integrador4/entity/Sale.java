@@ -99,4 +99,18 @@ public class Sale {
         }
         this.productsSold.add( vp );
     }
+
+    public String toString() {
+        return "id: "+ this.idSale + ", Date: "+ this.date + ", client: "+ this.client +
+                ", amount: "+ this.amount;
+    }
+
+    public boolean equals ( Object o ) {
+        try {
+            Sale sale = (Sale) o;
+            return sale.getIdSale() == this.idSale;
+        } catch ( Exception e ) {
+            return false;
+        }
+    }
 }
