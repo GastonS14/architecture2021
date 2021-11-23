@@ -8,7 +8,7 @@ import com.integrador4.repository.ProductRepository;
 import java.util.Optional;
 
 @Service
-public final class ProductService {
+public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
