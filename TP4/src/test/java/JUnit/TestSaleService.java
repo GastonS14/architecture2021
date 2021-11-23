@@ -8,6 +8,7 @@ import com.integrador4.entity.Sale;
 import com.integrador4.repository.*;
 import com.integrador4.service.SaleService;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,7 +24,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith( MockitoExtension.class )
-@ExtendWith(SpringExtension.class )
 public class TestSaleService {
     static int productUnits;
     static int idClient;
@@ -32,6 +31,7 @@ public class TestSaleService {
     static int initialStock;
     static ArrayList<SaleProductDto> saleProduct;
     static Sale sale;
+    // Utiliza @Mock, no @MockBean
     @MockBean SaleRepository saleRepository;
     @MockBean ProductRepository productRepository;
     @MockBean ClientRepository clientRepository;
@@ -39,7 +39,8 @@ public class TestSaleService {
     @InjectMocks SaleService saleService;
 
     @BeforeAll
-    static void loadData () {
+    // Spring utiliza un proxy, si no pones public no puede acceder a este metodo y nunca se ejecuta
+    public static void loadData () {
         saleProduct = new ArrayList<>();
         sale = new Sale();
         productUnits = 2;
