@@ -1,11 +1,13 @@
 package com.integrador4.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 
 @Entity
 @Table( name = "sale_product")
+@Schema( name = "sale-product", description = "Has a product with his sale")
 public class SaleProduct {
 
     @JsonIgnore

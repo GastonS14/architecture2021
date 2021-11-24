@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class Client {
     private String surname;
 
     @JsonIgnore
+    @Schema( hidden = true )
     @OneToMany( mappedBy = "client", cascade = {CascadeType.ALL}, orphanRemoval = true )
     private List<Sale> sales;
 

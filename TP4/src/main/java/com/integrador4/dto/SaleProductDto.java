@@ -1,5 +1,7 @@
 package com.integrador4.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,6 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table ( name = "request_sale_dto")
+@Schema( name = "Request sale for each product", description = "It has units & idProduct that client want to buy ")
 public class SaleProductDto {
     @Column private int unidades;
     @Id private int idProducto;

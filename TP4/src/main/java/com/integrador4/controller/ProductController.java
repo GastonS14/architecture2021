@@ -5,6 +5,11 @@ import com.integrador4.dto.ProductRequest;
 import com.integrador4.entity.Product;
 import com.integrador4.extensions.ObjectExtension;
 import com.integrador4.repository.BestSellProductRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +30,19 @@ public class ProductController {
     @Autowired private BestSellProductRepository bestSellProductRepository;
 
     @GetMapping()
+    @Operation( summary = "Get all products", description = "Get list of products",
+            responses = @ApiResponse(description = "List of products", responseCode = "200",content = @Content(mediaType = "application/json",
+                    array = @ArraySchema(schema = @Schema(implementation = Product.class)))))
     public Iterable<Product> getAll(HttpServletRequest request) {
         logger.info("method={} uri={}", request.getMethod(), request.getRequestURI());
         return this.productService.getAll();
     }
 
     @GetMapping("/{id}")
+    @Operation( summary = "Get product", description = "Get product by id",
+    responses = { @ApiResponse(description = "product", responseCode = "200",content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Product.class))) ,
+        @ApiResponse( description = "product not found", responseCode= "404" )})
     public ResponseEntity<Product> getById(@PathVariable Integer id, HttpServletRequest request) {
         logger.info("method={} uri={}", request.getMethod(), request.getRequestURI());
         Optional<Product> product = this.productService.getById(id);
@@ -39,6 +51,10 @@ public class ProductController {
     }
 
     @PostMapping
+    @Operation( summary = "Add product", description = "Add new product",
+            responses = { @ApiResponse(description = "successfully created", responseCode = "201",content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Product.class))) ,
+                    @ApiResponse( description = "Bad request", responseCode= "400" )})
     public ResponseEntity save(@RequestBody ProductRequest body, HttpServletRequest request) {
         logger.info("method={} uri={} body={}",
             request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
@@ -50,6 +66,10 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
+    @Operation( summary = "Update product", description = "Update an existing product by id",
+            responses = { @ApiResponse(description = "product updated", responseCode = "200",content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Product.class))) ,
+                    @ApiResponse( description = "product not found", responseCode= "404" )})
     public ResponseEntity<Product> update(@RequestBody ProductRequest body, @PathVariable Integer id, HttpServletRequest request) {
         logger.info("method={} uri={} body={}",
             request.getMethod(), request.getRequestURI(), ObjectExtension.toJson(body)
@@ -61,6 +81,10 @@ public class ProductController {
     }
 
     @GetMapping( "/bestSeller")
+    @Operation( summary = "The best sell", description = "Get best seller product",
+            responses = { @ApiResponse(description = "the best seller product", responseCode = "200",content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = BestSellProductDto.class))) ,
+                    @ApiResponse( description = "nothing to show", responseCode= "204" )})
     public ResponseEntity<BestSellProductDto> getBestSell ( ) {
         Optional<BestSellProductDto> bestSellProduct = this.bestSellProductRepository.getBestSell();
         if ( bestSellProduct.isEmpty() )
@@ -69,6 +93,10 @@ public class ProductController {
     }
 
     @DeleteMapping( "/{id}")
+    @Operation( summary = "Delete product",description = "Delete product by id", responses =
+            { @ApiResponse(description = "succesfully deleted", responseCode = "200",content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Product.class))) ,
+            @ApiResponse( description = "product not found", responseCode= "404" )})
     public ResponseEntity delete ( @PathVariable Integer id ) {
         Optional<Product> product = this.productService.delete( id );
         if ( product.isEmpty() )

@@ -1,7 +1,10 @@
 package com.integrador4.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.ArrayList;
 
+@Schema( name = "Request sale", description = "It has a client and all the products that he want to buy")
 public class RequestSale {
 
     private int client;

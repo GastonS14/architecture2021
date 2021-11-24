@@ -1,10 +1,13 @@
 package com.integrador4.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
+@Schema( name = "The Best seller product", description = "A report for the best seller product in the history")
 public class BestSellProductDto {
     @Id
     private int idProduct;

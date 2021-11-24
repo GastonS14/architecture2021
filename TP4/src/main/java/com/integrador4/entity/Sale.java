@@ -3,6 +3,8 @@ package com.integrador4.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -29,6 +31,7 @@ public class Sale {
     private Double amount;
 
     @OneToMany ( mappedBy = "sale", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @Schema( description = "Has all the products that were bought")
     private List<SaleProduct> productsSold;
 
     public Sale() {
