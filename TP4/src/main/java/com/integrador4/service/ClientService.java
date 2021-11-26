@@ -16,7 +16,10 @@ public class ClientService {
     public ClientService(){}
 
     public Optional<Client> save (ClientRequest clientRequest) {
-        return Optional.of( this.clientRepository.save(clientRequest.toClient()) );
+        Client clien = clientRequest.toClient();
+        System.out.println(clien);
+        Client client = this.clientRepository.save(clien);
+        return Optional.of( client );
     }
 
     public Optional<Client> update (Integer id, ClientRequest clientRequest) {
@@ -37,7 +40,7 @@ public class ClientService {
         Optional<Client> clientToDelete = this.clientRepository.findById( id );
         if ( clientToDelete.isEmpty() )
             return Optional.empty();
-        this.clientRepository.delete( clientToDelete.get() );
+        this.clientRepository.delete( clientToDelete.get());
         return clientToDelete;
     }
 }

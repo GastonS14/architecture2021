@@ -15,6 +15,5 @@ public class ObjectExtension {
 		} catch(Exception exception) {
 			return "{}";
 		}
-
 	}
 }
