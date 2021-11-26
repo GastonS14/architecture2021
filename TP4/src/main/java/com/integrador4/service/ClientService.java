@@ -17,7 +17,6 @@ public class ClientService {
 
     public Optional<Client> save (ClientRequest clientRequest) {
         Client clien = clientRequest.toClient();
-        System.out.println(clien);
         Client client = this.clientRepository.save(clien);
         return Optional.of( client );
     }
